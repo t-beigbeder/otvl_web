@@ -1,26 +1,6 @@
-# Quasar App (otvl_web)
+# otvl web
 
-A Quasar Framework app
+Toolkit to build an easily updatable web site.
 
-## Install the dependencies
-```bash
-yarn
-```
-
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
-```bash
-quasar dev
-```
-
-### Lint the files
-```bash
-yarn run lint
-```
-
-### Build the app for production
-```bash
-quasar build
-```
-
-### Customize the configuration
-See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
+- [user documentation](doc/user.md)
+- [developper documentation](doc/developper.md)
