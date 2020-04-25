@@ -3,6 +3,7 @@ import os
 import traceback
 import argparse
 import sys
+import json
 
 import tornado.ioloop
 import tornado.web
@@ -18,6 +19,14 @@ def setup_env():
 class HelloWorldHandler(tornado.web.RequestHandler):
     def get(self):
         self.write("Hello, world (v2)")
+
+
+class SiteConfigHandler(tornado.web.RequestHandler):
+    def get(self):
+        file_name = "data/test_site1/config/site1.yml"
+        with open(file_name) as ysd:
+            site_config = yaml.load(ysd, Loader=yaml.FullLoader)["config"]
+            self.write(json.dumps(site_config, indent=2))
 
 
 class AppServerMainBase:
@@ -70,6 +79,7 @@ class OtvlWebServer(AppServerMainBase):
     def _make_app(cls):
         return tornado.web.Application([
             (r"/", HelloWorldHandler),
+            (r"/site/config/", SiteConfigHandler),
         ])
 
     def _arg_parser(self):

@@ -1,0 +1,23 @@
+config:
+  home_section: home
+  home_type: page
+  types:
+    page:
+      mapping: StandardPage
+      has_slug: false
+    blox:
+      mapping: BlogIndexPage
+      has_slug: false
+    blog:
+      mapping: BlogPage
+      has_slug: true
+
+pages:
+  - id: home
+    type: page
+    menu: Home
+    title: Les ateliers du QI
+  - id: qi-gong
+    type: page
+    menu: QI Gong
+    title: QI Gong
