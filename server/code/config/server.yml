@@ -1,2 +1,2 @@
 server:
-  config_file: code/data/test_site1/config/site1.yml
+  config_file: data/test_site1/config/site1.yml

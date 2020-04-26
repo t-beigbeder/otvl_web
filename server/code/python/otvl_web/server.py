@@ -22,15 +22,25 @@ class HelloWorldHandler(tornado.web.RequestHandler):
 
 
 class SiteConfigHandler(tornado.web.RequestHandler):
+    logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
+    config = {}
+
+    def initialize(self, **kwargs):
+        self.__class__.config = kwargs['config']
+        del kwargs['config']
+        super().initialize(**kwargs)
+
     def get(self):
-        file_name = "data/test_site1/config/site1.yml"
-        with open(file_name) as ysd:
+        self.logger.debug(f"get: config is {self.config}")
+        config_file = self.config["server"]["config_file"]
+        with open(config_file) as ysd:
             site_config = yaml.load(ysd, Loader=yaml.FullLoader)["config"]
             self.write(json.dumps(site_config, indent=2))
 
 
 class AppServerMainBase:
     logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
+    config = None
 
     def _arg_parser(self):
         raise NotImplementedError("_arg_parser")
@@ -39,7 +49,6 @@ class AppServerMainBase:
         self.name = name
         self.arg_parser = self._arg_parser()
         self.args = None
-        self.config = None
 
     def _do_run(self):
         raise NotImplementedError("_do_run")
@@ -52,7 +61,7 @@ class AppServerMainBase:
         config_dir = os.getenv('CONFIG_DIR', 'code/config')
         config_name = os.getenv('CONFIG_NAME', self.name) + '.yml'
         with open(f"{config_dir}/{config_name}") as ysd:
-            self.config = yaml.load(ysd, Loader=yaml.FullLoader)
+            self.__class__.config = yaml.load(ysd, Loader=yaml.FullLoader)
         self._do_load_config()
 
     def run(self):
@@ -72,15 +81,22 @@ class AppServerMainBase:
         return False
 
 
+def make_otvl_web_app(config):
+    handler_kwa = {
+        "config": config
+        }
+    return tornado.web.Application([
+        (r"/", HelloWorldHandler),
+        (r"/site/config/", SiteConfigHandler, handler_kwa),
+    ])
+
+
 class OtvlWebServer(AppServerMainBase):
     logger = logging.getLogger(__module__ + "." + __qualname__)  # noqa
 
     @classmethod
     def _make_app(cls):
-        return tornado.web.Application([
-            (r"/", HelloWorldHandler),
-            (r"/site/config/", SiteConfigHandler),
-        ])
+        return make_otvl_web_app(cls.config)
 
     def _arg_parser(self):
         parser = argparse.ArgumentParser(description='OtvlWebServer')

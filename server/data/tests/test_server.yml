@@ -1,1 +1,2 @@
 server:
+  config_file: data/test_site1/config/site1.yml
