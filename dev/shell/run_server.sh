@@ -7,5 +7,5 @@ fi
 base_dir=`echo $cmd_dir | sed -e s=/dev/shell==`
 PYTHONPATH=${base_dir}/server/code/python
 export PYTHONPATH
-cd $base_dir/
-python -m otvl_web.server
+cd $base_dir/server
+python -m otvl_web.server -c /home/guest/git/otvl_blog/data/tests/test_server_qgg.yml

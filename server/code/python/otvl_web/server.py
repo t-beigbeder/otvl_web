@@ -21,7 +21,7 @@ class HelloWorldHandler(tornado.web.RequestHandler):
         self.write("Hello, world (v2)")
 
 
-class SiteConfigHandler(tornado.web.RequestHandler):
+class SiteHandler(tornado.web.RequestHandler):
     logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
     config = {}
 
@@ -33,8 +33,11 @@ class SiteConfigHandler(tornado.web.RequestHandler):
     def get(self):
         self.logger.debug(f"get: config is {self.config}")
         config_file = self.config["server"]["config_file"]
+        key = self.request.path[len("/site/"):]
+        if key[-1] == "/":
+            key = key[:-1]
         with open(config_file) as ysd:
-            site_config = yaml.load(ysd, Loader=yaml.FullLoader)["config"]
+            site_config = yaml.load(ysd, Loader=yaml.FullLoader)[key]
             self.write(json.dumps(site_config, indent=2))
 
 
@@ -49,18 +52,25 @@ class AppServerMainBase:
         self.name = name
         self.arg_parser = self._arg_parser()
         self.args = None
+        self.config_file = None
 
     def _do_run(self):
         raise NotImplementedError("_do_run")
+
+    def pre_load_config(self):
+        pass
 
     def _do_load_config(self):
         raise NotImplementedError("_do_load_config")
 
     def _load_config(self):
         self.logger.debug("load_config")
-        config_dir = os.getenv('CONFIG_DIR', 'code/config')
-        config_name = os.getenv('CONFIG_NAME', self.name) + '.yml'
-        with open(f"{config_dir}/{config_name}") as ysd:
+        self.pre_load_config()
+        if self.config_file is None:
+            config_dir = os.getenv('CONFIG_DIR', 'code/config')
+            config_name = os.getenv('CONFIG_NAME', self.name) + '.yml'
+            self.config_file = f"{config_dir}/{config_name}"
+        with open(self.config_file) as ysd:
             self.__class__.config = yaml.load(ysd, Loader=yaml.FullLoader)
         self._do_load_config()
 
@@ -87,7 +97,8 @@ def make_otvl_web_app(config):
         }
     return tornado.web.Application([
         (r"/", HelloWorldHandler),
-        (r"/site/config/", SiteConfigHandler, handler_kwa),
+        (r"/site/config/", SiteHandler, handler_kwa),
+        (r"/site/pages/", SiteHandler, handler_kwa),
     ])
 
 
@@ -100,18 +111,33 @@ class OtvlWebServer(AppServerMainBase):
 
     def _arg_parser(self):
         parser = argparse.ArgumentParser(description='OtvlWebServer')
+        parser.add_argument('-c', '--config', type=str, help='Configuration file')
+        parser.add_argument('-p', '--port', type=int, help='port to bind the server (defaults to OW_PORT env var or 8888)')  # noqa
+        parser.add_argument('-a', '--address', type=str, help='host or IP address to listen to, empty string implies all interfaces (defaults to OW_ADDRESS or empty)')  # noqa
         return parser
 
     def __init__(self, name):
         AppServerMainBase.__init__(self, name)
+
+    def pre_load_config(self):
+        self.logger.debug("pre_load_config OtvlWebServer")
+        self.config_file = self.args.config
 
     def _do_load_config(self):
         self.logger.debug("_do_load_config OtvlWebServer")
 
     def _do_run(self):
         self.logger.debug("_do_run OtvlWebServer")
+        if self.args.port:
+            port = self.args.port
+        else:
+            port = int(os.getenv("OW_PORT", "8888"))
+        if self.args.address:
+            address = self.args.address
+        else:
+            address = os.getenv("OW_ADDRESS", "")
         app = self._make_app()
-        app.listen(8888)
+        app.listen(port, address)
         tornado.ioloop.IOLoop.current().start()
         return True
 
