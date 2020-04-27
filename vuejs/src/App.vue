@@ -16,6 +16,8 @@ export default {
   data: function () {
     return {
       app_debug: false,
+      app_debug_console: false,
+      app_debug_simul_rest: true,
       odbg: {},
       site_configuration: {},
       site_configuration_updated: false,
@@ -30,17 +32,26 @@ export default {
     }
   },
   created: function () {
-    console.log('App was created v11')
+    if (this.app_debug_console) {
+      console.log('App was created v12')
+    }
     this.fetchSiteConfiguration()
   },
   watch: {
     site_configuration_updated () {
-      console.log('App site_configuration_updated')
+      if (this.app_debug_console) {
+        console.log('App site_configuration_updated')
+      }
+      console.log('site_configuration_updated')
+      console.log(this.site_configuration)
+
       this.buildRoutes()
       this.fetchSitePages()
     },
     site_pages_updated () {
-      console.log('App site_pages_updated')
+      if (this.app_debug_console) {
+        console.log('App site_pages_updated')
+      }
       this.menus = this.buildMenusFromConf()
       this.pages_by_id = this.buildPagesById()
       // this.$set(this.odbg, 'menus', this.menus)
@@ -69,8 +80,18 @@ export default {
       }
     },
     fetchSiteConfiguration: function () {
-      this.simulFetchSiteConfiguration()
-      this.site_configuration_updated = true
+      if (this.app_debug_simul_rest) {
+        this.simulFetchSiteConfiguration()
+        this.site_configuration_updated = true
+      } else {
+        this.$axios.get('http://dxpydk:8888/site/config/')
+          .then((response) => {
+            this.site_configuration = response.data
+            console.log(`site conf ${this.site_configuration}`)
+            console.log(this.site_configuration)
+            this.site_configuration_updated = true //
+          })
+      }
     },
     buildRoutes: function () {
       this.$router.addRoutes(this.buildRoutesFromConf())

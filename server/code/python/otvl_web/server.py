@@ -30,6 +30,10 @@ class SiteHandler(tornado.web.RequestHandler):
         del kwargs['config']
         super().initialize(**kwargs)
 
+    def set_default_headers(self):
+        self.logger.debug("set_default_headers")
+        self.set_header("Access-Control-Allow-Origin", "*")
+
     def get(self):
         self.logger.debug(f"get: config is {self.config}")
         config_file = self.config["server"]["config_file"]
