@@ -11,13 +11,62 @@ config:
     blog:
       mapping: BlogPage
       has_slug: true
+  brand:
+    toolbar:
+      label: Otvl Web
 
 pages:
   - id: home
     type: page
     menu: Home
-    title: Les ateliers du QI
-  - id: qi-gong
+  - id: menu1
     type: page
-    menu: QI Gong
-    title: QI Gong
+    menu: Menu1
+    children:
+      - id: sub-menu1
+        type: page
+        menu: Sub 1
+      - id: sub-menu2
+        type: page
+        menu: Sub 2
+  - id: menu2
+    type: page
+    menu: Menu2
+    title: Title menu2
+    children:
+      - id: sub-menu1
+        type: page
+        menu: Sub 1 in 2
+      - id: sub-menu2
+        type: page
+        menu: Sub 2 in 2
+      - id: the-big-blog
+        type: blox
+        menu: The Big Blog !
+        blog_type: blog
+  - id: corporate-blog
+    type: page
+    menu: Corporate Blog
+  - id: about
+    menu: About
+    children:
+      - id: contact
+        type: page
+        menu: Contact us
+      - id: legal-policies
+        type: page
+        menu: Legal Policies
+  - id: no-type-no-menu-test
+    menu: No type no menu
+    children:
+      - id: no-sub-menu-here
+        type: page
+  - id: no-menu-here-test
+    menu: No menu here
+    children:
+      - id: no-sub-menu-there
+        type: page
+      - id: sub-menu-there
+        type: page
+        menu: A sub menu there
+

@@ -28,6 +28,9 @@ export default {
       site_configuration_updated: false,
       site_pages: [],
       site_pages_updated: false,
+      brand: {
+        toolbar_label: 'toolbar_label_tbd'
+      },
       menus: function () {
         return []
       },
@@ -38,7 +41,7 @@ export default {
   },
   created: function () {
     if (this.app_debug_console) {
-      console.log('App was created v33')
+      console.log('App was created v35')
     }
     this.fetchSiteConfiguration()
   },
@@ -52,6 +55,11 @@ export default {
         typeConf.mapping = this.pageClassesByName[typeConf.mapping]
       }
       this.buildRoutes()
+      this.$set(this, 'brand', this.site_configuration.brand)
+      if (this.app_debug_console) {
+        console.log(`App brand ${this.brand}`)
+        console.log(this.brand)
+      }
       this.fetchSitePages()
     },
     site_pages_updated () {
@@ -106,26 +114,22 @@ export default {
         {
           id: 'home',
           type: 'page',
-          menu: 'Home',
-          title: 'Les ateliers du QI'
+          menu: 'Home'
         },
         {
           id: 'qi-gong',
           type: 'page',
           menu: 'QI Gong',
-          title: 'QI Gong',
           children: [
             {
               id: 'notions-mtc-utiles',
               type: 'page',
-              menu: 'Notions de MTC utiles',
-              title: 'Notions de MTC utiles'
+              menu: 'Notions de MTC utiles'
             },
             {
               id: 'poumon',
               type: 'page',
-              menu: 'Le poumon',
-              title: 'Le poumon'
+              menu: 'Le poumon'
             }
           ]
         },
@@ -133,19 +137,16 @@ export default {
           id: 'pratique',
           type: 'page',
           menu: 'Pratique',
-          title: 'Pratique',
           children: [
             {
               id: 'association-qi-gong-go',
               type: 'page',
-              menu: 'Association Qi Gong Go!',
-              title: 'Association Qi Gong Go!'
+              menu: 'Association Qi Gong Go!'
             },
             {
               id: 'actualites',
               type: 'blox',
               menu: 'Actualités',
-              title: 'Actualités',
               blog_type: 'blog'
             }
           ]
@@ -154,7 +155,6 @@ export default {
           id: 'blid',
           type: 'blox',
           menu: 'Blog',
-          title: 'Blog',
           blog_type: 'blog'
         },
         {
@@ -164,32 +164,27 @@ export default {
             {
               id: 'contact',
               type: 'page',
-              menu: 'Nous contacter',
-              title: 'Nous contacter'
+              menu: 'Nous contacter'
             },
             {
               id: 'association-qi-gong-go',
               type: 'page',
-              menu: 'Association Qi Gong Go!',
-              title: 'Association Qi Gong Go!'
+              menu: 'Association Qi Gong Go!'
             },
             {
               id: 'association-chemins-harmonie',
               type: 'page',
-              menu: 'Association Les chemins de l\'harmonie',
-              title: 'Association Les chemins de l\'harmonie'
+              menu: 'Association Les chemins de l\'harmonie'
             },
             {
               id: 'mentions-legales',
               type: 'page',
-              menu: 'Mentions légales',
-              title: 'Mentions légales'
+              menu: 'Mentions légales'
             },
             {
               id: 'confidentialite',
               type: 'page',
-              menu: 'Confidentialité',
-              title: 'Confidentialité'
+              menu: 'Confidentialité'
             }
           ]
         },
@@ -199,8 +194,7 @@ export default {
           children: [
             {
               id: 'no-sub-menu-here',
-              type: 'page',
-              title: 'No sub menu here'
+              type: 'page'
             }
           ]
         },
@@ -210,14 +204,12 @@ export default {
           children: [
             {
               id: 'no-sub-menu-there',
-              type: 'page',
-              title: 'No sub menu there'
+              type: 'page'
             },
             {
               id: 'sub-menu-there',
               type: 'page',
-              menu: 'A sub menu there',
-              title: 'A sub menu there'
+              menu: 'A sub menu there'
             }
           ]
         }

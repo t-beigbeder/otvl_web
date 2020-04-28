@@ -34,10 +34,11 @@ export default {
       this.id.section = section
       this.id.sub_section = subSection || ''
       this.id.slug = slug || ''
-      // TODO: remove this test
-      this.content.title = 'Title ' + this.id.section + ' ' + this.id.sub_section + ' ' + this.id.slug
       if (this.content.title) {
         document.title = this.content.title
+      } else {
+        // TODO: remove this test
+        document.title = 'Title ' + this.id.section + ' ' + this.id.sub_section + ' ' + this.id.slug
       }
       this.content.heading = 'Heading ' + this.id.section + ' ' + this.id.sub_section + ' ' + this.id.slug
     },

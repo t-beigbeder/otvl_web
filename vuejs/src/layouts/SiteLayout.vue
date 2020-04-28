@@ -18,7 +18,7 @@
           </q-item>
           <q-toolbar-title>
             <q-item tag="a" to="/page/home" class="text-grey-8" style="text-decoration: none">
-                Ateliers du QI
+              {{ app.brand.toolbar.label }}
             </q-item>
           </q-toolbar-title>
         </q-toolbar>
@@ -79,43 +79,7 @@ export default {
 
   data () {
     return {
-      leftDrawerOpen: false,
-      menu_test1: {
-        label: 'Label1',
-        target_url: '/page/x1/y1'
-      },
-      menu_test2: {
-        label: 'Label2',
-        target_url: '/page/x2/y2',
-        sub_menus: [
-          {
-            label: 'Label2',
-            target_url: '/page/x2/y2'
-          },
-          {
-            label: 'Label2bis',
-            target_url: '/page/x2bis/y2bis'
-          }
-        ]
-      },
-      menu_test3: {
-        label: 'Label3',
-        target_url: '/page/x3/y3'
-      },
-      menu_test4: {
-        label: 'Label4',
-        target_url: '/page/x4/y4',
-        sub_menus: [
-          {
-            label: 'Label4',
-            target_url: '/page/x4/y4'
-          },
-          {
-            label: 'Label4bis',
-            target_url: '/page/x4bis/y4bis'
-          }
-        ]
-      }
+      leftDrawerOpen: false
     }
   },
   props: ['app']
