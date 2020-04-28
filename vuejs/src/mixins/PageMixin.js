@@ -9,6 +9,7 @@ export default {
         sub_section: '',
         slug: ''
       },
+      type: '',
       content: {
         title: '',
         heading: ''
@@ -17,11 +18,17 @@ export default {
   },
   props: ['app'],
   created: function () {
-    this.fetchContent(this.$route.params.section, this.$route.params.sub_section, this.$route.params.slug)
+    if (this.app.app_debug_console) {
+      console.log('created')
+    }
+    this.fetchContent()
   },
   watch: {
-    $route (to, from) {
-      this.fetchContent(to.params.section, to.params.sub_section, to.params.slug)
+    $route: function () {
+      if (this.app.app_debug_console) {
+        console.log('watch $route')
+      }
+      this.fetchContent()
     }
   },
   computed: {
@@ -30,10 +37,7 @@ export default {
     }
   },
   methods: {
-    doFetchContent: function (section, subSection, slug) {
-      this.id.section = section
-      this.id.sub_section = subSection || ''
-      this.id.slug = slug || ''
+    simulFetchContent: function () {
       if (this.content.title) {
         document.title = this.content.title
       } else {
@@ -41,9 +45,45 @@ export default {
         document.title = 'Title ' + this.id.section + ' ' + this.id.sub_section + ' ' + this.id.slug
       }
       this.content.heading = 'Heading ' + this.id.section + ' ' + this.id.sub_section + ' ' + this.id.slug
+      if (this.type === 'blox') {
+        this.$set(this, 'blogs',
+          [
+            {
+              id: {
+                section: this.id.section,
+                sub_section: this.id.subSection,
+                slug: 'first'
+              },
+              type: 'blog',
+              content: {
+                title: '',
+                heading: ''
+              }
+            }
+          ]
+        )
+      }
     },
-    fetchContent: function (section, subSection, slug) {
-      this.doFetchContent(section, subSection, slug)
+    fetchContent: function () {
+      if (this.app.app_debug_console) {
+        console.log(`fetchContent $route path ${this.$route.path}`)
+      }
+      this.type = this.$route.path.split('/')[1]
+      this.id.section = this.$route.params.section
+      this.id.sub_section = this.$route.params.sub_section || ''
+      this.id.slug = this.$route.params.slug || ''
+      if (this.app.app_debug_console) {
+        console.log(`fetchContent str_id ${this.str_id} type ${this.type}`)
+      }
+      if (this.app.app_debug_simul_rest) {
+        this.simulFetchContent()
+      } else {
+        this.$axios.get(`http://dxpydk:8888/${this.type}/${this.str_id}/`)
+          .then((response) => {
+            this.site_configuration = response.data
+            this.site_configuration_updated = true
+          })
+      }
     }
   }
 }

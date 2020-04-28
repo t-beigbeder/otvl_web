@@ -45,7 +45,7 @@ pages:
         menu: The Big Blog !
         blog_type: blog
   - id: corporate-blog
-    type: page
+    type: blox
     menu: Corporate Blog
   - id: about
     menu: About

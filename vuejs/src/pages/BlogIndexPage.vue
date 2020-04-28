@@ -38,27 +38,6 @@ export default {
       const page = this.getPageById(this.str_id)
       return (this.id.sub_section ? `/${page.blog_type}/${this.id.section}/${this.id.sub_section}` : `/${page.blog_type}/${this.id.section}`)
     }
-  },
-  methods: {
-    fetchContent: function (section, subSection) {
-      this.doFetchContent(section, subSection)
-      // TODO: remove this test
-      this.$set(this, 'blogs',
-        [
-          {
-            id: {
-              section: section,
-              sub_section: subSection,
-              slug: 'first'
-            },
-            content: {
-              title: '',
-              heading: ''
-            }
-          }
-        ]
-      )
-    }
   }
 }
 </script>

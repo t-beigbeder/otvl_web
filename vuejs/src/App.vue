@@ -29,7 +29,9 @@ export default {
       site_pages: [],
       site_pages_updated: false,
       brand: {
-        toolbar_label: 'toolbar_label_tbd'
+        toolbar: {
+          label: 'toolbar_label_tbd'
+        }
       },
       menus: function () {
         return []
@@ -41,7 +43,7 @@ export default {
   },
   created: function () {
     if (this.app_debug_console) {
-      console.log('App was created v35')
+      console.log('App was created v38')
     }
     this.fetchSiteConfiguration()
   },
@@ -69,7 +71,7 @@ export default {
       this.menus = this.buildMenusFromConf()
       this.pages_by_id = this.buildPagesById()
       // this.$set(this.odbg, 'menus', this.menus)
-      // this.$set(this.odbg, 'pages_by_id', this.pages_by_id)
+      this.$set(this.odbg, 'pages_by_id', this.pages_by_id)
     }
   },
   methods: {
@@ -89,6 +91,11 @@ export default {
           blog: {
             mapping: 'BlogPage',
             has_slug: true
+          }
+        },
+        brand: {
+          toolbar: {
+            label: 'Otvl Web'
           }
         }
       }
