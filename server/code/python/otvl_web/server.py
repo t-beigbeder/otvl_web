@@ -21,22 +21,34 @@ class HelloWorldHandler(tornado.web.RequestHandler):
         self.write("Hello, world (v2)")
 
 
-class SiteHandler(tornado.web.RequestHandler):
+class BaseHandler(tornado.web.RequestHandler):
     logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
-    config = {}
+    server_config = {}
 
     def initialize(self, **kwargs):
-        self.__class__.config = kwargs['config']
-        del kwargs['config']
+        BaseHandler.server_config = kwargs["server_config"]
+        del kwargs["server_config"]
         super().initialize(**kwargs)
 
-    def set_default_headers(self):
-        self.logger.debug("set_default_headers")
-        self.set_header("Access-Control-Allow-Origin", "*")
+    def prepare(self):
+        self.logger.debug(f"prepare: {self.request.method} {self.request.path}")
+        if "Origin" in self.request.headers and \
+                "cors_mapping" in self.server_config and \
+                self.request.headers["Origin"] in self.server_config["cors_mapping"]:
+            origin_allowed = self.request.headers["Origin"]
+            self.logger.debug(f"prepare CORS authorized for {origin_allowed}")
+            self.set_header("Access-Control-Allow-Origin", origin_allowed)
+
+
+class SiteHandler(BaseHandler):
+    logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
+
+    def initialize(self, **kwargs):
+        super().initialize(**kwargs)
 
     def get(self):
-        self.logger.debug(f"get: config is {self.config}")
-        config_file = self.config["server"]["config_file"]
+        config_file = self.server_config["site_config_file"]
+        self.logger.debug(f"GET: site_config_file {config_file}")
         key = self.request.path[len("/site/"):]
         if key[-1] == "/":
             key = key[:-1]
@@ -47,7 +59,7 @@ class SiteHandler(tornado.web.RequestHandler):
 
 class AppServerMainBase:
     logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
-    config = None
+    server_config = None
 
     def _arg_parser(self):
         raise NotImplementedError("_arg_parser")
@@ -75,7 +87,7 @@ class AppServerMainBase:
             config_name = os.getenv('CONFIG_NAME', self.name) + '.yml'
             self.config_file = f"{config_dir}/{config_name}"
         with open(self.config_file) as ysd:
-            self.__class__.config = yaml.load(ysd, Loader=yaml.FullLoader)
+            self.__class__.server_config = yaml.load(ysd, Loader=yaml.FullLoader)
         self._do_load_config()
 
     def run(self):
@@ -95,9 +107,9 @@ class AppServerMainBase:
         return False
 
 
-def make_otvl_web_app(config):
+def make_otvl_web_app(server_config):
     handler_kwa = {
-        "config": config
+        "server_config": server_config
         }
     return tornado.web.Application([
         (r"/", HelloWorldHandler),
@@ -111,7 +123,7 @@ class OtvlWebServer(AppServerMainBase):
 
     @classmethod
     def _make_app(cls):
-        return make_otvl_web_app(cls.config)
+        return make_otvl_web_app(cls.server_config)
 
     def _arg_parser(self):
         parser = argparse.ArgumentParser(description='OtvlWebServer')

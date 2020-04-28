@@ -16,9 +16,14 @@ export default {
   data: function () {
     return {
       app_debug: false,
-      app_debug_console: false,
-      app_debug_simul_rest: true,
+      app_debug_console: true,
+      app_debug_simul_rest: false,
       odbg: {},
+      pageClassesByName: {
+        StandardPage: StandardPage,
+        BlogIndexPage: BlogIndexPage,
+        BlogPage: BlogPage
+      },
       site_configuration: {},
       site_configuration_updated: false,
       site_pages: [],
@@ -33,7 +38,7 @@ export default {
   },
   created: function () {
     if (this.app_debug_console) {
-      console.log('App was created v12')
+      console.log('App was created v33')
     }
     this.fetchSiteConfiguration()
   },
@@ -42,9 +47,10 @@ export default {
       if (this.app_debug_console) {
         console.log('App site_configuration_updated')
       }
-      console.log('site_configuration_updated')
-      console.log(this.site_configuration)
-
+      for (const type in this.site_configuration.types) {
+        const typeConf = this.site_configuration.types[type]
+        typeConf.mapping = this.pageClassesByName[typeConf.mapping]
+      }
       this.buildRoutes()
       this.fetchSitePages()
     },
@@ -65,15 +71,15 @@ export default {
         home_type: 'page',
         types: {
           page: {
-            mapping: StandardPage,
+            mapping: 'StandardPage',
             has_slug: false
           },
           blox: {
-            mapping: BlogIndexPage,
+            mapping: 'BlogIndexPage',
             has_slug: false
           },
           blog: {
-            mapping: BlogPage,
+            mapping: 'BlogPage',
             has_slug: true
           }
         }
@@ -87,9 +93,7 @@ export default {
         this.$axios.get('http://dxpydk:8888/site/config/')
           .then((response) => {
             this.site_configuration = response.data
-            console.log(`site conf ${this.site_configuration}`)
-            console.log(this.site_configuration)
-            this.site_configuration_updated = true //
+            this.site_configuration_updated = true
           })
       }
     },
@@ -220,8 +224,16 @@ export default {
       ]
     },
     fetchSitePages: function () {
-      this.simulFetchSitePages()
-      this.site_pages_updated = true
+      if (this.app_debug_simul_rest) {
+        this.simulFetchSitePages()
+        this.site_pages_updated = true
+      } else {
+        this.$axios.get('http://dxpydk:8888/site/pages/')
+          .then((response) => {
+            this.site_pages = response.data
+            this.site_pages_updated = true
+          })
+      }
     }
   }
 }
