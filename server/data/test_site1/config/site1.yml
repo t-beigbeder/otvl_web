@@ -44,6 +44,9 @@ pages:
         type: blox
         menu: The Big Blog !
         blog_type: blog
+      - id: test-unicode
+        type: page
+        menu: Üdü Wüdü
   - id: corporate-blog
     type: blox
     menu: Corporate Blog

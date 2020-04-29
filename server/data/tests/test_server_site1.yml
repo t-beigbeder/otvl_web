@@ -1,4 +1,12 @@
 site_config_file: data/test_site1/config/site1.yml
+pages_directory: data/test_site1/pages
+assets_directory: data/test_site1/assets
+
+version:
+  server: "1.0"
+  application: "1.0"
+  server_config_file: data/tests/test_server_site1.yml
+  site_config_file: data/test_site1/config/site1.yml
 
 cors_mapping:
   'http://dxpydk:8080': 'http://dxpydk:8888'

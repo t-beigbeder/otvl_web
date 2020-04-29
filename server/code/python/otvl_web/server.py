@@ -16,11 +16,6 @@ def setup_env():
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 
-class HelloWorldHandler(tornado.web.RequestHandler):
-    def get(self):
-        self.write("Hello, world (v2)")
-
-
 class BaseHandler(tornado.web.RequestHandler):
     logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
     server_config = {}
@@ -32,12 +27,37 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def prepare(self):
         self.logger.debug(f"prepare: {self.request.method} {self.request.path}")
+        self.set_header("Content-Type", "application/json")
         if "Origin" in self.request.headers and \
                 "cors_mapping" in self.server_config and \
                 self.request.headers["Origin"] in self.server_config["cors_mapping"]:
             origin_allowed = self.request.headers["Origin"]
             self.logger.debug(f"prepare CORS authorized for {origin_allowed}")
             self.set_header("Access-Control-Allow-Origin", origin_allowed)
+
+    def _check_par(self, name, par):
+        if not par:
+            self._error(400, 'MissingParameter', 'Parameter {0} is missing in URL'.format(name))
+            return par
+        return True
+
+    def _error(self, code, reason, message):
+        self.clear()
+        self.set_status(code)
+        self.finish({'reason': reason, 'message': message})
+
+
+class VersionHandler(BaseHandler):
+    logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
+
+    def initialize(self, **kwargs):
+        super().initialize(**kwargs)
+
+    def get(self):
+        config_file = self.server_config["site_config_file"]
+        self.logger.debug(f"GET: site_config_file {config_file}")
+        self.write(json.dumps(self.server_config["version"], indent=2))
+        return self.finish()
 
 
 class SiteHandler(BaseHandler):
@@ -55,6 +75,47 @@ class SiteHandler(BaseHandler):
         with open(config_file) as ysd:
             site_config = yaml.load(ysd, Loader=yaml.FullLoader)[key]
             self.write(json.dumps(site_config, indent=2))
+            return self.finish()
+
+
+class PageHandler(BaseHandler):
+    logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
+
+    def initialize(self, **kwargs):
+        super().initialize(**kwargs)
+
+    def _get_page_content(self, section, sub_section, slug):
+        file_path = self.server_config["pages_directory"]
+        if file_path[-1] != "/":
+            file_path += "/"
+        file_path += section
+        if sub_section:
+            file_path += "/"
+            file_path += sub_section
+        if slug:
+            file_path += "/"
+            file_path += slug
+        try:
+            with open(file_path + ".emd", encoding="utf-8") as fd:
+                return fd.read()
+        except FileNotFoundError:
+            return None
+
+    def get(self, type_, section, *path_args):
+        config_file = self.server_config["site_config_file"]
+        sub_section, slug = '', ''
+        if len(path_args) > 0:
+            sub_section = path_args[0]
+            if len(path_args) > 1:
+                slug = path_args[1]
+        self.logger.debug(f"GET: site_config_file {config_file} type '{type_}' section '{section}' sub_section '{sub_section}' slug '{slug}'")  # noqa
+        if not self._check_par("section", section):
+            return
+        page_content = self._get_page_content(section, sub_section, slug)
+        if not page_content:
+            return self._error(404, 'ResourceNotFound', 'The page content is missing')
+        self.write(json.dumps(dict(page_content=page_content), indent=2))
+        return self.finish()
 
 
 class AppServerMainBase:
@@ -112,9 +173,12 @@ def make_otvl_web_app(server_config):
         "server_config": server_config
         }
     return tornado.web.Application([
-        (r"/", HelloWorldHandler),
-        (r"/site/config/", SiteHandler, handler_kwa),
-        (r"/site/pages/", SiteHandler, handler_kwa),
+        (r"/version/?", VersionHandler, handler_kwa),
+        (r"/site/config/?", SiteHandler, handler_kwa),
+        (r"/site/pages/?", SiteHandler, handler_kwa),
+        (r"/([^/]*)/([^/]*)/([^/]*)/([^/]*)/?", PageHandler, handler_kwa),
+        (r"/([^/]*)/([^/]*)/([^/]*)/?", PageHandler, handler_kwa),
+        (r"/([^/]*)/([^/]*)/?", PageHandler, handler_kwa),
     ])
 
 
