@@ -34,9 +34,11 @@ def app():
 
 
 @pytest.mark.gen_test
-def test_hello_world(http_client, base_url):
-    response = yield http_client.fetch(base_url)
+def test_version(http_client, base_url):
+    response = yield http_client.fetch(base_url + "/version")
     assert response.code == 200
+    resp_o = body_to_obj(response.body)
+    assert resp_o["server"] == "1.0"
 
 
 @pytest.mark.gen_test
@@ -53,6 +55,15 @@ def test_get_site_pages(http_client, base_url, caplog, monkeypatch):
     assert response.code == 200
     resp_o = body_to_obj(response.body)
     assert resp_o[0]["id"] == "home"
+
+
+@pytest.mark.gen_test
+def test_get_home_content(http_client, base_url, caplog, monkeypatch):
+    response = yield http_client.fetch(base_url + "/page/home/")
+    assert response.code == 200
+    resp_o = body_to_obj(response.body)
+    assert "meta" in resp_o
+    assert "content" in resp_o
 
 
 if __name__ == "__main__":

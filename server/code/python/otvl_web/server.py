@@ -8,6 +8,7 @@ import json
 import tornado.ioloop
 import tornado.web
 import yaml
+import markdown
 
 
 def setup_env():
@@ -80,6 +81,7 @@ class SiteHandler(BaseHandler):
 
 class PageHandler(BaseHandler):
     logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
+    md = None
 
     def initialize(self, **kwargs):
         super().initialize(**kwargs)
@@ -101,6 +103,31 @@ class PageHandler(BaseHandler):
         except FileNotFoundError:
             return None
 
+    def _md2html(self, md_text):
+        extensions = [
+            "attr_list",
+            "footnotes",
+            "tables",
+            "codehilite",
+            "meta",
+            "toc"
+            ]
+        if self.md is None:
+            PageHandler.md = markdown.Markdown(extensions=extensions)
+        html = self.md.convert(md_text)
+        return html, self.md.Meta
+
+    def _from_md_meta(self, md_meta, fields):
+        res = {}
+        for field in fields:
+            if field not in md_meta:
+                continue
+            value = md_meta[field]
+            if type(value) is list:
+                value = '\n'.join(value)
+            res[field] = value
+        return res
+
     def get(self, type_, section, *path_args):
         config_file = self.server_config["site_config_file"]
         sub_section, slug = '', ''
@@ -111,10 +138,14 @@ class PageHandler(BaseHandler):
         self.logger.debug(f"GET: site_config_file {config_file} type '{type_}' section '{section}' sub_section '{sub_section}' slug '{slug}'")  # noqa
         if not self._check_par("section", section):
             return
-        page_content = self._get_page_content(section, sub_section, slug)
-        if not page_content:
+        md_text = self._get_page_content(section, sub_section, slug)
+        if not md_text:
             return self._error(404, 'ResourceNotFound', 'The page content is missing')
-        self.write(json.dumps(dict(page_content=page_content), indent=2))
+        page_content, md_meta = self._md2html(md_text)
+        meta = self._from_md_meta(md_meta, self.server_config["meta_md_fields"])
+        content = self._from_md_meta(md_meta, self.server_config["content_md_fields"])
+        content["html"] = page_content
+        self.write(json.dumps(dict(meta=meta, content=content), indent=2))
         return self.finish()
 
 

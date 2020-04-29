@@ -10,9 +10,18 @@ export default {
         slug: ''
       },
       type: '',
+      meta: {
+        version: '',
+        creation_date: '',
+        publication_date: '',
+        last_update_date: '',
+        summary: [],
+        authors: []
+      },
       content: {
         title: '',
-        heading: ''
+        heading: '',
+        html: ''
       }
     }
   },
@@ -80,8 +89,9 @@ export default {
       } else {
         this.$axios.get(`http://dxpydk:8888/${this.type}/${this.str_id}/`)
           .then((response) => {
-            this.site_configuration = response.data
-            this.site_configuration_updated = true
+            this.$set(this, 'meta', response.data.meta)
+            this.$set(this, 'content', response.data.content)
+            document.title = this.content.title
           })
       }
     }

@@ -1,2 +1,4 @@
 PyYAML
 tornado
+markdown
+Pygments

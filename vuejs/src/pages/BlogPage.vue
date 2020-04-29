@@ -1,6 +1,6 @@
 <template>
   <q-layout>
-    <h4>{{ content.heading }}</h4>
+    <h1>{{ content.heading }}</h1>
     <p>This is a blog page.</p>
     <p>The section is {{ $route.params.section }}</p>
     <p>The sub_section is {{ $route.params.sub_section }}</p>
