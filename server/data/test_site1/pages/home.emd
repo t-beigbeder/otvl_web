@@ -12,6 +12,7 @@ heading: Heading for Otvl Web's home
 
 This is the first paragraph of the document.
 
+![Image Home](http://dxpydk:8888/assets/images/home/boutDuMonde.jpg){: class="BRAND__page-img-full" }
 # Title
 ## Sub title
 ### Level 3
@@ -19,3 +20,6 @@ This is the first paragraph of the document.
 Some text
 
 - a list
+- below, a hr
+
+---

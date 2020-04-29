@@ -1,5 +1,5 @@
 <template>
-  <q-layout>
+  <q-layout class="BRAND__page-content">
     <h1>{{ content.heading }}</h1>
     <span v-html="content.html"></span>
     <p v-if="app.app_debug">site_configuration {{ app.site_configuration }}</p>

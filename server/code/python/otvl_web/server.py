@@ -203,10 +203,12 @@ def make_otvl_web_app(server_config):
     handler_kwa = {
         "server_config": server_config
         }
+    assets_directory = server_config["assets_directory"]
     return tornado.web.Application([
         (r"/version/?", VersionHandler, handler_kwa),
         (r"/site/config/?", SiteHandler, handler_kwa),
         (r"/site/pages/?", SiteHandler, handler_kwa),
+        (r"/assets/(.*)", tornado.web.StaticFileHandler, {"path": assets_directory}),
         (r"/([^/]*)/([^/]*)/([^/]*)/([^/]*)/?", PageHandler, handler_kwa),
         (r"/([^/]*)/([^/]*)/([^/]*)/?", PageHandler, handler_kwa),
         (r"/([^/]*)/([^/]*)/?", PageHandler, handler_kwa),

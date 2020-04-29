@@ -129,8 +129,15 @@ export default {
   &__site-menu-item
     color: $grey-8
 
+  &__page-content
+    color: $grey-8
+
+  &__page-img-full
+    width: 100%
+
   @media (min-width: 1024px)
     &__page-container
-      padding-left: 94px
+      padding-left: 64px
+      padding-right: 64px
 
 </style>
