@@ -85,6 +85,7 @@ class PageHandler(BaseHandler):
 
     def initialize(self, **kwargs):
         super().initialize(**kwargs)
+        self._yml = None
 
     def _get_page_content(self, section, sub_section, slug):
         file_path = self.server_config["pages_directory"]
@@ -98,6 +99,8 @@ class PageHandler(BaseHandler):
             file_path += "/"
             file_path += slug
         try:
+            with open(file_path + ".yml", encoding="utf-8") as ypc_fd:
+                self._yml = yaml.load(ypc_fd, Loader=yaml.FullLoader)
             with open(file_path + ".emd", encoding="utf-8") as fd:
                 return fd.read()
         except FileNotFoundError:
