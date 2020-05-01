@@ -1,7 +1,13 @@
 import AppUtilMixin from 'src/mixins/AppUtilMixin'
+import StreamField from 'src/components/StreamField'
 
 export default {
   mixins: [AppUtilMixin],
+
+  components: {
+    StreamField
+  },
+
   data: function () {
     return {
       id: {
@@ -21,7 +27,7 @@ export default {
       content: {
         title: '',
         heading: '',
-        html: ''
+        stream_fields: []
       }
     }
   },
