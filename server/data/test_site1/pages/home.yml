@@ -1,21 +1,24 @@
 meta:
-  version: 1.0
-  creation_date:
-  publication_date:
-  last_update_date:
+  version: "1.0"
+  creation_date: 20200429
+  publication_date: 20200430
+  last_update_date: 20200501
   summary: |
-    a
-    b
+    Home summary.
+    Line2.
+    Line3 of home summary.
   authors:
-    - x
-    - y
+    - no nem
+    - thierry otvl
 
 content:
-  title:
-  heading:
-  sequence:
-  - md_file: home.emd
-  - md_data: |
+  title: Home for Otvl Web
+  heading: Heading for Otvl Web's home
+  stream_fields:
+  - type: md_file
+    file: home.emd
+  - type: md_data
+    data: |
       # heading in md_data
 
       Text in md_data
@@ -26,5 +29,5 @@ content:
       - list in md_data # 2
 
       End text in md_data
-  - q-img:
-      src: http://dxpydk:8888/assets/images/home/nature.jpg
+  - type: sf_img
+    src: http://dxpydk:8888/assets/images/home/nature.jpg

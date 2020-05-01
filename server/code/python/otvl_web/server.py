@@ -85,7 +85,18 @@ class PageHandler(BaseHandler):
 
     def initialize(self, **kwargs):
         super().initialize(**kwargs)
-        self._yml = None
+
+    def _md2html(self, md_text):
+        extensions = [
+            "attr_list",
+            "footnotes",
+            "tables",
+            "codehilite",
+            "toc"
+            ]
+        if self.md is None:
+            PageHandler.md = markdown.Markdown(extensions=extensions)
+        return self.md.convert(md_text)
 
     def _get_page_content(self, section, sub_section, slug):
         file_path = self.server_config["pages_directory"]
@@ -100,36 +111,21 @@ class PageHandler(BaseHandler):
             file_path += slug
         try:
             with open(file_path + ".yml", encoding="utf-8") as ypc_fd:
-                self._yml = yaml.load(ypc_fd, Loader=yaml.FullLoader)
-            with open(file_path + ".emd", encoding="utf-8") as fd:
-                return fd.read()
+                page_content = yaml.load(ypc_fd, Loader=yaml.FullLoader)
+            for sf in page_content["content"]["stream_fields"]:
+                if sf["type"] == "md_file":
+                    md_file_path = os.path.dirname(file_path) + "/" + sf["file"]
+                    with open(md_file_path, encoding="utf-8") as md_fd:
+                        sf["type"] = "html"
+                        sf["content"] = self._md2html(md_fd.read())
+                        del sf["file"]
+                elif sf["type"] == "md_data":
+                    sf["type"] = "html"
+                    sf["content"] = self._md2html(sf["data"])
+                    del sf["data"]
+            return page_content
         except FileNotFoundError:
             return None
-
-    def _md2html(self, md_text):
-        extensions = [
-            "attr_list",
-            "footnotes",
-            "tables",
-            "codehilite",
-            "meta",
-            "toc"
-            ]
-        if self.md is None:
-            PageHandler.md = markdown.Markdown(extensions=extensions)
-        html = self.md.convert(md_text)
-        return html, self.md.Meta
-
-    def _from_md_meta(self, md_meta, fields):
-        res = {}
-        for field in fields:
-            if field not in md_meta:
-                continue
-            value = md_meta[field]
-            if type(value) is list:
-                value = '\n'.join(value)
-            res[field] = value
-        return res
 
     def get(self, type_, section, *path_args):
         config_file = self.server_config["site_config_file"]
@@ -141,14 +137,10 @@ class PageHandler(BaseHandler):
         self.logger.debug(f"GET: site_config_file {config_file} type '{type_}' section '{section}' sub_section '{sub_section}' slug '{slug}'")  # noqa
         if not self._check_par("section", section):
             return
-        md_text = self._get_page_content(section, sub_section, slug)
-        if not md_text:
+        page_content = self._get_page_content(section, sub_section, slug)
+        if not page_content:
             return self._error(404, 'ResourceNotFound', 'The page content is missing')
-        page_content, md_meta = self._md2html(md_text)
-        meta = self._from_md_meta(md_meta, self.server_config["meta_md_fields"])
-        content = self._from_md_meta(md_meta, self.server_config["content_md_fields"])
-        content["html"] = page_content
-        self.write(json.dumps(dict(meta=meta, content=content), indent=2))
+        self.write(json.dumps(page_content, indent=2))
         return self.finish()
 
 
