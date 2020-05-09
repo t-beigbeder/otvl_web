@@ -4,12 +4,20 @@
     <StreamField v-for="(stream_field, index) in content.stream_fields" v-bind="stream_field" :key="str_id + index">
     </StreamField>
     <p v-if="app.app_debug">site_configuration {{ app.site_configuration }}</p>
-    beforer ul
-    <ul id="blogs">
-      <li v-for="item in blogs" :key="item.str_id">
-        <router-link :to="blogPrefixLink + '/' + item.id.slug">{{ item.id.slug }}</router-link>
-      </li>
-    </ul>
+    <div class="row">
+      <div class="col-sm-12 col-md-9">
+        blogs list
+        blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+        <ul id="blogs">
+          <li v-for="item in blogs" :key="item.str_id">
+            <router-link :to="blogPrefixLink + '/' + item.id.slug">{{ item.id.slug }}</router-link>
+          </li>
+        </ul>
+      </div>
+      <div class="col-3">
+      blogs archives janvier février février février février février février février février février février février février février février février février février février février février février février février février février février février février février février février février février février février
+      </div>
+    </div>
   </q-page>
 </template>
 
