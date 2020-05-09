@@ -43,7 +43,6 @@ class BaseHandler(tornado.web.RequestHandler):
         return True
 
     def _error(self, code, reason, message):
-        self.clear()
         self.set_status(code)
         self.finish({'reason': reason, 'message': message})
 

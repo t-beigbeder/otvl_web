@@ -99,6 +99,13 @@ export default {
             this.$set(this, 'content', response.data.content)
             document.title = this.content.title
           })
+          .catch((error) => {
+            if (error.response && error.response.status === 404) {
+              this.$router.push('/404')
+            } else {
+              this.$router.push('/err')
+            }
+          })
       }
     }
   }

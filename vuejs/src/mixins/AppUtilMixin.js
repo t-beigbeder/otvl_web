@@ -1,5 +1,5 @@
 import SiteLayout from 'src/layouts/SiteLayout'
-import Error404 from 'src/pages/Error404'
+import PageNotFoundError from 'src/pages/PageNotFoundError'
 
 export default {
   methods: {
@@ -46,7 +46,7 @@ export default {
       routes.push(
         {
           path: '*',
-          component: Error404
+          component: PageNotFoundError
         }
       )
       return routes

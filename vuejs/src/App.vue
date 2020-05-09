@@ -110,6 +110,9 @@ export default {
             this.site_configuration = response.data
             this.site_configuration_updated = true
           })
+          .catch(() => {
+            this.$router.push('/err')
+          })
       }
     },
     buildRoutes: function () {
@@ -231,6 +234,9 @@ export default {
           .then((response) => {
             this.site_pages = response.data
             this.site_pages_updated = true
+          })
+          .catch(() => {
+            this.$router.push('/err')
           })
       }
     }
