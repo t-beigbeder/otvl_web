@@ -1,23 +1,16 @@
 <template>
-  <q-layout>
-    <h4>{{ content.heading }}</h4>
-    <p>This is a blog index page.</p>
-    <p>The section is {{ $route.params.section }}</p>
-    <p>The sub_section is {{ $route.params.sub_section }}</p>
-    <p>The slug is {{ $route.params.slug }}</p>
-    <p>The str_id is {{ str_id }}</p>
-
+  <q-page class="BRAND__page-content">
+    <h1>{{ content.heading }}</h1>
+    <StreamField v-for="(stream_field, index) in content.stream_fields" v-bind="stream_field" :key="str_id + index">
+    </StreamField>
     <p v-if="app.app_debug">site_configuration {{ app.site_configuration }}</p>
-
+    beforer ul
     <ul id="blogs">
       <li v-for="item in blogs" :key="item.str_id">
         <router-link :to="blogPrefixLink + '/' + item.id.slug">{{ item.id.slug }}</router-link>
       </li>
     </ul>
-    <q-page-container>
-      <router-view></router-view>
-    </q-page-container>
-  </q-layout>
+  </q-page>
 </template>
 
 <script>
