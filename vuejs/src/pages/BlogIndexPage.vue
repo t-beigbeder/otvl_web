@@ -5,7 +5,7 @@
     </StreamField>
     <p v-if="app.app_debug">site_configuration {{ app.site_configuration }}</p>
     <div class="row">
-      <div class="col-sm-12 col-md-9">
+      <div class="col-12 col-md-9 q-pr-md-sm">
         blogs list
         blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
         <ul id="blogs">
@@ -14,7 +14,7 @@
           </li>
         </ul>
       </div>
-      <div class="col-3">
+      <div class="col-12 col-md-3 q-pl-md-sm">
       blogs archives janvier février février février février février février février février février février février février février février février février février février février février février février février février février février février février février février février février février février février
       </div>
     </div>
