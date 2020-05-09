@@ -60,7 +60,7 @@
         </q-list>
       </q-scroll-area>
     </q-drawer>
-    <q-page-container class="BRAND__page-container">
+    <q-page-container class="q-mx-sm-lg q-mx-md-xl">
       <p v-if="app.app_debug">SiteLayout odbg {{ app.odbg }}</p>
       <router-view v-bind:app="app"/>
     </q-page-container>
@@ -134,10 +134,5 @@ export default {
 
   &__page-img-full
     width: 100%
-
-  @media (min-width: 1024px)
-    &__page-container
-      padding-left: 64px
-      padding-right: 64px
 
 </style>
