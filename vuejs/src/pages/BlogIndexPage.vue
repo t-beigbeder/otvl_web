@@ -15,8 +15,8 @@
           </li>
         </ul>
       </div>
-      <div class="col-12 col-md-3 q-pl-md-sm">
-      blogs archives janvier février février février février février février février février février février février février février février février février février février février février février février février février février février février février février février février février février février février
+      <div class="col-3 q-mt-lg q-pl-md-sm">
+        <BlogBrowser :title="content.title"></BlogBrowser>
       </div>
     </div>
   </q-page>
@@ -24,10 +24,14 @@
 
 <script>
 import PageMixin from '../mixins/PageMixin'
+import BlogBrowser from 'src/components/BlogBrowser'
 
 export default {
   mixins: [PageMixin],
   name: 'BlogIndexPage',
+  components: {
+    BlogBrowser
+  },
   data: function () {
     return {
       blogs: function () {

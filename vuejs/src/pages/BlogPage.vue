@@ -1,25 +1,28 @@
 <template>
-  <q-layout>
-    <h1>{{ content.heading }}</h1>
-    <p>This is a blog page.</p>
-    <p>The section is {{ $route.params.section }}</p>
-    <p>The sub_section is {{ $route.params.sub_section }}</p>
-    <p>The slug is {{ $route.params.slug }}</p>
-    <p>The str_id is {{ str_id }}</p>
-
-    <p v-if="app.app_debug">site_configuration {{ app.site_configuration }}</p>
-
-    <q-page-container>
-      <router-view></router-view>
-    </q-page-container>
-  </q-layout>
+  <q-page class="BRAND__page-content">
+    <div class="row">
+      <div class="col-12 col-md-9 q-pr-md-sm">
+        <h1>{{ content.heading }}</h1>
+        <StreamField v-for="(stream_field, index) in content.stream_fields" v-bind="stream_field" :key="str_id + index">
+        </StreamField>
+        <p v-if="app.app_debug">site_configuration {{ app.site_configuration }}</p>
+      </div>
+      <div class="col-3 q-mt-lg q-pl-md-sm">
+        <BlogBrowser :title="'TODO: fetch parent ' + content.title"></BlogBrowser>
+      </div>
+    </div>
+  </q-page>
 </template>
 
 <script>
 import PageMixin from '../mixins/PageMixin'
+import BlogBrowser from 'src/components/BlogBrowser'
 
 export default {
   mixins: [PageMixin],
-  name: 'BlogPage'
+  name: 'BlogPage',
+  components: {
+    BlogBrowser
+  }
 }
 </script>
