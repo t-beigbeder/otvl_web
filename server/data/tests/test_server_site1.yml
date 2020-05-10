@@ -8,16 +8,5 @@ version:
   server_config_file: data/tests/test_server_site1.yml
   site_config_file: data/test_site1/config/site1.yml
 
-meta_md_fields:
-  - version
-  - creation_date
-  - publication_date
-  - last_update_date
-  - summary
-  - authors
-content_md_fields:
-  - title
-  - heading
-
 cors_mapping:
   'http://dxpydk:8080': 'http://dxpydk:8888'

@@ -28,7 +28,8 @@ export default {
         title: '',
         heading: '',
         stream_fields: []
-      }
+      },
+      content_updated: false
     }
   },
   props: ['app'],
@@ -39,6 +40,14 @@ export default {
     this.fetchContent()
   },
   watch: {
+    content_updated () {
+      if (this.app.app_debug_console) {
+        console.log('Page content_updated')
+      }
+      if (this.app.site_configuration.types[this.type].is_blog_index) {
+        this.fetchBlogIndex()
+      }
+    },
     $route: function () {
       if (this.app.app_debug_console) {
         console.log('watch $route')
@@ -84,11 +93,12 @@ export default {
         console.log(`fetchContent $route path ${this.$route.path}`)
       }
       this.type = this.$route.path.split('/')[1]
+      const isBlogIndex = this.app.site_configuration.types[this.type].is_blog_index
       this.id.section = this.$route.params.section
       this.id.sub_section = this.$route.params.sub_section || ''
       this.id.slug = this.$route.params.slug || ''
       if (this.app.app_debug_console) {
-        console.log(`fetchContent str_id ${this.str_id} type ${this.type}`)
+        console.log(`fetchContent str_id ${this.str_id} type ${this.type} isBlogIndex ${isBlogIndex}`)
       }
       if (this.app.app_debug_simul_rest) {
         this.simulFetchContent()
@@ -98,6 +108,7 @@ export default {
             this.$set(this, 'meta', response.data.meta)
             this.$set(this, 'content', response.data.content)
             document.title = this.content.title
+            this.content_updated = true
           })
           .catch((error) => {
             if (error.response && error.response.status === 404) {

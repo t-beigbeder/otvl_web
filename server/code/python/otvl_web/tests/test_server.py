@@ -66,6 +66,21 @@ def test_get_home_content(http_client, base_url, caplog, monkeypatch):
     assert "content" in resp_o
 
 
+@pytest.mark.gen_test
+def test_get_incorrect_type(http_client, base_url, caplog, monkeypatch):
+    response = yield http_client.fetch(base_url + "/page2/home/", raise_error=False)
+    assert response.code == 400
+    resp_o = body_to_obj(response.body)
+    assert resp_o["reason"] == "BadParameter"
+    assert resp_o["message"] == "Parameter type page2 is unknown"
+
+
+@pytest.mark.gen_test
+def test_get_blogs(http_client, base_url, caplog, monkeypatch):
+    response = yield http_client.fetch(base_url + "/blogs/corporate-blog///", raise_error=False)
+    assert response.code == 200
+
+
 if __name__ == "__main__":
     # pytest.main()
     pytest.main(['-v', '-s', '-k', 'test_server.py'])

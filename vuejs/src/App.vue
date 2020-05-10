@@ -82,15 +82,18 @@ export default {
         types: {
           page: {
             mapping: 'StandardPage',
-            has_slug: false
+            has_slug: false,
+            is_blog_index: false
           },
           blox: {
             mapping: 'BlogIndexPage',
-            has_slug: false
+            has_slug: false,
+            is_blog_index: true
           },
           blog: {
             mapping: 'BlogPage',
-            has_slug: true
+            has_slug: true,
+            is_blog_index: false
           }
         },
         brand: {

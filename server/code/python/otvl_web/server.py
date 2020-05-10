@@ -20,10 +20,13 @@ def setup_env():
 class BaseHandler(tornado.web.RequestHandler):
     logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
     server_config = {}
+    site_config = {}
 
     def initialize(self, **kwargs):
         BaseHandler.server_config = kwargs["server_config"]
         del kwargs["server_config"]
+        BaseHandler.site_config = kwargs["site_config"]
+        del kwargs["site_config"]
         super().initialize(**kwargs)
 
     def prepare(self):
@@ -109,7 +112,8 @@ class PageHandler(BaseHandler):
             file_path += "/"
             file_path += slug
         try:
-            with open(file_path + ".yml", encoding="utf-8") as ypc_fd:
+            file_path += ".yml"
+            with open(file_path, encoding="utf-8") as ypc_fd:
                 page_content = yaml.load(ypc_fd, Loader=yaml.FullLoader)
             for sf in page_content["content"]["stream_fields"]:
                 if sf["type"] == "md_file":
@@ -124,6 +128,7 @@ class PageHandler(BaseHandler):
                     del sf["data"]
             return page_content
         except FileNotFoundError:
+            self.logger.debug(f"_get_page_content: file_path {file_path} FileNotFoundError")
             return None
 
     def get(self, type_, section, *path_args):
@@ -134,12 +139,35 @@ class PageHandler(BaseHandler):
             if len(path_args) > 1:
                 slug = path_args[1]
         self.logger.debug(f"GET: site_config_file {config_file} type '{type_}' section '{section}' sub_section '{sub_section}' slug '{slug}'")  # noqa
+        if type_ not in self.site_config["config"]["types"]:
+            return self._error(400, 'BadParameter', 'Parameter type {0} is unknown'.format(type_))
         if not self._check_par("section", section):
             return
         page_content = self._get_page_content(section, sub_section, slug)
         if not page_content:
             return self._error(404, 'ResourceNotFound', 'The page content is missing')
         self.write(json.dumps(page_content, indent=2))
+        return self.finish()
+
+
+class BlogsHandler(BaseHandler):
+    logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
+
+    def initialize(self, **kwargs):
+        super().initialize(**kwargs)
+
+    def get(self, section, *path_args):
+        config_file = self.server_config["site_config_file"]
+        sub_section = ''
+        if len(path_args) > 0:
+            sub_section = path_args[0]
+        self.logger.debug(f"GET: site_config_file {config_file} section '{section}' sub_section '{sub_section}'")  # noqa
+        if not self._check_par("section", section):
+            return
+        blogs = {
+            "blogs": []
+            }
+        self.write(json.dumps(blogs, indent=2))
         return self.finish()
 
 
@@ -194,8 +222,13 @@ class AppServerMainBase:
 
 
 def make_otvl_web_app(server_config):
+    site_config_file = server_config["site_config_file"]
+    with open(site_config_file) as ysd:
+        site_config = yaml.load(ysd, Loader=yaml.FullLoader)
+
     handler_kwa = {
-        "server_config": server_config
+        "server_config": server_config,
+        "site_config": site_config
         }
     assets_directory = server_config["assets_directory"]
     return tornado.web.Application([
@@ -203,6 +236,9 @@ def make_otvl_web_app(server_config):
         (r"/site/config/?", SiteHandler, handler_kwa),
         (r"/site/pages/?", SiteHandler, handler_kwa),
         (r"/assets/(.*)", tornado.web.StaticFileHandler, {"path": assets_directory}),
+        (r"/blogs/([^/]*)/([^/]*)/([^/]*)/?", BlogsHandler, handler_kwa),
+        (r"/blogs/([^/]*)/([^/]*)/?", BlogsHandler, handler_kwa),
+        (r"/blogs/([^/]*)/?", BlogsHandler, handler_kwa),
         (r"/([^/]*)/([^/]*)/([^/]*)/([^/]*)/?", PageHandler, handler_kwa),
         (r"/([^/]*)/([^/]*)/([^/]*)/?", PageHandler, handler_kwa),
         (r"/([^/]*)/([^/]*)/?", PageHandler, handler_kwa),
