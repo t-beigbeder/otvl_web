@@ -1,0 +1,31 @@
+meta:
+  version: "1.0"
+  creation_date: 20200507
+  publication_date: 20200508
+  last_update_date: 20200509
+  summary: |
+    blog 101 summary.
+    Line2.
+    Line3 of blog 101 summary.
+  authors:
+    - no nem
+    - thierry otvl
+
+content:
+  title: Blog 101
+  heading: Heading for blog 101
+  stream_fields:
+  - type: md_data
+    data: |
+      # heading in md_data
+
+      Text in md_data
+
+      - list in md_data
+          - sub list in md_data
+          - sub list in md_data # 2
+      - list in md_data # 2
+
+      End text in md_data
+  - type: sf_img
+    src: http://dxpydk:8888/assets/images/home/nature.jpg

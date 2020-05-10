@@ -79,6 +79,8 @@ def test_get_incorrect_type(http_client, base_url, caplog, monkeypatch):
 def test_get_blogs(http_client, base_url, caplog, monkeypatch):
     response = yield http_client.fetch(base_url + "/blogs/corporate-blog///", raise_error=False)
     assert response.code == 200
+    resp_o = body_to_obj(response.body)
+    assert "blogs" in resp_o
 
 
 if __name__ == "__main__":

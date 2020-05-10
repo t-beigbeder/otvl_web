@@ -43,7 +43,7 @@ export default {
   },
   created: function () {
     if (this.app_debug_console) {
-      console.log('App was created v38')
+      console.log('App was created v39')
     }
     this.fetchSiteConfiguration()
   },
@@ -110,7 +110,7 @@ export default {
       } else {
         this.$axios.get('http://dxpydk:8888/site/config/')
           .then((response) => {
-            this.site_configuration = response.data
+            this.$set(this, 'site_configuration', response.data)
             this.site_configuration_updated = true
           })
           .catch(() => {

@@ -10,8 +10,8 @@
         blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
         </p>
         <ul id="blogs">
-          <li v-for="item in blogs" :key="item.str_id">
-            <router-link :to="blogPrefixLink + '/' + item.id.slug">{{ item.id.slug }}</router-link>
+          <li v-for="item in blogs" :key="item.slug">
+            <router-link :to="blogPrefixLink + '/' + item.slug">{{ item.slug }}</router-link>
           </li>
         </ul>
       </div>
@@ -37,8 +37,8 @@ export default {
   },
   computed: {
     blogPrefixLink: function () {
-      const page = this.getPageById(this.str_id)
-      return (this.id.sub_section ? `/${page.blog_type}/${this.id.section}/${this.id.sub_section}` : `/${page.blog_type}/${this.id.section}`)
+      const blogType = this.app.site_configuration.types[this.type].blog_type
+      return (this.id.sub_section ? `/${blogType}/${this.id.section}/${this.id.sub_section}` : `/${blogType}/${this.id.section}`)
     }
   },
   methods: {
@@ -57,8 +57,8 @@ export default {
         this.$axios.get(`http://dxpydk:8888/blogs/${this.str_id}/`)
           .then((response) => {
             if (this.app.app_debug_console) {
-              console.log(`fetchBlogIndex str_id ${this.str_id} response data`)
-              console.log(response.data)
+              console.log(`fetchBlogIndex str_id ${this.str_id}`)
+              this.$set(this, 'blogs', response.data.blogs)
             }
           })
           .catch((error) => {

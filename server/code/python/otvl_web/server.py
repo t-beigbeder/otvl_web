@@ -4,6 +4,8 @@ import traceback
 import argparse
 import sys
 import json
+import glob
+from operator import itemgetter
 
 import tornado.ioloop
 import tornado.web
@@ -81,7 +83,7 @@ class SiteHandler(BaseHandler):
             return self.finish()
 
 
-class PageHandler(BaseHandler):
+class BasePageHandler(BaseHandler):
     logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
     md = None
 
@@ -97,10 +99,19 @@ class PageHandler(BaseHandler):
             "toc"
             ]
         if self.md is None:
-            PageHandler.md = markdown.Markdown(extensions=extensions)
+            BasePageHandler.md = markdown.Markdown(extensions=extensions)
         return self.md.convert(md_text)
 
-    def _get_page_content(self, section, sub_section, slug):
+    def _load_page_content(self, page_file_path):
+        try:
+            with open(page_file_path, encoding="utf-8") as ypc_fd:
+                page_content = yaml.load(ypc_fd, Loader=yaml.FullLoader)
+                return page_content
+        except FileNotFoundError:
+            self.logger.debug(f"_load_page_content: file_path {page_file_path} FileNotFoundError")
+            return None
+
+    def _get_page_content(self, section, sub_section, slug, as_html=True):
         file_path = self.server_config["pages_directory"]
         if file_path[-1] != "/":
             file_path += "/"
@@ -113,8 +124,7 @@ class PageHandler(BaseHandler):
             file_path += slug
         try:
             file_path += ".yml"
-            with open(file_path, encoding="utf-8") as ypc_fd:
-                page_content = yaml.load(ypc_fd, Loader=yaml.FullLoader)
+            page_content = self._load_page_content(file_path)
             for sf in page_content["content"]["stream_fields"]:
                 if sf["type"] == "md_file":
                     md_file_path = os.path.dirname(file_path) + "/" + sf["file"]
@@ -130,6 +140,13 @@ class PageHandler(BaseHandler):
         except FileNotFoundError:
             self.logger.debug(f"_get_page_content: file_path {file_path} FileNotFoundError")
             return None
+
+
+class PageHandler(BasePageHandler):
+    logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
+
+    def initialize(self, **kwargs):
+        super().initialize(**kwargs)
 
     def get(self, type_, section, *path_args):
         config_file = self.server_config["site_config_file"]
@@ -150,11 +167,37 @@ class PageHandler(BaseHandler):
         return self.finish()
 
 
-class BlogsHandler(BaseHandler):
+class BlogsHandler(BasePageHandler):
     logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
 
     def initialize(self, **kwargs):
         super().initialize(**kwargs)
+
+    def _load_blogs(self, file_path):
+        blog_infos = {}
+        blob_paths = glob.glob(f"{file_path}/**/*.yml", recursive=True)
+        for blog_path in blob_paths:
+            blog_name = os.path.basename(blog_path)[0:-len(".yml")]
+            blog_infos[blog_name] = {"slug": blog_name}
+            blog_content = self._load_page_content(blog_path)
+            for meta_field, meta_value in blog_content["meta"].items():
+                blog_infos[blog_name][meta_field] = meta_value
+        return blog_infos
+
+    def _get_blogs_index(self, section, sub_section):
+        file_path = self.server_config["pages_directory"]
+        if file_path[-1] != "/":
+            file_path += "/"
+        file_path += section
+        if sub_section:
+            file_path += "/"
+            file_path += sub_section
+        blogs = self._load_blogs(file_path)
+        blog_index = []
+        for info in blogs.values():
+            blog_index.append(info)
+        return sorted(blog_index, key=itemgetter("publication_date"), reverse=True)
+        return blog_index
 
     def get(self, section, *path_args):
         config_file = self.server_config["site_config_file"]
@@ -165,7 +208,7 @@ class BlogsHandler(BaseHandler):
         if not self._check_par("section", section):
             return
         blogs = {
-            "blogs": []
+            "blogs": self._get_blogs_index(section, sub_section)
             }
         self.write(json.dumps(blogs, indent=2))
         return self.finish()
