@@ -86,6 +86,14 @@ def test_get_blogs_index(http_client, base_url, caplog, monkeypatch):
 
 @pytest.mark.gen_test
 def test_get_blogs_content(http_client, base_url, caplog, monkeypatch):
+    response = yield http_client.fetch(base_url + "/blox/corporate-blog/", raise_error=False)
+    assert response.code == 200
+    resp_o = body_to_obj(response.body)
+    assert "meta" in resp_o
+    assert "content" in resp_o
+    assert resp_o["content"]["index_title"] == "List of corporate blogs"
+    assert resp_o["content"]["index_url"] == "/blox/corporate-blog/"
+
     response = yield http_client.fetch(base_url + "/blogs/corporate-blog///", raise_error=False)
     assert response.code == 200
     resp_o = body_to_obj(response.body)
@@ -101,6 +109,7 @@ def test_get_blogs_content(http_client, base_url, caplog, monkeypatch):
         assert "meta" in resp_o
         assert "content" in resp_o
         assert resp_o["content"]["index_title"] == "List of corporate blogs"
+        assert resp_o["content"]["index_url"] == "/blox/corporate-blog/"
 
 
 if __name__ == "__main__":

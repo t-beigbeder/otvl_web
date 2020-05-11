@@ -12,6 +12,7 @@ config:
     blog:
       mapping: BlogPage
       has_slug: true
+      blog_index_type: blox
   brand:
     toolbar:
       label: Otvl Web

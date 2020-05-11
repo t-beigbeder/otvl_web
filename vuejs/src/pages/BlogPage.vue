@@ -8,7 +8,7 @@
         <p v-if="app.app_debug">site_configuration {{ app.site_configuration }}</p>
       </div>
       <div class="col-3 q-mt-lg q-pl-md-sm">
-        <BlogBrowser :title="'TODO: fetch parent ' + content.title"></BlogBrowser>
+        <BlogBrowser :index_title="content.index_title" :index_url="content.index_url"></BlogBrowser>
       </div>
     </div>
   </q-page>
@@ -23,6 +23,14 @@ export default {
   name: 'BlogPage',
   components: {
     BlogBrowser
+  },
+  data: function () {
+    return {
+      content: {
+        index_title: '',
+        index_url: ''
+      }
+    }
   }
 }
 </script>

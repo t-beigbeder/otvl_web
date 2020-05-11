@@ -1,7 +1,9 @@
 <template>
   <q-card bordered class="my-card">
     <q-card-section>
-      <div class="text-h6">{{ title }}</div>
+      <q-item tag="a" :to="index_url" class="text-h6" style="text-decoration: none">
+        {{ index_title }}
+      </q-item>
     </q-card-section>
 
     <q-separator inset />
@@ -18,7 +20,11 @@ export default {
   name: 'BlogBrowser',
 
   props: {
-    title: {
+    index_title: {
+      type: String,
+      required: true
+    },
+    index_url: {
       type: String,
       required: true
     }
