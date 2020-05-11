@@ -111,7 +111,7 @@ class BasePageHandler(BaseHandler):
             self.logger.debug(f"_load_page_content: file_path {page_file_path} FileNotFoundError")
             return None
 
-    def _get_page_content(self, section, sub_section, slug, as_html=True):
+    def _get_page_content(self, section, sub_section, slug):
         file_path = self.server_config["pages_directory"]
         if file_path[-1] != "/":
             file_path += "/"
@@ -120,26 +120,30 @@ class BasePageHandler(BaseHandler):
             file_path += "/"
             file_path += sub_section
         if slug:
-            file_path += "/"
-            file_path += slug
-        try:
+            blog_paths = glob.glob(f"{file_path}/**/{slug}.yml", recursive=True)
+            if not len(blog_paths):
+                return None
+            file_path = blog_paths[0]
+        else:
             file_path += ".yml"
-            page_content = self._load_page_content(file_path)
-            for sf in page_content["content"]["stream_fields"]:
-                if sf["type"] == "md_file":
-                    md_file_path = os.path.dirname(file_path) + "/" + sf["file"]
-                    with open(md_file_path, encoding="utf-8") as md_fd:
-                        sf["type"] = "html"
-                        sf["content"] = self._md2html(md_fd.read())
-                        del sf["file"]
-                elif sf["type"] == "md_data":
-                    sf["type"] = "html"
-                    sf["content"] = self._md2html(sf["data"])
-                    del sf["data"]
-            return page_content
-        except FileNotFoundError:
-            self.logger.debug(f"_get_page_content: file_path {file_path} FileNotFoundError")
+
+        page_content = self._load_page_content(file_path)
+        if page_content is None:
             return None
+        if "stream_fields" not in page_content["content"]:
+            return page_content
+        for sf in page_content["content"]["stream_fields"]:
+            if sf["type"] == "md_file":
+                md_file_path = os.path.dirname(file_path) + "/" + sf["file"]
+                with open(md_file_path, encoding="utf-8") as md_fd:
+                    sf["type"] = "html"
+                    sf["content"] = self._md2html(md_fd.read())
+                    del sf["file"]
+            elif sf["type"] == "md_data":
+                sf["type"] = "html"
+                sf["content"] = self._md2html(sf["data"])
+                del sf["data"]
+        return page_content
 
 
 class PageHandler(BasePageHandler):
@@ -163,6 +167,11 @@ class PageHandler(BasePageHandler):
         page_content = self._get_page_content(section, sub_section, slug)
         if not page_content:
             return self._error(404, 'ResourceNotFound', 'The page content is missing')
+        if slug:
+            blox_page_content = self._get_page_content(section, sub_section, '')
+            if not blox_page_content:
+                return self._error(404, 'ResourceNotFound', 'The blog index content is missing')
+            page_content["content"]["index_title"] = blox_page_content["content"]["index_title"]
         self.write(json.dumps(page_content, indent=2))
         return self.finish()
 
@@ -175,8 +184,8 @@ class BlogsHandler(BasePageHandler):
 
     def _load_blogs(self, file_path):
         blog_infos = {}
-        blob_paths = glob.glob(f"{file_path}/**/*.yml", recursive=True)
-        for blog_path in blob_paths:
+        blog_paths = glob.glob(f"{file_path}/**/*.yml", recursive=True)
+        for blog_path in blog_paths:
             blog_name = os.path.basename(blog_path)[0:-len(".yml")]
             blog_infos[blog_name] = {"slug": blog_name}
             blog_content = self._load_page_content(blog_path)

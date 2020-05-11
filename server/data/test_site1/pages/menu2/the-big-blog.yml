@@ -14,6 +14,7 @@ meta:
 content:
   title: A big blog for Otvl Web
   heading: Heading for Otvl Web's big blog
+  index_title: Big blog index
   stream_fields:
   - type: md_data
     data: |

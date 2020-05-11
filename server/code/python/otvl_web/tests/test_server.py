@@ -76,11 +76,31 @@ def test_get_incorrect_type(http_client, base_url, caplog, monkeypatch):
 
 
 @pytest.mark.gen_test
-def test_get_blogs(http_client, base_url, caplog, monkeypatch):
+def test_get_blogs_index(http_client, base_url, caplog, monkeypatch):
     response = yield http_client.fetch(base_url + "/blogs/corporate-blog///", raise_error=False)
     assert response.code == 200
     resp_o = body_to_obj(response.body)
     assert "blogs" in resp_o
+    assert len(resp_o["blogs"]) > 1
+
+
+@pytest.mark.gen_test
+def test_get_blogs_content(http_client, base_url, caplog, monkeypatch):
+    response = yield http_client.fetch(base_url + "/blogs/corporate-blog///", raise_error=False)
+    assert response.code == 200
+    resp_o = body_to_obj(response.body)
+    assert "blogs" in resp_o
+
+    assert len(resp_o["blogs"]) > 1
+    for blog in resp_o["blogs"]:
+        response = yield http_client.fetch(
+            base_url + "/blog/corporate-blog//" + blog["slug"],
+            raise_error=False)
+        assert response.code == 200
+        resp_o = body_to_obj(response.body)
+        assert "meta" in resp_o
+        assert "content" in resp_o
+        assert resp_o["content"]["index_title"] == "List of corporate blogs"
 
 
 if __name__ == "__main__":

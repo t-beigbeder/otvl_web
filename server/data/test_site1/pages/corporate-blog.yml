@@ -14,6 +14,7 @@ meta:
 content:
   title: Corporate blog for Otvl Web
   heading: Heading for Otvl Web's corporate blog
+  index_title: List of corporate blogs
   stream_fields:
   - type: md_data
     data: |
