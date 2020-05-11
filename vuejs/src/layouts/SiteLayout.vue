@@ -13,12 +13,12 @@
             icon="menu"
             class="q-mx-md"
           />
-          <q-item tag="a" to="/page/home">
+          <q-item tag="a" :to=app.brand.urls.home>
               <img src="~assets/brand_logo.jpg">
           </q-item>
           <q-toolbar-title>
-            <q-item tag="a" to="/page/home" class="text-grey-8" style="text-decoration: none">
-              {{ app.brand.toolbar.label }}
+            <q-item tag="a" :to=app.brand.urls.home class="text-grey-8" style="text-decoration: none">
+              {{ app.brand.labels.toolbar }}
             </q-item>
           </q-toolbar-title>
         </q-toolbar>
@@ -34,7 +34,7 @@
             <q-avatar size="26px">
               <img src="~assets/user.png">
             </q-avatar>
-            <q-tooltip>Account</q-tooltip>
+            <q-tooltip>{{ app.brand.labels.account_tooltip }}</q-tooltip>
           </q-btn>
         </q-toolbar>
       </div>
@@ -50,7 +50,7 @@
         <q-toolbar class="BRAND__toolbar">
           <q-toolbar-title class="row items-center text-grey-8">
             <img class="q-pl-md" src="~assets/brand_logo.jpg">
-            <span class="q-ml-sm">Ateliers du QI</span>
+            <span class="q-ml-sm">{{ app.brand.labels.toolbar }}</span>
           </q-toolbar-title>
         </q-toolbar>
 

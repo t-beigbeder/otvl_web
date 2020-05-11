@@ -6,17 +6,20 @@
         <StreamField v-for="(stream_field, index) in content.stream_fields" v-bind="stream_field" :key="str_id + index">
         </StreamField>
         <p v-if="app.app_debug">site_configuration {{ app.site_configuration }}</p>
-        <p>blogs list
-        blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
-        </p>
-        <ul id="blogs">
-          <li v-for="item in blogs" :key="item.slug">
-            <router-link :to="blogPrefixLink + '/' + item.slug">{{ item.slug }}</router-link>
-          </li>
-        </ul>
+        <q-separator spaced />
+        <div v-for="blog in blogs" :key="blog.slug" class="q-pl-md">
+          <h2>{{ blog.heading }}</h2>
+          <div class="text-right">{{ blog.publication_date }}</div>
+          <div>
+            {{ blog.summary }}
+            <q-btn :to="blogPrefixLink + '/' + blog.slug" dense no-caps :label="app.brand.labels.blog_index_read_more"></q-btn>
+          </div>
+          <q-separator spaced />
+        </div>
+
       </div>
       <div class="col-3 q-mt-lg q-pl-md-sm">
-        <BlogBrowser :index_title="content.index_title" :index_url="content.index_url"></BlogBrowser>
+        <BlogBrowser :app="app" :index_title="content.index_title" :index_url="content.index_url"></BlogBrowser>
       </div>
     </div>
   </q-page>

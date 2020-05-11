@@ -10,7 +10,6 @@
       Sorry, nothing here...<strong>(page not found)</strong>
     </p>
     <q-btn
-      color="secondary"
       style="width:200px;"
       to="/"
       label="Go back"
