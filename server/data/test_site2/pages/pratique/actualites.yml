@@ -1,0 +1,11 @@
+meta:
+  version: "1.0"
+  creation_date: 20200514
+  publication_date: 20200514
+  last_update_date: 20200514
+
+content:
+  title: Actualités
+  heading: Les actualités du site "Les ateliers du QI"
+  index_title: "Liste des billets..."
+  stream_fields: []

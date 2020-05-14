@@ -1,0 +1,24 @@
+meta:
+  version: "1.0"
+  creation_date: 20200514
+  publication_date: 20200514
+  last_update_date: 20200514
+
+content:
+  title: Les ateliers du QI
+  heading:
+  stream_fields:
+  - type: md_data
+    data: |
+      ![Image Home](http://dxpydk:8888/assets/images/home/boutDuMonde.jpg){: class="BRAND__page-img-full" }
+
+      Ce site est dédié à la pratique du [QI Gong]() et de la méditation.
+
+      Retrouvez les dernières informations dans la rubrique "[Actualités]()".
+
+      Venez pratiquer le QI Gong ou la méditation à Poucharramet (31370) ou à Seysses (31600),
+      dans la région de Muret et de Rieumes au sein d'associations: voir la rubrique "[Pratique]()".
+
+      Pour toute demande d'information, vous pouvez utiliser ce [formulaire]().
+
+      Merci de votre visite et à très bientôt!
