@@ -6,11 +6,16 @@ import sys
 import json
 import glob
 from operator import itemgetter
+from urllib.parse import urlparse, urlunparse
 
 import tornado.ioloop
 import tornado.web
 import yaml
 import markdown
+from mdx_wikilink_plus.mdx_wikilink_plus import WikiLinkPlusExtension
+
+
+logger = logging.getLogger(__name__)
 
 
 def setup_env():
@@ -83,6 +88,11 @@ class SiteHandler(BaseHandler):
             return self.finish()
 
 
+def wiki_links_url_builder(urlo, base, end, url_whitespace, url_case):
+    logger.info(f"wiki_links_url_builder urlo {urlo} unparse {urlunparse(urlo)}")
+    return urlunparse(urlo)
+
+
 class BasePageHandler(BaseHandler):
     logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
     md = None
@@ -96,10 +106,16 @@ class BasePageHandler(BaseHandler):
             "footnotes",
             "tables",
             "codehilite",
-            "toc"
+            "toc",
+            "mdx_wikilink_plus"
             ]
+        extension_configs = {
+                        'mdx_wikilink_plus': {
+                            'build_url': wiki_links_url_builder
+                        },
+                     }
         if self.md is None:
-            BasePageHandler.md = markdown.Markdown(extensions=extensions)
+            BasePageHandler.md = markdown.Markdown(extensions=extensions, extension_configs=extension_configs)
         return self.md.convert(md_text)
 
     def _load_page_content(self, page_file_path):

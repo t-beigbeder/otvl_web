@@ -2,3 +2,4 @@ PyYAML
 tornado
 markdown
 Pygments
+mdx_wikilink_plus
