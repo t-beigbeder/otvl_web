@@ -10,3 +10,5 @@ version:
 
 cors_mapping:
   'http://dxpydk:8080': 'http://dxpydk:8888'
+
+base_url: "#"

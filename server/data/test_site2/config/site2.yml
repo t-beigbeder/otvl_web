@@ -26,7 +26,6 @@ config:
 pages:
   - id: home
     type: page
-    menu: Home
     title: Les ateliers du QI
   - id: qi-gong
     type: page
