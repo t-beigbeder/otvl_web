@@ -29,8 +29,12 @@ export default {
       site_pages: [],
       site_pages_updated: false,
       brand: {
-        toolbar: {
-          label: 'toolbar_label_tbd'
+        urls: {
+          home: 'urls_home_tbd'
+        },
+        labels: {
+          toolbar: 'toolbar_label_tbd',
+          account_tooltip: 'account_tooltip_tbd'
         }
       },
       menus: function () {
@@ -43,7 +47,7 @@ export default {
   },
   created: function () {
     if (this.app_debug_console) {
-      console.log('App was created v39')
+      console.log(`App was created, API_SERVER_URL ${process.env.API_SERVER_URL} it101`)
     }
     this.fetchSiteConfiguration()
   },
@@ -70,8 +74,6 @@ export default {
       }
       this.menus = this.buildMenusFromConf()
       this.pages_by_id = this.buildPagesById()
-      // this.$set(this.odbg, 'menus', this.menus)
-      this.$set(this.odbg, 'pages_by_id', this.pages_by_id)
     }
   },
   methods: {
@@ -108,19 +110,19 @@ export default {
         this.simulFetchSiteConfiguration()
         this.site_configuration_updated = true
       } else {
-        this.$axios.get('http://dxpydk:8888/site/config/')
+        this.$axios.get(process.env.API_SERVER_URL + '/site/config/')
           .then((response) => {
             this.$set(this, 'site_configuration', response.data)
             this.site_configuration_updated = true
           })
           .catch(() => {
-            this.$router.push('/err')
+            // this.$router.push('/err')
+            location.replace(`${process.env.WEB_SERVER_URL}/error/technical_error.html`)
           })
       }
     },
     buildRoutes: function () {
       this.$router.addRoutes(this.buildRoutesFromConf())
-      // this.$set(this.odbg, 'routes', this.buildRoutesFromConf())
     },
     simulFetchSitePages: function () {
       this.site_pages = [
@@ -233,7 +235,7 @@ export default {
         this.simulFetchSitePages()
         this.site_pages_updated = true
       } else {
-        this.$axios.get('http://dxpydk:8888/site/pages/')
+        this.$axios.get(process.env.API_SERVER_URL + '/site/pages/')
           .then((response) => {
             this.site_pages = response.data
             this.site_pages_updated = true

@@ -77,7 +77,7 @@ class SiteHandler(BaseHandler):
     def get(self):
         config_file = self.server_config["site_config_file"]
         self.logger.debug(f"GET: site_config_file {config_file}")
-        key = self.request.path[len("/site/"):]
+        key = self.request.path[len("/api/site/"):]
         if key[-1] == "/":
             key = key[:-1]
         with open(config_file) as ysd:
@@ -299,16 +299,16 @@ def make_otvl_web_app(server_config):
         }
     assets_directory = server_config["assets_directory"]
     return tornado.web.Application([
-        (r"/version/?", VersionHandler, handler_kwa),
-        (r"/site/config/?", SiteHandler, handler_kwa),
-        (r"/site/pages/?", SiteHandler, handler_kwa),
-        (r"/assets/(.*)", tornado.web.StaticFileHandler, {"path": assets_directory}),
-        (r"/blogs/([^/]*)/([^/]*)/([^/]*)/?", BlogsHandler, handler_kwa),
-        (r"/blogs/([^/]*)/([^/]*)/?", BlogsHandler, handler_kwa),
-        (r"/blogs/([^/]*)/?", BlogsHandler, handler_kwa),
-        (r"/([^/]*)/([^/]*)/([^/]*)/([^/]*)/?", PageHandler, handler_kwa),
-        (r"/([^/]*)/([^/]*)/([^/]*)/?", PageHandler, handler_kwa),
-        (r"/([^/]*)/([^/]*)/?", PageHandler, handler_kwa),
+        (r"/api/version/?", VersionHandler, handler_kwa),
+        (r"/api/site/config/?", SiteHandler, handler_kwa),
+        (r"/api/site/pages/?", SiteHandler, handler_kwa),
+        (r"/api/assets/(.*)", tornado.web.StaticFileHandler, {"path": assets_directory}),
+        (r"/api/blogs/([^/]*)/([^/]*)/([^/]*)/?", BlogsHandler, handler_kwa),
+        (r"/api/blogs/([^/]*)/([^/]*)/?", BlogsHandler, handler_kwa),
+        (r"/api/blogs/([^/]*)/?", BlogsHandler, handler_kwa),
+        (r"/api/([^/]*)/([^/]*)/([^/]*)/([^/]*)/?", PageHandler, handler_kwa),
+        (r"/api/([^/]*)/([^/]*)/([^/]*)/?", PageHandler, handler_kwa),
+        (r"/api/([^/]*)/([^/]*)/?", PageHandler, handler_kwa),
     ])
 
 

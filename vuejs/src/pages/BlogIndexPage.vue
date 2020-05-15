@@ -65,18 +65,20 @@ export default {
       if (this.app.app_debug_simul_rest) {
         this.simulFetchBlogIndex()
       } else {
-        this.$axios.get(`http://dxpydk:8888/blogs/${this.str_id}/`)
+        this.$axios.get(`${process.env.API_SERVER_URL}/blogs/${this.str_id}/`)
           .then((response) => {
             if (this.app.app_debug_console) {
               console.log(`fetchBlogIndex str_id ${this.str_id}`)
-              this.$set(this, 'blogs', response.data.blogs)
             }
+            this.$set(this, 'blogs', response.data.blogs)
           })
           .catch((error) => {
             if (error.response && error.response.status === 404) {
-              this.$router.push('/404')
+              // this.$router.push('/404')
+              location.replace(`${process.env.WEB_SERVER_URL}/error/page_not_found.html`)
             } else {
-              this.$router.push('/err')
+              // this.$router.push('/err')
+              location.replace(`${process.env.WEB_SERVER_URL}/error/technical_error.html`)
             }
           })
       }

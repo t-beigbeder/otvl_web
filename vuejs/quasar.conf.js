@@ -7,7 +7,7 @@
 // https://quasar.dev/quasar-cli/quasar-conf-js
 /* eslint-env node */
 
-module.exports = function (/* ctx */) {
+module.exports = function (ctx) {
   return {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
@@ -88,7 +88,18 @@ module.exports = function (/* ctx */) {
             formatter: require('eslint').CLIEngine.getFormatter('stylish')
           }
         })
-      }
+      },
+      // cf https://quasar.dev/quasar-cli/cli-documentation/handling-process-env
+      // shell > export APP_SERVER_FQDN=demo.otvl.org
+      env: ctx.dev
+        ? { // so on dev we'll have
+          API_SERVER_URL: JSON.stringify('http://' + process.env.APP_SERVER_FQDN + ':8888/api'),
+          WEB_SERVER_URL: JSON.stringify('http://' + process.env.APP_SERVER_FQDN + ':8080/#')
+        }
+        : { // and on build (production):
+          API_SERVER_URL: JSON.stringify('https://' + process.env.APP_SERVER_FQDN + '/api'),
+          WEB_SERVER_URL: JSON.stringify('https://' + process.env.APP_SERVER_FQDN)
+        }
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
