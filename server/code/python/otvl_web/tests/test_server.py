@@ -35,7 +35,7 @@ def app():
 
 @pytest.mark.gen_test
 def test_version(http_client, base_url):
-    response = yield http_client.fetch(base_url + "/version")
+    response = yield http_client.fetch(base_url + "/api/version")
     assert response.code == 200
     resp_o = body_to_obj(response.body)
     assert resp_o["server"] == "1.0"
@@ -43,7 +43,7 @@ def test_version(http_client, base_url):
 
 @pytest.mark.gen_test
 def test_get_site_config(http_client, base_url, caplog, monkeypatch):
-    response = yield http_client.fetch(base_url + "/site/config/")
+    response = yield http_client.fetch(base_url + "/api/site/config/")
     assert response.code == 200
     resp_o = body_to_obj(response.body)
     assert resp_o["home_section"] == "home" and len(resp_o["types"]) == 3
@@ -51,7 +51,7 @@ def test_get_site_config(http_client, base_url, caplog, monkeypatch):
 
 @pytest.mark.gen_test
 def test_get_site_pages(http_client, base_url, caplog, monkeypatch):
-    response = yield http_client.fetch(base_url + "/site/pages/")
+    response = yield http_client.fetch(base_url + "/api/site/pages/")
     assert response.code == 200
     resp_o = body_to_obj(response.body)
     assert resp_o[0]["id"] == "home"
@@ -59,7 +59,7 @@ def test_get_site_pages(http_client, base_url, caplog, monkeypatch):
 
 @pytest.mark.gen_test
 def test_get_home_content(http_client, base_url, caplog, monkeypatch):
-    response = yield http_client.fetch(base_url + "/page/home/")
+    response = yield http_client.fetch(base_url + "/api/page/home/")
     assert response.code == 200
     resp_o = body_to_obj(response.body)
     assert "meta" in resp_o
@@ -68,7 +68,7 @@ def test_get_home_content(http_client, base_url, caplog, monkeypatch):
 
 @pytest.mark.gen_test
 def test_get_incorrect_type(http_client, base_url, caplog, monkeypatch):
-    response = yield http_client.fetch(base_url + "/page2/home/", raise_error=False)
+    response = yield http_client.fetch(base_url + "/api/page2/home/", raise_error=False)
     assert response.code == 400
     resp_o = body_to_obj(response.body)
     assert resp_o["reason"] == "BadParameter"
@@ -77,7 +77,7 @@ def test_get_incorrect_type(http_client, base_url, caplog, monkeypatch):
 
 @pytest.mark.gen_test
 def test_get_blogs_index(http_client, base_url, caplog, monkeypatch):
-    response = yield http_client.fetch(base_url + "/blogs/corporate-blog///", raise_error=False)
+    response = yield http_client.fetch(base_url + "/api/blogs/corporate-blog///", raise_error=False)
     assert response.code == 200
     resp_o = body_to_obj(response.body)
     assert "blogs" in resp_o
@@ -86,7 +86,7 @@ def test_get_blogs_index(http_client, base_url, caplog, monkeypatch):
 
 @pytest.mark.gen_test
 def test_get_blogs_content(http_client, base_url, caplog, monkeypatch):
-    response = yield http_client.fetch(base_url + "/blox/corporate-blog/", raise_error=False)
+    response = yield http_client.fetch(base_url + "/api/blox/corporate-blog/", raise_error=False)
     assert response.code == 200
     resp_o = body_to_obj(response.body)
     assert "meta" in resp_o
@@ -94,7 +94,7 @@ def test_get_blogs_content(http_client, base_url, caplog, monkeypatch):
     assert resp_o["content"]["index_title"] == "List of corporate blogs"
     assert resp_o["content"]["index_url"] == "/blox/corporate-blog/"
 
-    response = yield http_client.fetch(base_url + "/blogs/corporate-blog///", raise_error=False)
+    response = yield http_client.fetch(base_url + "/api/blogs/corporate-blog///", raise_error=False)
     assert response.code == 200
     resp_o = body_to_obj(response.body)
     assert "blogs" in resp_o
@@ -102,7 +102,7 @@ def test_get_blogs_content(http_client, base_url, caplog, monkeypatch):
     assert len(resp_o["blogs"]) > 1
     for blog in resp_o["blogs"]:
         response = yield http_client.fetch(
-            base_url + "/blog/corporate-blog//" + blog["slug"],
+            base_url + "/api/blog/corporate-blog//" + blog["slug"],
             raise_error=False)
         assert response.code == 200
         resp_o = body_to_obj(response.body)
