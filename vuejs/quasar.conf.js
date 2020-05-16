@@ -92,11 +92,11 @@ module.exports = function (ctx) {
       // cf https://quasar.dev/quasar-cli/cli-documentation/handling-process-env
       // shell > export APP_SERVER_FQDN=demo.otvl.org
       env: ctx.dev
-        ? { // so on dev we'll have
+        ? {
           API_SERVER_URL: JSON.stringify('http://' + process.env.APP_SERVER_FQDN + ':8888/api'),
           WEB_SERVER_URL: JSON.stringify('http://' + process.env.APP_SERVER_FQDN + ':8080/#')
         }
-        : { // and on build (production):
+        : {
           API_SERVER_URL: JSON.stringify('https://' + process.env.APP_SERVER_FQDN + '/api'),
           WEB_SERVER_URL: JSON.stringify('https://' + process.env.APP_SERVER_FQDN)
         }

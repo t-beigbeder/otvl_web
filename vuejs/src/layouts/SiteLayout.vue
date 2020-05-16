@@ -14,7 +14,7 @@
             class="q-mx-md"
           />
           <q-item tag="a" :to=app.brand.urls.home>
-              <img src="~assets/brand_logo.jpg">
+              <img src="statics/img/brand_logo.jpg">
           </q-item>
           <q-toolbar-title>
             <q-item tag="a" :to=app.brand.urls.home class="text-grey-8" style="text-decoration: none">
@@ -32,7 +32,7 @@
         <q-toolbar class="col-1 BRAND__toolbar" style="height: 64px">
           <q-btn flat round dense disable>
             <q-avatar size="26px">
-              <img src="~assets/user.png">
+              <img src="statics/img/user.png">
             </q-avatar>
             <q-tooltip>{{ app.brand.labels.account_tooltip }}</q-tooltip>
           </q-btn>
@@ -49,7 +49,7 @@
       <q-scroll-area class="fit">
         <q-toolbar class="BRAND__toolbar">
           <q-toolbar-title class="row items-center text-grey-8">
-            <img class="q-pl-md" src="~assets/brand_logo.jpg">
+            <img class="q-pl-md" src="statics/img/brand_logo.jpg">
             <span class="q-ml-sm">{{ app.brand.labels.toolbar }}</span>
           </q-toolbar-title>
         </q-toolbar>
