@@ -89,9 +89,43 @@ class SiteHandler(BaseHandler):
 class BasePageHandler(BaseHandler):
     logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
     md = None
+    default_assets_url = None
+    assets_url = None
 
     def initialize(self, **kwargs):
         super().initialize(**kwargs)
+        BasePageHandler.default_assets_url = self.site_config["config"]["default_assets_url"]
+        if "assets_url" not in self.server_config:
+            BasePageHandler.assets_url = self.default_assets_url
+        else:
+            BasePageHandler.assets_url = self.server_config["assets_url"]
+
+    def _patch_html_src_assets(self, html_text):
+        if self.assets_url == self.default_assets_url:
+            return html_text
+        src_asset_str = f'src="{self.default_assets_url}'
+        server_asset_str = f'src="{self.assets_url}'
+        while src_asset_str in html_text:
+            ix = html_text.index(src_asset_str)
+            html_text = html_text[0:ix] + server_asset_str + html_text[ix + len(src_asset_str):]
+        return html_text
+
+    def _patch_asset_in_src_sf(self, src_sf):
+        if self.assets_url == self.default_assets_url or self.default_assets_url not in src_sf:
+            return src_sf
+        ix = src_sf.index(self.default_assets_url)
+        src_sf = src_sf[0:ix] + self.assets_url + src_sf[ix + len(self.default_assets_url):]
+        return src_sf
+
+    def _patch_assets_wiki_links(self, md_text):
+        if self.assets_url == self.default_assets_url:
+            return md_text
+        src_asset_str = f'[[{self.default_assets_url}'
+        server_asset_str = f'[[{self.assets_url}'
+        while src_asset_str in md_text:
+            ix = md_text.index(src_asset_str)
+            md_text = md_text[0:ix] + server_asset_str + md_text[ix + len(src_asset_str):]
+        return md_text
 
     def _md2html(self, md_text):
         extensions = [
@@ -108,7 +142,7 @@ class BasePageHandler(BaseHandler):
             if "base_url" in self.server_config:
                 extension_configs["mdx_wikilink_plus"] = {"base_url": self.server_config["base_url"]}
             BasePageHandler.md = markdown.Markdown(extensions=extensions, extension_configs=extension_configs)
-        return self.md.convert(md_text)
+        return self._patch_html_src_assets(self.md.convert(self._patch_assets_wiki_links(md_text)))
 
     def _load_page_content(self, page_file_path):
         try:
@@ -151,6 +185,8 @@ class BasePageHandler(BaseHandler):
                 sf["type"] = "html"
                 sf["content"] = self._md2html(sf["data"])
                 del sf["data"]
+            elif "src" in sf:
+                sf["src"] = self._patch_asset_in_src_sf(sf["src"])
         return page_content
 
 

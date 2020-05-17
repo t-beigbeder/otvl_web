@@ -76,6 +76,24 @@ def test_get_incorrect_type(http_client, base_url, caplog, monkeypatch):
 
 
 @pytest.mark.gen_test
+def test_get_home_asset_content(http_client, base_url, caplog, monkeypatch):
+    response = yield http_client.fetch(base_url + "/api/page/home/")
+    assert response.code == 200
+    resp_o = body_to_obj(response.body)
+    assert "stream_fields" in resp_o["content"]
+    assert len(resp_o["content"]["stream_fields"]) == 3
+    sf1c = resp_o["content"]["stream_fields"][0]["content"]
+    ix = sf1c.index(" src=\"")
+    asset_url = "http://dxpydk:8888/api/assets/"
+    assert sf1c[ix+6:].startswith(asset_url)
+    sf2c = resp_o["content"]["stream_fields"][1]["content"]
+    ix = sf2c.index(" href=\"")
+    assert sf2c[ix+7:].startswith(asset_url)
+    sf3s = resp_o["content"]["stream_fields"][2]["src"]
+    assert sf3s.startswith(asset_url)
+
+
+@pytest.mark.gen_test
 def test_get_blogs_index(http_client, base_url, caplog, monkeypatch):
     response = yield http_client.fetch(base_url + "/api/blogs/corporate-blog///", raise_error=False)
     assert response.code == 200

@@ -16,7 +16,7 @@ export default {
   data: function () {
     return {
       app_debug: false,
-      app_debug_console: false,
+      app_debug_console: true,
       app_debug_simul_rest: false,
       odbg: {},
       pageClassesByName: {

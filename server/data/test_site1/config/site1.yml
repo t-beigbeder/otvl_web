@@ -13,6 +13,7 @@ config:
       mapping: BlogPage
       has_slug: true
       blog_index_type: blox
+  default_assets_url: /assets/
   brand:
     urls:
       home: /page/home

@@ -10,7 +10,7 @@ content:
   stream_fields:
   - type: md_data
     data: |
-      ![Image Home](http://dxpydk:8888/api/assets/images/home/boutDuMonde.jpg){: class="BRAND__page-img-full" }
+      ![Image Home](/assets/images/home/boutDuMonde.jpg){: class="BRAND__page-img-full" }
 
       Ce site est dédié à la pratique du [[/page/qi-gong | QI Gong]] et de la méditation.
 
