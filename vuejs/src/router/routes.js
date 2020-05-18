@@ -6,11 +6,11 @@ const routes = [
 
 routes.push(
   {
-    path: '/error/technical_error.html',
+    path: '/statics/error/technical_error.html',
     redirect: '/err'
   },
   {
-    path: '/error/page_not_found.html',
+    path: '/statics/error/page_not_found.html',
     redirect: '/404'
   },
   {

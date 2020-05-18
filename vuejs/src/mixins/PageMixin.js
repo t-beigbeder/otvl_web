@@ -104,9 +104,9 @@ export default {
           })
           .catch((error) => {
             if (error.response && error.response.status === 404) {
-              location.replace(`${this.app.rtc.web_server_url}/error/page_not_found.html`)
+              location.replace(`${this.app.rtc.web_server_url}/statics/error/page_not_found.html`)
             } else {
-              location.replace(`${this.app.rtc.web_server_url}/error/technical_error.html`)
+              location.replace(`${this.app.rtc.web_server_url}/statics/error/technical_error.html`)
             }
           })
       }

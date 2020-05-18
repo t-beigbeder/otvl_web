@@ -119,7 +119,7 @@ export default {
             this.site_configuration_updated = true
           })
           .catch(() => {
-            location.replace(`${this.rtc.web_server_url}/error/technical_error.html`)
+            location.replace(`${this.rtc.web_server_url}/statics/error/technical_error.html`)
           })
       }
     },
