@@ -93,7 +93,7 @@ export default {
       if (this.app.app_debug_simul_rest) {
         this.simulFetchContent()
       } else {
-        this.$axios.get(`${process.env.API_SERVER_URL}/${this.type}/${this.str_id}/`)
+        this.$axios.get(`${this.app.rtc.api_server_url}/${this.type}/${this.str_id}/`)
           .then((response) => {
             this.$set(this, 'meta', response.data.meta)
             this.$set(this, 'content', response.data.content)
@@ -104,11 +104,9 @@ export default {
           })
           .catch((error) => {
             if (error.response && error.response.status === 404) {
-              // this.$router.push('/404')
-              location.replace(`${process.env.WEB_SERVER_URL}/error/page_not_found.html`)
+              location.replace(`${this.app.rtc.web_server_url}/error/page_not_found.html`)
             } else {
-              // this.$router.push('/err')
-              location.replace(`${process.env.WEB_SERVER_URL}/error/technical_error.html`)
+              location.replace(`${this.app.rtc.web_server_url}/error/technical_error.html`)
             }
           })
       }

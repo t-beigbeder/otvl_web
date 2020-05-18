@@ -65,7 +65,7 @@ export default {
       if (this.app.app_debug_simul_rest) {
         this.simulFetchBlogIndex()
       } else {
-        this.$axios.get(`${process.env.API_SERVER_URL}/blogs/${this.str_id}/`)
+        this.$axios.get(`${this.app.rtc.api_server_url}/blogs/${this.str_id}/`)
           .then((response) => {
             if (this.app.app_debug_console) {
               console.log(`fetchBlogIndex str_id ${this.str_id}`)
@@ -74,11 +74,9 @@ export default {
           })
           .catch((error) => {
             if (error.response && error.response.status === 404) {
-              // this.$router.push('/404')
-              location.replace(`${process.env.WEB_SERVER_URL}/error/page_not_found.html`)
+              location.replace(`${this.app.rtc.web_server_url}/error/page_not_found.html`)
             } else {
-              // this.$router.push('/err')
-              location.replace(`${process.env.WEB_SERVER_URL}/error/technical_error.html`)
+              location.replace(`${this.app.rtc.web_server_url}/error/technical_error.html`)
             }
           })
       }

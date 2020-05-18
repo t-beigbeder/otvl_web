@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { confFromStaticsHttp } from 'src/statics/js/conf.js'
 import AppUtilMixin from 'src/mixins/AppUtilMixin'
 import StandardPage from 'pages/StandardPage'
 import BlogIndexPage from 'pages/BlogIndexPage'
@@ -46,8 +47,10 @@ export default {
     }
   },
   created: function () {
+    this.rtc = confFromStaticsHttp()
     if (this.app_debug_console) {
-      console.log(`App was created, API_SERVER_URL ${process.env.API_SERVER_URL} it101`)
+      console.log('App was created, it102 rtc')
+      console.log(this.rtc)
     }
     this.fetchSiteConfiguration()
   },
@@ -110,14 +113,13 @@ export default {
         this.simulFetchSiteConfiguration()
         this.site_configuration_updated = true
       } else {
-        this.$axios.get(process.env.API_SERVER_URL + '/site/config/')
+        this.$axios.get(this.rtc.api_server_url + '/site/config/')
           .then((response) => {
             this.$set(this, 'site_configuration', response.data)
             this.site_configuration_updated = true
           })
           .catch(() => {
-            // this.$router.push('/err')
-            location.replace(`${process.env.WEB_SERVER_URL}/error/technical_error.html`)
+            location.replace(`${this.rtc.web_server_url}/error/technical_error.html`)
           })
       }
     },
@@ -235,7 +237,7 @@ export default {
         this.simulFetchSitePages()
         this.site_pages_updated = true
       } else {
-        this.$axios.get(process.env.API_SERVER_URL + '/site/pages/')
+        this.$axios.get(this.rtc.api_server_url + '/site/pages/')
           .then((response) => {
             this.site_pages = response.data
             this.site_pages_updated = true
