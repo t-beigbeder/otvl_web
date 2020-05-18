@@ -6,6 +6,7 @@
 
 <script>
 import { confFromStaticsHttp } from 'src/statics/js/conf.js'
+
 import AppUtilMixin from 'src/mixins/AppUtilMixin'
 import StandardPage from 'pages/StandardPage'
 import BlogIndexPage from 'pages/BlogIndexPage'
@@ -47,9 +48,23 @@ export default {
     }
   },
   created: function () {
-    this.rtc = confFromStaticsHttp()
+    confFromStaticsHttp()
+    var qApp = document.getElementById('q-app')
+    this.rtc = {
+      default_api_server_url: qApp.getAttribute('default-api-server-url'),
+      default_web_server_url: qApp.getAttribute('default-web-server-url'),
+      api_server_url: qApp.getAttribute('api-server-url'),
+      web_server_url: qApp.getAttribute('web-server-url')
+    }
+    if (this.rtc.web_server_url === 'default_web_server_url') {
+      this.rtc.web_server_url = this.rtc.default_web_server_url
+    }
+    if (this.rtc.api_server_url === 'default_api_server_url') {
+      this.rtc.api_server_url = this.rtc.default_api_server_url
+    }
     if (this.app_debug_console) {
-      console.log('App was created, it102 rtc')
+      console.log('App was created, it102 qApp and rtc')
+      console.log(qApp)
       console.log(this.rtc)
     }
     this.fetchSiteConfiguration()

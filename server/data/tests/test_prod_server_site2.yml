@@ -1,0 +1,15 @@
+site_config_file: data/test_site2/config/site2.yml
+pages_directory: data/test_site2/pages
+assets_directory: data/test_site2/assets
+
+version:
+  server: "1.0"
+  application: "1.0"
+  server_config_file: data/tests/test_prod_server_site2.yml
+  site_config_file: data/test_site2/config/site2.yml
+
+cors_mapping_bck:
+  'http://dxpydk:8080': 'http://dxpydk:8888'
+
+base_url_bck: "#"
+assets_url_bck: "http://dxpydk:8888/api/assets/"
