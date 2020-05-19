@@ -5,10 +5,14 @@ RUN yarn global add @quasar/cli
 
 RUN mkdir -p /code /shell && chown node:node /code /shell
 USER node:node
+ADD package.json /tmp/package.json
+RUN cd /tmp && yarn
+
 COPY . /code/
 WORKDIR /code
-RUN yarn install
+RUN ln -s /tmp/node_modules
 RUN quasar build
-COPY .dev/shell/export_from_docker_vuejs.sh /shell/
+COPY .dev/* /shell/
 
-ENTRYPOINT [ "/shell/export_from_docker_vuejs.sh" ]
+ENTRYPOINT [ "/shell/docker_entrypoint.sh" ]
+CMD [ "/shell/docker_cmd.sh" ]

@@ -16,7 +16,8 @@ VERSION="1.0.dev001"
 EXPORT_DIR=/srv/export_dir/guest
 run_command docker build \
    -t otvl_web_vuejs:${VERSION} vuejs && \
-  run_command docker run --rm otvl_web_vuejs:${VERSION} > ${EXPORT_DIR}/otvl_web_vuejs-${VERSION}.tgz && \
+  info "run command docker run --rm otvl_web_vuejs:${VERSION}" && \
+  docker run --rm otvl_web_vuejs:${VERSION} > ${EXPORT_DIR}/otvl_web_vuejs-${VERSION}.tgz && \
   run_command ls -l ${EXPORT_DIR}/otvl_web_vuejs-${VERSION}.tgz && \
   info "Archive ${EXPORT_DIR}/otvl_web_vuejs-${VERSION}.tgz is available" && \
   true || exit 1

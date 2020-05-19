@@ -20,7 +20,8 @@ run_command docker build \
   --build-arg V_GROUP=`id -gn` \
   --build-arg V_GID=`id -g` \
   -t otvl_web_server:${VERSION} server && \
-  run_command docker run --rm otvl_web_server:${VERSION} > ${EXPORT_DIR}/otvl_web_server-${VERSION}.tgz && \
+  info "run command docker run --rm otvl_web_server:${VERSION}" && \
+  docker run --rm otvl_web_server:${VERSION} > ${EXPORT_DIR}/otvl_web_server-${VERSION}.tgz && \
   run_command ls -l ${EXPORT_DIR}/otvl_web_server-${VERSION}.tgz && \
   info "Archive ${EXPORT_DIR}/otvl_web_server-${VERSION}.tgz is available" && \
   true || exit 1

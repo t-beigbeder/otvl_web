@@ -6,4 +6,3 @@ dist
 .vscode
 .dockerignore
 .gitignore
-yarn.lock

@@ -22,7 +22,8 @@ ARG V_GID=1001
 COPY --from=build_stage_2 /venv /venv
 RUN addgroup --gid ${V_GID} ${V_GROUP} && \
   adduser --disabled-password --ingroup ${V_GROUP} --uid ${V_UID} --shell /bin/sh --gecos ${V_USER} ${V_USER}
-COPY code/shell/export_from_docker_server.sh /shell/
+COPY code/shell/* /shell/
 USER ${V_USER}:${V_GROUP}
 
-ENTRYPOINT [ "/shell/export_from_docker_server.sh" ]
+ENTRYPOINT [ "/shell/docker_entrypoint.sh" ]
+CMD [ "/shell/docker_cmd.sh" ]
