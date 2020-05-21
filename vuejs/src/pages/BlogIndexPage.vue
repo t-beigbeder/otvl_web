@@ -19,7 +19,7 @@
 
       </div>
       <div class="col-3 q-mt-lg q-pl-md-sm">
-        <BlogBrowser :app="app" :index_title="content.index_title" :index_url="content.index_url"></BlogBrowser>
+        <BlogBrowser :app="app" :brand="content.brand" :index_url="content.index_url"></BlogBrowser>
       </div>
     </div>
   </q-page>

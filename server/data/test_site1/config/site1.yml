@@ -20,16 +20,6 @@ config:
     labels:
       toolbar: Otvl Web
       account_tooltip: Account
-      search_blogs: "Search blogs..."
-      blog_index_search_criteria: "Other search criteria..."
-      blog_index_read_more: "Read more..."
-      page_not_found_back: "go back"
-    texts:
-      page_not_found:
-        short: "Sorry, the requested page does not exist"
-        long: |
-          This page is not yet available, or it has been moved elsewhere.
-          The error will be reported and the issue will be fixed as soon as possible.
 
 pages:
   - id: home

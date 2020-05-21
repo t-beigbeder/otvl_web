@@ -109,7 +109,7 @@ def test_get_blogs_content(http_client, base_url, caplog, monkeypatch):
     resp_o = body_to_obj(response.body)
     assert "meta" in resp_o
     assert "content" in resp_o
-    assert resp_o["content"]["index_title"] == "List of corporate blogs"
+    assert resp_o["content"]["brand"]["labels"]["index_title"] == "List of corporate blogs"
     assert resp_o["content"]["index_url"] == "/blox/corporate-blog/"
 
     response = yield http_client.fetch(base_url + "/api/blogs/corporate-blog///", raise_error=False)
@@ -126,7 +126,7 @@ def test_get_blogs_content(http_client, base_url, caplog, monkeypatch):
         resp_o = body_to_obj(response.body)
         assert "meta" in resp_o
         assert "content" in resp_o
-        assert resp_o["content"]["index_title"] == "List of corporate blogs"
+        assert resp_o["content"]["brand"]["labels"]["index_title"] == "List of corporate blogs"
         assert resp_o["content"]["index_url"] == "/blox/corporate-blog/"
 
 

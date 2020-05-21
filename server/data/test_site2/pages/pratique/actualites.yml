@@ -6,6 +6,12 @@ meta:
 
 content:
   title: Actualités
-  heading: Les actualités du site "Les ateliers du QI"
-  index_title: "Liste des billets..."
+  heading: Les actualités du site
+  brand:
+    labels:
+      index_title: "Liste des nouvelles"
+      search_blogs: "Rechercher des nouvelles..."
+      blog_index_search_criteria: "Autres critères de recherche..."
+      blog_index_read_more: "Lire..."
+
   stream_fields: []

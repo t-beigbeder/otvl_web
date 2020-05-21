@@ -14,6 +14,13 @@ meta:
 content:
   title: Blog 101
   heading: Heading for blog 101
+  brand:
+    labels:
+      index_title: List of blog 101 blogs
+      search_blogs: "Search blogs..."
+      blog_index_search_criteria: "Other search criteria..."
+      blog_index_read_more: "Read more..."
+
   stream_fields:
   - type: md_data
     data: |

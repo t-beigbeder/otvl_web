@@ -14,7 +14,13 @@ meta:
 content:
   title: A big blog for Otvl Web
   heading: Heading for Otvl Web's big blog
-  index_title: Big blog index
+  brand:
+    labels:
+      index_title: Big blog index
+      search_blogs: "Search blogs..."
+      blog_index_search_criteria: "Other search criteria..."
+      blog_index_read_more: "Read more..."
+
   stream_fields:
   - type: md_data
     data: |

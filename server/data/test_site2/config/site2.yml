@@ -20,9 +20,6 @@ config:
     labels:
       toolbar: Ateliers du QI
       account_tooltip: Compte
-      search_blogs: "Rechercher des billets..."
-      blog_index_search_criteria: "Autres critères de recherche..."
-      blog_index_read_more: "Lire le billet..."
 
 pages:
   - id: home

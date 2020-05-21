@@ -215,7 +215,7 @@ class PageHandler(BasePageHandler):
             blox_page_content = self._get_page_content(section, sub_section, '')
             if not blox_page_content:
                 return self._error(404, 'ResourceNotFound', 'The blog index content is missing')
-            page_content["content"]["index_title"] = blox_page_content["content"]["index_title"]
+            page_content["content"]["brand"] = blox_page_content["content"]["brand"]
         type_config = self.site_config["config"]["types"][type_]
         if "blog_type" in type_config or "blog_index_type" in type_config:
             blog_index_type = type_ if "blog_type" in type_config else type_config["blog_index_type"]

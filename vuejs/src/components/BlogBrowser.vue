@@ -10,10 +10,10 @@
 
     <q-card-section class="q-py-none">
       <q-item dense tag="a" :to="index_url" class="q-my-sm text-grey-8" style="text-decoration: none">
-        {{ index_title }}
+        {{ brand.labels.index_title }}
       </q-item>
       <q-item dense disable tag="a" :to="index_url" class="q-my-sm text-grey-8" style="text-decoration: none">
-        {{ app.brand.labels.blog_index_search_criteria }}
+        {{ brand.labels.blog_index_search_criteria }}
       </q-item>
     </q-card-section>
   </q-card>
