@@ -1,5 +1,6 @@
 import AppUtilMixin from 'src/mixins/AppUtilMixin'
 import StreamField from 'src/components/StreamField'
+import { DateTime } from 'luxon'
 
 export default {
   mixins: [AppUtilMixin],
@@ -109,6 +110,12 @@ export default {
               location.replace(`${this.app.rtc.web_server_url}/statics/error/technical_error.html`)
             }
           })
+      }
+    },
+    testLuxon: function () {
+      if (this.app.app_debug_console) {
+        const dt = DateTime.local(2017, 5, 15, 8, 30)
+        console.log(`testLuxon ${dt}`)
       }
     }
   }
