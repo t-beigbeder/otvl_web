@@ -28,8 +28,8 @@ export default {
       type: Object,
       required: true
     },
-    index_title: {
-      type: String,
+    brand: {
+      type: Object,
       required: true
     },
     index_url: {

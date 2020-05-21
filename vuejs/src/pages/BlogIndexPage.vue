@@ -12,7 +12,7 @@
           <div class="text-right">{{ blog.publication_date }}</div>
           <div>
             {{ blog.summary }}
-            <q-btn :to="blogPrefixLink + '/' + blog.slug" dense no-caps :label="app.brand.labels.blog_index_read_more"></q-btn>
+            <q-btn :to="blogPrefixLink + '/' + blog.slug" dense no-caps :label="content.brand.labels.blog_index_read_more"></q-btn>
           </div>
           <q-separator spaced />
         </div>
