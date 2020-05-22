@@ -49,7 +49,24 @@ Quasar (or try yarn)
 
 ### System setup for python
 
-To be completed.
+    # in a virtualenv
+    pip install -r server/requirements-dev.txt
+
+### Produce tgz archives for deployment
+
+- Docker must be installed on the development environment.
+- Tune VERSION and EXPORT_DIR in shell scripts.
+
+Python server, the resulting archive contains a virtual env that must be installed
+as /srv/venv/otvl_web:
+
+    dev/shell/run_dkb_server.sh
+
+Vuejs static files, the resulting archive must be deployed
+as the root of a static web site:
+
+    dev/shell/run_dkb_vuejs.sh
+
 
 ## References
 

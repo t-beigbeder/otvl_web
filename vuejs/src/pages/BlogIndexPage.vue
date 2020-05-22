@@ -7,18 +7,20 @@
         </StreamField>
         <p v-if="app.app_debug">site_configuration {{ app.site_configuration }}</p>
         <q-separator spaced />
-        <div v-for="blog in blogs" :key="blog.slug" class="q-pl-md">
-          <h2>{{ blog.heading }}</h2>
-          <div class="text-right">{{ blog.publication_date }}</div>
-          <div>
+        <div v-for="blog in blogs" :key="blog.slug" class="row q-pl-md">
+          <h2 class="col-12 col-md-9">{{ blog.heading }}</h2>
+          <p class="col-12 col-md-3 q-my-auto text-caption">
+            Published on: {{ blog.publication_date }}
+          </p>
+          <div class="col-12">
             {{ blog.summary }}
-            <q-btn :to="blogPrefixLink + '/' + blog.slug" dense no-caps :label="content.brand.labels.blog_index_read_more"></q-btn>
+            <q-btn class="q-ml-md" dense color="blue-grey-2" text-color="blue-grey-9" no-caps :to="blogPrefixLink + '/' + blog.slug" :label="content.brand.labels.blog_index_read_more"></q-btn>
           </div>
-          <q-separator spaced />
+          <q-separator spaced class="col-12" />
         </div>
 
       </div>
-      <div class="col-3 q-mt-lg q-pl-md-sm">
+      <div class="col-3 q-mt-xl q-pl-md-sm">
         <BlogBrowser :app="app" :brand="content.brand" :index_url="content.index_url"></BlogBrowser>
       </div>
     </div>
