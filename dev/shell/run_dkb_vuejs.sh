@@ -14,7 +14,7 @@ else
 fi
 VERSION="1.0.dev002"
 EXPORT_DIR=/srv/export_dir/guest
-run_command docker build \
+run_command docker build --pull \
    -t otvl_web_vuejs:${VERSION} vuejs && \
   info "run command docker run --rm otvl_web_vuejs:${VERSION}" && \
   docker run --rm otvl_web_vuejs:${VERSION} > ${EXPORT_DIR}/otvl_web_vuejs-${VERSION}.tgz && \

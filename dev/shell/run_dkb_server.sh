@@ -14,7 +14,7 @@ else
 fi
 VERSION="1.0.dev002"
 EXPORT_DIR=/srv/export_dir/guest
-run_command docker build \
+run_command docker build --pull \
   --build-arg V_USER=`id -un` \
   --build-arg V_UID=`id -u` \
   --build-arg V_GROUP=`id -gn` \
