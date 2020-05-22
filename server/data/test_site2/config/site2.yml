@@ -17,6 +17,7 @@ config:
   brand:
     urls:
       home: /page/home
+    locale: fr
     labels:
       toolbar: Ateliers du QI
       account_tooltip: Compte

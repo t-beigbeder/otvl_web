@@ -10,11 +10,11 @@
         <div v-for="blog in blogs" :key="blog.slug" class="row q-pl-md">
           <h2 class="col-12 col-md-9">{{ blog.heading }}</h2>
           <p class="col-12 col-md-3 q-my-auto text-caption">
-            Published on: {{ blog.publication_date }}
+            {{ content.brand.labels.published_on }} {{ intlDate(blog.publication_date, locale) }}
           </p>
           <div class="col-12">
             {{ blog.summary }}
-            <q-btn class="q-ml-md" dense color="blue-grey-2" text-color="blue-grey-9" no-caps :to="blogPrefixLink + '/' + blog.slug" :label="content.brand.labels.blog_index_read_more"></q-btn>
+            <q-btn class="q-ml-md" dense color="blue-grey-2" text-color="blue-grey-9" no-caps :to="blogPrefixLink + '/' + blog.slug" :label="content.brand.labels.read_more"></q-btn>
           </div>
           <q-separator spaced class="col-12" />
         </div>
@@ -39,11 +39,11 @@ export default {
   },
   data: function () {
     return {
-      blogs: function () {
-        return []
-      },
+      blogs: [],
       content: {
-        index_title: '',
+        brand: {
+          labels: {}
+        },
         index_url: ''
       }
     }

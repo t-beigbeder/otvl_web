@@ -10,8 +10,9 @@ content:
   brand:
     labels:
       index_title: "Liste des nouvelles"
-      search_blogs: "Rechercher des nouvelles..."
-      blog_index_search_criteria: "Autres critères de recherche..."
-      blog_index_read_more: "Lire..."
+      search_blogs: "Rechercher..."
+      search_criteria: "Autres recherches..."
+      published_on: "Publié le "
+      read_more: "Lire..."
 
   stream_fields: []

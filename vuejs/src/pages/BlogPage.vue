@@ -28,7 +28,9 @@ export default {
   data: function () {
     return {
       content: {
-        index_title: '',
+        brand: {
+          labels: {}
+        },
         index_url: ''
       }
     }

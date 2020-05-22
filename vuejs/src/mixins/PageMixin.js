@@ -50,6 +50,9 @@ export default {
   computed: {
     str_id: function () {
       return this.id.section + '/' + this.id.sub_section + '/' + this.id.slug
+    },
+    locale: function () {
+      return this.app.brand.locale
     }
   },
   methods: {
@@ -112,11 +115,13 @@ export default {
           })
       }
     },
-    testLuxon: function () {
+    intlDate: function (isoDateStr, locale) {
+      const dt = DateTime.fromISO(isoDateStr)
+      const res = dt.setLocale(locale).toLocaleString(DateTime.DATE_MED)
       if (this.app.app_debug_console) {
-        const dt = DateTime.local(2017, 5, 15, 8, 30)
-        console.log(`testLuxon ${dt}`)
+        console.log(`intlDate ${isoDateStr} - ${locale} - ${dt} - ${res}`)
       }
+      return res
     }
   }
 }

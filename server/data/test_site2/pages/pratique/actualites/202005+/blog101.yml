@@ -1,13 +1,13 @@
 meta:
   version: "1.0"
-  creation_date: 20190908
-  publication_date: 20190908
-  last_update_date: 20190908
+  creation_date: "20190908"
+  publication_date: "20190908"
+  last_update_date: "20190908"
   summary: |
     Dimanche 13 octobre, "Rando Sophro Qi Gong", avec l'association "Les Chemins de l'harmonie".
 
 content:
-  title: Blog 101
+  title: En octobre, rando Sophro Qi Gong
   heading: En octobre, rando Sophro Qi Gong
   stream_fields:
   - type: md_data

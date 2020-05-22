@@ -18,8 +18,9 @@ content:
     labels:
       index_title: List of corporate blogs
       search_blogs: "Search blogs..."
-      blog_index_search_criteria: "Other search criteria..."
-      blog_index_read_more: "Read more..."
+      search_criteria: "Other search criteria..."
+      published_on: "Published on "
+      read_more: "Read more..."
 
   stream_fields:
   - type: md_data

@@ -17,6 +17,7 @@ config:
   brand:
     urls:
       home: /page/home
+    locale: en
     labels:
       toolbar: Otvl Web
       account_tooltip: Account
