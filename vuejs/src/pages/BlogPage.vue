@@ -6,8 +6,9 @@
         <StreamField v-for="(stream_field, index) in content.stream_fields" v-bind="stream_field" :key="str_id + index">
         </StreamField>
         <p v-if="app.app_debug">site_configuration {{ app.site_configuration }}</p>
+        <q-separator spaced />
       </div>
-      <div class="col-3 q-mt-lg q-pl-md-sm">
+      <div class="col-3 q-mt-xl q-pl-md-sm">
         <BlogBrowser :app="app" :brand="content.brand" :index_url="content.index_url"></BlogBrowser>
       </div>
     </div>
