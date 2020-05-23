@@ -21,7 +21,7 @@ run_command docker build --pull \
   --build-arg V_GID=`id -g` \
   -t otvl_web_server:${VERSION} server && \
   info "run command docker run --rm otvl_web_server:${VERSION}" && \
-  docker run --rm otvl_web_server:${VERSION} > ${EXPORT_DIR}/otvl_web_server-${VERSION}.tgz && \
-  run_command ls -l ${EXPORT_DIR}/otvl_web_server-${VERSION}.tgz && \
-  info "Archive ${EXPORT_DIR}/otvl_web_server-${VERSION}.tgz is available" && \
+  docker run --rm otvl_web_server:${VERSION} > ${EXPORT_DIR}/otvl_web_server_venv-${VERSION}.tgz && \
+  run_command ls -l ${EXPORT_DIR}/otvl_web_server_venv-${VERSION}.tgz && \
+  info "Archive ${EXPORT_DIR}/otvl_web_server_venv-${VERSION}.tgz is available" && \
   true || exit 1
