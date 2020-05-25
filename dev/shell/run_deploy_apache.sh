@@ -10,7 +10,7 @@ for site in site2 ; do
   rm -rf /srv/www/${site}/web
   mkdir -p /srv/www/${site}/web/assets
   # cp -a dist/spa/. /srv/www/${site}/web
-  VERSION="1.0.dev001"
+  VERSION="1.0.dev003"
   EXPORT_DIR=/srv/export_dir/guest
   (cd /srv/www/${site}/web && tar xzf ${EXPORT_DIR}/otvl_web_vuejs-${VERSION}.tgz)
   sed -e 's=default_api_server_url=https://site2.dxpydk/api=' -i /srv/www/${site}/web/index.html
