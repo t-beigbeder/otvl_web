@@ -363,13 +363,10 @@ class SiteMapHandler(BaseHandler):
     def get(self, *path_args):
         url_set = []
         for page in self.site_config["pages"]:
-            if (("type" not in page) or ("menu" not in page)) and not self._has_sub_menu(page):
-                continue
-            if not self._has_sub_menu(page):
-                self._get_urls(url_set, page)
-                continue
             if "type" in page:
                 self._get_urls(url_set, page)
+            if not self._has_sub_menu(page):
+                continue
             for child in page["children"]:
                 if "menu" not in child:
                     continue
