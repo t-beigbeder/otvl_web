@@ -21,7 +21,7 @@ def env_setup(monkeypatch):
     sys.argv = ["main"]
     monkeypatch.setenv('LOGGING', 'INFO')
     monkeypatch.setenv('CONFIG_DIR', 'data/tests')
-    monkeypatch.setenv('CONFIG_NAME', 'test_server_site1')
+    monkeypatch.setenv('CONFIG_NAME', 'test_unit_server_site1')
 
 
 @pytest.fixture
@@ -134,8 +134,21 @@ def test_get_blogs_content(http_client, base_url, caplog, monkeypatch):
 def test_get_sitemap(http_client, base_url, caplog, monkeypatch):
     response = yield http_client.fetch(base_url + "/api/sitemap.xml", raise_error=False)
     assert response.code == 200
-    resp_o = body_to_obj(response.body)
-    assert "urlset" in resp_o
+    lines = response.body.decode("utf-8").split('\n')
+    assert "urlset" in lines[1]
+    assert len(lines) >= 6
+    for line in lines[2:-2]:
+        assert line.startswith("<url><loc>")
+        assert line.endswith("</lastmod></url>")
+        url = line[len("<url><loc>"):line.index("</loc")]
+        lm = line[line.index("<lastmod>")+len("<lastmod>"):line.index("</lastmod")]
+        assert len(url)
+        if lm == "1970-01-01":
+            continue
+        response = yield http_client.fetch(
+            base_url + url,
+            raise_error=False)
+        assert response.code == 200
 
 
 if __name__ == "__main__":

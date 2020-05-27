@@ -37,7 +37,10 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def prepare(self):
         self.logger.debug(f"prepare: {self.request.method} {self.request.path}")
-        self.set_header("Content-Type", "application/json")
+        if not self.request.path.endswith(".xml"):
+            self.set_header("Content-Type", "application/json")
+        else:
+            self.set_header("Content-Type", "text/xml; charset=utf-8")
         if "Origin" in self.request.headers and \
                 "cors_mapping" in self.server_config and \
                 self.request.headers["Origin"] in self.server_config["cors_mapping"]:
@@ -346,9 +349,9 @@ class SiteMapHandler(BaseHandler):
         for blog in blogs:
             slug = blog["slug"]
             if parent is None:
-                blog_loc = f"/{page['type']}/{page['id']}/{slug}"
+                blog_loc = f"/{type_config['blog_type']}/{page['id']}//{slug}"
             else:
-                blog_loc = f"/{page['type']}/{parent['id']}/{page['id']}/{slug}"
+                blog_loc = f"/{type_config['blog_type']}/{parent['id']}/{page['id']}/{slug}"
             blog_date = self._get_lastmod(blog)
             url_set.append(
                 {
@@ -358,10 +361,7 @@ class SiteMapHandler(BaseHandler):
             )
 
     def get(self, *path_args):
-        sitemap = {
-            "urlset": []
-            }
-        url_set = sitemap["urlset"]
+        url_set = []
         for page in self.site_config["pages"]:
             if (("type" not in page) or ("menu" not in page)) and not self._has_sub_menu(page):
                 continue
@@ -374,8 +374,17 @@ class SiteMapHandler(BaseHandler):
                 if "menu" not in child:
                     continue
                 self._get_urls(url_set, child, page)
+        self.write('<?xml version="1.0" encoding="UTF-8"?>\n')
+        self.write('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
+        sitemap_root = self.server_config["sitemap_root"] if "sitemap_root" in self.server_config else ""
 
-        self.write(json.dumps(sitemap, indent=2))
+        for url in url_set:
+            self.write('<url>')
+            self.write(f'<loc>{sitemap_root}{url["loc"]}</loc>')
+            self.write(f'<lastmod>{url["lastmod"]}</lastmod>')
+            self.write('</url>\n')
+        self.write('</urlset>\n')
+
         return self.finish()
 
 

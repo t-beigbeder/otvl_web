@@ -12,7 +12,7 @@ else
     echo >&2 "No ${base_dir}/dev/shell/common_dev.sh"
     exit 1
 fi
-VERSION="1.0.dev003"
+VERSION="1.0.dev004"
 EXPORT_DIR=/srv/export_dir/guest
 run_command docker build --pull \
    -t otvl_web_vuejs:${VERSION} vuejs && \
