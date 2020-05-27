@@ -4,23 +4,22 @@ meta:
   publication_date: 20200508
   last_update_date: 20200509
   summary: |
-    Home summary.
+    blog 101 summary.
     Line2.
-    Line3 of home summary.
+    Line3 of blog 101 summary.
   authors:
     - no nem
     - thierry otvl
 
 content:
-  title: A big blog for Otvl Web
-  heading: Heading for Otvl Web's big blog
+  title: Blog 101
+  heading: Heading for blog 101
   brand:
     labels:
-      index_title: Big blog index
+      index_title: List of blog 101 blogs
       search_blogs: "Search blogs..."
-      search_criteria: "Other search criteria..."
-      published_on: "Published on "
-      read_more: "Read more..."
+      blog_index_search_criteria: "Other search criteria..."
+      blog_index_read_more: "Read more..."
 
   stream_fields:
   - type: md_data

@@ -6,6 +6,7 @@ import sys
 import json
 import glob
 from operator import itemgetter
+import datetime
 
 import tornado.ioloop
 import tornado.web
@@ -54,6 +55,44 @@ class BaseHandler(tornado.web.RequestHandler):
         self.set_status(code)
         self.finish({'reason': reason, 'message': message})
 
+    def _load_page_content(self, page_file_path):
+        try:
+            with open(page_file_path, encoding="utf-8") as ypc_fd:
+                page_content = yaml.load(ypc_fd, Loader=yaml.FullLoader)
+                return page_content
+        except FileNotFoundError:
+            self.logger.debug(f"_load_page_content: file_path {page_file_path} FileNotFoundError")
+            return None
+
+    def _load_blogs(self, file_path):
+        blog_infos = {}
+        blog_paths = glob.glob(f"{file_path}/**/*.yml", recursive=True)
+        for blog_path in blog_paths:
+            blog_name = os.path.basename(blog_path)[0:-len(".yml")]
+            blog_content = self._load_page_content(blog_path)
+            blog_infos[blog_name] = {
+                "slug": blog_name,
+                "heading": blog_content["content"]["heading"]
+                }
+            for meta_field, meta_value in blog_content["meta"].items():
+                blog_infos[blog_name][meta_field] = meta_value
+        return blog_infos
+
+    def _get_blogs_index(self, section, sub_section):
+        file_path = self.server_config["pages_directory"]
+        if file_path[-1] != "/":
+            file_path += "/"
+        file_path += section
+        if sub_section:
+            file_path += "/"
+            file_path += sub_section
+        blogs = self._load_blogs(file_path)
+        blog_index = []
+        for info in blogs.values():
+            blog_index.append(info)
+        return sorted(blog_index, key=itemgetter("publication_date"), reverse=True)
+        return blog_index
+
 
 class VersionHandler(BaseHandler):
     logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
@@ -75,15 +114,11 @@ class SiteHandler(BaseHandler):
         super().initialize(**kwargs)
 
     def get(self):
-        config_file = self.server_config["site_config_file"]
-        self.logger.debug(f"GET: site_config_file {config_file}")
         key = self.request.path[len("/api/site/"):]
         if key[-1] == "/":
             key = key[:-1]
-        with open(config_file) as ysd:
-            site_config = yaml.load(ysd, Loader=yaml.FullLoader)[key]
-            self.write(json.dumps(site_config, indent=2))
-            return self.finish()
+        self.write(json.dumps(self.site_config[key], indent=2))
+        return self.finish()
 
 
 class BasePageHandler(BaseHandler):
@@ -143,15 +178,6 @@ class BasePageHandler(BaseHandler):
                 extension_configs["mdx_wikilink_plus"] = {"base_url": self.server_config["base_url"]}
             BasePageHandler.md = markdown.Markdown(extensions=extensions, extension_configs=extension_configs)
         return self._patch_html_src_assets(self.md.convert(self._patch_assets_wiki_links(md_text)))
-
-    def _load_page_content(self, page_file_path):
-        try:
-            with open(page_file_path, encoding="utf-8") as ypc_fd:
-                page_content = yaml.load(ypc_fd, Loader=yaml.FullLoader)
-                return page_content
-        except FileNotFoundError:
-            self.logger.debug(f"_load_page_content: file_path {page_file_path} FileNotFoundError")
-            return None
 
     def _get_page_content(self, section, sub_section, slug):
         file_path = self.server_config["pages_directory"]
@@ -230,35 +256,6 @@ class BlogsHandler(BasePageHandler):
     def initialize(self, **kwargs):
         super().initialize(**kwargs)
 
-    def _load_blogs(self, file_path):
-        blog_infos = {}
-        blog_paths = glob.glob(f"{file_path}/**/*.yml", recursive=True)
-        for blog_path in blog_paths:
-            blog_name = os.path.basename(blog_path)[0:-len(".yml")]
-            blog_content = self._load_page_content(blog_path)
-            blog_infos[blog_name] = {
-                "slug": blog_name,
-                "heading": blog_content["content"]["heading"]
-                }
-            for meta_field, meta_value in blog_content["meta"].items():
-                blog_infos[blog_name][meta_field] = meta_value
-        return blog_infos
-
-    def _get_blogs_index(self, section, sub_section):
-        file_path = self.server_config["pages_directory"]
-        if file_path[-1] != "/":
-            file_path += "/"
-        file_path += section
-        if sub_section:
-            file_path += "/"
-            file_path += sub_section
-        blogs = self._load_blogs(file_path)
-        blog_index = []
-        for info in blogs.values():
-            blog_index.append(info)
-        return sorted(blog_index, key=itemgetter("publication_date"), reverse=True)
-        return blog_index
-
     def get(self, section, *path_args):
         config_file = self.server_config["site_config_file"]
         sub_section = ''
@@ -271,6 +268,114 @@ class BlogsHandler(BasePageHandler):
             "blogs": self._get_blogs_index(section, sub_section)
             }
         self.write(json.dumps(blogs, indent=2))
+        return self.finish()
+
+
+class SiteMapHandler(BaseHandler):
+    logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
+
+    def initialize(self, **kwargs):
+        super().initialize(**kwargs)
+
+    def _has_sub_menu(self, page):
+        if "children" not in page:
+            return False
+        for child in page["children"]:
+            if "menu" in child:
+                return True
+        return False
+
+    def _get_page_content(self, section, sub_section, slug):
+        file_path = self.server_config["pages_directory"]
+        if file_path[-1] != "/":
+            file_path += "/"
+        file_path += section
+        if sub_section:
+            file_path += "/"
+            file_path += sub_section
+        if slug:
+            blog_paths = glob.glob(f"{file_path}/**/{slug}.yml", recursive=True)
+            if not len(blog_paths):
+                return None
+            file_path = blog_paths[0]
+        else:
+            file_path += ".yml"
+
+        page_content = self._load_page_content(file_path)
+        return page_content
+
+    def _get_lastmod(self, meta):
+        def i2s(s):
+            if type(s) is int:
+                return str(s)
+            return s
+
+        try:
+            if meta:
+                if "last_update_date" in meta:
+                    return datetime.datetime.strptime(i2s(meta["last_update_date"]), "%Y%m%d")
+                elif "publication_date" in meta:
+                    return datetime.datetime.strptime(i2s(meta["publication_date"]), "%Y%m%d")
+            return datetime.date.fromtimestamp(0)
+        except ValueError:
+            return datetime.date.fromtimestamp(0)
+
+    def _get_urls(self, url_set, page, parent=None):
+        if parent is None:
+            loc = f"/{page['type']}/{page['id']}"
+            page_content = self._get_page_content(page['id'], None, None)
+            section = page['id']
+            sub_section = None
+        else:
+            loc = f"/{page['type']}/{parent['id']}/{page['id']}"
+            page_content = self._get_page_content(parent['id'], page['id'], None)
+            section = parent['id']
+            sub_section = page['id']
+        page_date = self._get_lastmod(page_content["meta"] if page_content else None)
+
+        url_set.append(
+            {
+                "loc": loc,
+                "lastmod": page_date.strftime("%Y-%m-%d")
+            }
+        )
+        type_config = self.site_config["config"]["types"][page['type']]
+        if "blog_type" not in type_config:
+            return
+        blogs = self._get_blogs_index(section, sub_section)
+        for blog in blogs:
+            slug = blog["slug"]
+            if parent is None:
+                blog_loc = f"/{page['type']}/{page['id']}/{slug}"
+            else:
+                blog_loc = f"/{page['type']}/{parent['id']}/{page['id']}/{slug}"
+            blog_date = self._get_lastmod(blog)
+            url_set.append(
+                {
+                    "loc": blog_loc,
+                    "lastmod": blog_date.strftime("%Y-%m-%d")
+                }
+            )
+
+    def get(self, *path_args):
+        sitemap = {
+            "urlset": []
+            }
+        url_set = sitemap["urlset"]
+        for page in self.site_config["pages"]:
+            if (("type" not in page) or ("menu" not in page)) and not self._has_sub_menu(page):
+                continue
+            if not self._has_sub_menu(page):
+                self._get_urls(url_set, page)
+                continue
+            if "type" in page:
+                self._get_urls(url_set, page)
+            for child in page["children"]:
+                if "menu" not in child:
+                    continue
+                self._get_urls(url_set, child, page)
+
+        self.write(json.dumps(sitemap, indent=2))
         return self.finish()
 
 
@@ -336,6 +441,7 @@ def make_otvl_web_app(server_config):
     assets_directory = server_config["assets_directory"]
     return tornado.web.Application([
         (r"/api/version/?", VersionHandler, handler_kwa),
+        (r"/api/sitemap.xml", SiteMapHandler, handler_kwa),
         (r"/api/site/config/?", SiteHandler, handler_kwa),
         (r"/api/site/pages/?", SiteHandler, handler_kwa),
         (r"/api/assets/(.*)", tornado.web.StaticFileHandler, {"path": assets_directory}),

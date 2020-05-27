@@ -130,6 +130,14 @@ def test_get_blogs_content(http_client, base_url, caplog, monkeypatch):
         assert resp_o["content"]["index_url"] == "/blox/corporate-blog/"
 
 
+@pytest.mark.gen_test
+def test_get_sitemap(http_client, base_url, caplog, monkeypatch):
+    response = yield http_client.fetch(base_url + "/api/sitemap.xml", raise_error=False)
+    assert response.code == 200
+    resp_o = body_to_obj(response.body)
+    assert "urlset" in resp_o
+
+
 if __name__ == "__main__":
     # pytest.main()
     pytest.main(['-v', '-s', '-k', 'test_server.py'])
