@@ -349,7 +349,7 @@ class SiteMapHandler(BaseHandler):
         for blog in blogs:
             slug = blog["slug"]
             if parent is None:
-                blog_loc = f"/{type_config['blog_type']}/{page['id']}//{slug}"
+                blog_loc = f"/{type_config['blog_type']}/{page['id']}/{slug}"
             else:
                 blog_loc = f"/{type_config['blog_type']}/{parent['id']}/{page['id']}/{slug}"
             blog_date = self._get_lastmod(blog)

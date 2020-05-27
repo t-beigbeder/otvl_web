@@ -13,3 +13,4 @@ cors_mapping_bck:
 
 base_url_bck: "#"
 assets_url_bck: "http://dxpydk:8888/api/assets/"
+sitemap_root: "https://site2.dxpydk"

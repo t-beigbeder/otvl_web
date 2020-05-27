@@ -13,4 +13,3 @@ cors_mapping:
 
 base_url: "#"
 assets_url: "http://dxpydk:8888/api/assets/"
-sitemap_root: "/api"

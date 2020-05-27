@@ -12,7 +12,7 @@ else
     echo >&2 "No ${base_dir}/dev/shell/common_dev.sh"
     exit 1
 fi
-VERSION="1.0.dev004"
+VERSION="1.0.dev005"
 EXPORT_DIR=/srv/export_dir/guest
 run_command docker build --pull \
   --build-arg V_USER=`id -un` \
