@@ -14,7 +14,7 @@
             class="q-mx-md"
           />
           <q-item tag="a" :to=app.brand.urls.home>
-              <img v-if="'assets' in app.brand" src="statics/img/brand_logo.jpg">
+              <img v-if="'assets' in app.brand && 'brand_img' in app.brand.assets" :src="app.assets_url + app.brand.assets.brand_img">
               <img v-else src="statics/img/brand_logo.jpg">
           </q-item>
           <q-toolbar-title>

@@ -1,6 +1,6 @@
 meta:
   version: "1.0"
-  publication_date: 20200508
+  publication_date: "20200528"
 
 content:
   title: About
@@ -9,13 +9,12 @@ content:
   stream_fields:
   - type: md_data
     data: |
-      # heading in md_data
+      This site is published by Thierry Beigbeder
+      [![Image LinkedIn](/assets/images/common/linkedin-logo-24.png "LinkedIn")](https://www.linkedin.com/in/thierry-beigbeder-358169/)
+      [![Image GitHub](/assets/images/common/github-logo-24.png)](https://github.com/t-beigbeder)
+      [![Image Twitter](/assets/images/common/twitter-logo-24.png)](https://twitter.com/t_beigbeder)
+      .
 
-      Text in md_data
-
-      - list in md_data
-          - sub list in md_data
-          - sub list in md_data # 2
-      - list in md_data # 2
-
-      End text in md_data
+      Unless explicitly mentioned, the blog articles are published under a
+      [![Creative Commons License](https://i.creativecommons.org/l/by-sa/4.0/88x31.png "Logo Creative Commons License")](https://creativecommons.org/licenses/by-sa/4.0/legalcode)
+      license.

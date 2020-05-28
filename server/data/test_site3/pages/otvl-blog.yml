@@ -17,13 +17,8 @@ content:
   stream_fields:
   - type: md_data
     data: |
-      # heading in md_data
+      ![Image Home](/assets/images/common/versEtangDeSoulcem.jpeg){: class="BRAND__page-img-full" }
 
-      Text in md_data
+      # Welcome to otvl.org blog!
 
-      - list in md_data
-          - sub list in md_data
-          - sub list in md_data # 2
-      - list in md_data # 2
-
-      End text in md_data
+      Here is a list of the published articles.

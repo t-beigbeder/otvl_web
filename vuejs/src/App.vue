@@ -18,7 +18,7 @@ export default {
   data: function () {
     return {
       app_debug: false,
-      app_debug_console: true,
+      app_debug_console: false,
       odbg: {},
       pageClassesByName: {
         StandardPage: StandardPage,
@@ -45,7 +45,8 @@ export default {
       },
       pages_by_id: function () {
         return {}
-      }
+      },
+      assets_url: 'assets_url_tbd'
     }
   },
   created: function () {
@@ -57,14 +58,14 @@ export default {
       api_server_url: qApp.getAttribute('api-server-url'),
       web_server_url: qApp.getAttribute('web-server-url')
     }
-    if (this.rtc.web_server_url === 'default_web_server_url') {
+    if ((this.rtc.web_server_url === 'default_web_server_url') || !this.rtc.web_server_url) {
       this.rtc.web_server_url = this.rtc.default_web_server_url
     }
-    if (this.rtc.api_server_url === 'default_api_server_url') {
+    if (this.rtc.api_server_url === 'default_api_server_url' || !this.rtc.api_server_url) {
       this.rtc.api_server_url = this.rtc.default_api_server_url
     }
     if (this.app_debug_console) {
-      console.log('App was created, it102 qApp and rtc')
+      console.log('App was created, it104 qApp and rtc')
       console.log(qApp)
       console.log(this.rtc)
     }
@@ -81,6 +82,7 @@ export default {
       }
       this.buildRoutes()
       this.$set(this, 'brand', this.site_configuration.brand)
+      this.assets_url = this.site_configuration.assets_url
       if (this.app_debug_console) {
         console.log(`App brand ${this.brand}`)
         console.log(this.brand)

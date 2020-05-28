@@ -1,0 +1,14 @@
+meta:
+  version: "1.0"
+  publication_date: "20200528"
+  summary: |
+    While the use of Docker and a Kubernetes orchestrator for Data Science
+    become more and more standard when relying on Cloud Computing,
+    two interesting questions remain open.
+
+content:
+  title: Working locally with Kubernetes for Data Science
+  heading: Working locally with Kubernetes for Data Science
+  stream_fields:
+  - type: md_file
+    file: k8s-local-dev.emd
