@@ -64,24 +64,20 @@ export default {
         console.log(`fetchBlogIndex str_id ${this.str_id} type ${this.type}`)
       }
 
-      if (this.app.app_debug_simul_rest) {
-        this.simulFetchBlogIndex()
-      } else {
-        this.$axios.get(`${this.app.rtc.api_server_url}/blogs/${this.str_id}/`)
-          .then((response) => {
-            if (this.app.app_debug_console) {
-              console.log(`fetchBlogIndex str_id ${this.str_id}`)
-            }
-            this.$set(this, 'blogs', response.data.blogs)
-          })
-          .catch((error) => {
-            if (error.response && error.response.status === 404) {
-              location.replace(`${this.app.rtc.web_server_url}/statics/error/page_not_found.html`)
-            } else {
-              location.replace(`${this.app.rtc.web_server_url}/statics/error/technical_error.html`)
-            }
-          })
-      }
+      this.$axios.get(`${this.app.rtc.api_server_url}/blogs/${this.str_id}/`)
+        .then((response) => {
+          if (this.app.app_debug_console) {
+            console.log(`fetchBlogIndex str_id ${this.str_id}`)
+          }
+          this.$set(this, 'blogs', response.data.blogs)
+        })
+        .catch((error) => {
+          if (error.response && error.response.status === 404) {
+            location.replace(`${this.app.rtc.web_server_url}/statics/error/page_not_found.html`)
+          } else {
+            location.replace(`${this.app.rtc.web_server_url}/statics/error/technical_error.html`)
+          }
+        })
     }
   }
 }

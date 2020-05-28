@@ -120,7 +120,14 @@ class SiteHandler(BaseHandler):
         key = self.request.path[len("/api/site/"):]
         if key[-1] == "/":
             key = key[:-1]
-        self.write(json.dumps(self.site_config[key], indent=2))
+        config_o = self.site_config[key]
+        if key == "config":
+            if "assets_url" in self.server_config:
+                config_o["assets_url"] = self.server_config["assets_url"]
+            else:
+                config_o["assets_url"] = config_o["default_assets_url"]
+
+        self.write(json.dumps(config_o, indent=2))
         return self.finish()
 
 
