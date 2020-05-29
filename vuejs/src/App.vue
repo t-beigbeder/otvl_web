@@ -38,6 +38,10 @@ export default {
         labels: {
           toolbar: 'toolbar_label_tbd',
           account_tooltip: 'account_tooltip_tbd'
+        },
+        behavior: {
+          dates_header: false,
+          dates_footer: false
         }
       },
       menus: function () {

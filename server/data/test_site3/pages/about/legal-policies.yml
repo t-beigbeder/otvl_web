@@ -5,6 +5,8 @@ meta:
 content:
   title: Legal policies
   heading:
+  brand:
+    no_dates: true
 
   stream_fields:
   - type: md_data

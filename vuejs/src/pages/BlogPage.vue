@@ -2,6 +2,7 @@
   <q-page class="BRAND__page-content">
     <div class="row">
       <div class="col-12 col-md-9 q-pr-md-sm">
+        <PageHeaderAndFooter :page="this" :app="app" is_header></PageHeaderAndFooter>
         <h1>{{ content.heading }}</h1>
         <StreamField v-for="(stream_field, index) in content.stream_fields" v-bind="stream_field" :key="str_id + index">
         </StreamField>
@@ -10,6 +11,9 @@
       </div>
       <div class="col-3 q-mt-xl q-pl-md-sm">
         <BlogBrowser :app="app" :brand="content.brand" :index_url="content.index_url"></BlogBrowser>
+      </div>
+      <div class="col-12 col-md-9 q-pr-md-sm">
+        <PageHeaderAndFooter :page="this" :app="app"></PageHeaderAndFooter>
       </div>
     </div>
   </q-page>
@@ -28,9 +32,6 @@ export default {
   data: function () {
     return {
       content: {
-        brand: {
-          labels: {}
-        },
         index_url: ''
       }
     }

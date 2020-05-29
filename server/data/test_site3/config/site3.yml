@@ -23,8 +23,12 @@ config:
     labels:
       toolbar: Blog
       account_tooltip: Account
+      created_on: "Created on "
+      published_on: "Published on "
+      last_updated_on: "Last updated on "
     behavior:
-      blog: {}
+      dates_header: true
+      dates_footer: false
 
 pages:
   - id: otvl-blog

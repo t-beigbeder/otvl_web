@@ -1,4 +1,5 @@
 import AppUtilMixin from 'src/mixins/AppUtilMixin'
+import PageHeaderAndFooter from 'src/components/PageHeaderAndFooter'
 import StreamField from 'src/components/StreamField'
 import { DateTime } from 'luxon'
 
@@ -6,6 +7,7 @@ export default {
   mixins: [AppUtilMixin],
 
   components: {
+    PageHeaderAndFooter,
     StreamField
   },
 
@@ -28,6 +30,9 @@ export default {
       content: {
         title: '',
         heading: '',
+        brand: {
+          no_dates: false
+        },
         stream_fields: []
       }
     }
@@ -53,6 +58,26 @@ export default {
     },
     locale: function () {
       return this.app.brand.locale
+    },
+    meta_headers: function () {
+      const res = {
+      }
+      if (this.app.brand.behavior.dates_header) {
+        res.creation_date = this.meta.creation_date
+        res.publication_date = this.meta.publication_date
+        res.last_update_date = this.meta.last_update_date
+      }
+      return res
+    },
+    meta_footers: function () {
+      const res = {
+      }
+      if (this.app.brand.behavior.dates_footer) {
+        res.creation_date = this.meta.creation_date
+        res.publication_date = this.meta.publication_date
+        res.last_update_date = this.meta.last_update_date
+      }
+      return res
     }
   },
   methods: {
