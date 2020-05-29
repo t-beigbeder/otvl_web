@@ -75,7 +75,6 @@ class BaseHandler(tornado.web.RequestHandler):
             blog_content = self._load_page_content(blog_path)
             blog_infos[blog_name] = {
                 "slug": blog_name,
-                "heading": blog_content["content"]["heading"]
                 }
             for meta_field, meta_value in blog_content["meta"].items():
                 blog_infos[blog_name][meta_field] = meta_value

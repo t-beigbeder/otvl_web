@@ -23,6 +23,8 @@ config:
     labels:
       toolbar: Blog
       account_tooltip: Account
+    behavior:
+      blog: {}
 
 pages:
   - id: otvl-blog

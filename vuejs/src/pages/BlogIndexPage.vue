@@ -8,7 +8,7 @@
         <p v-if="app.app_debug">site_configuration {{ app.site_configuration }}</p>
         <q-separator spaced />
         <div v-for="blog in blogs" :key="blog.slug" class="row q-pl-md">
-          <h2 class="col-12 col-md-9">{{ blog.heading }}</h2>
+          <h2 class="col-12 col-md-9">{{ blog.summary_heading }}</h2>
           <p class="col-12 col-md-3 q-my-auto text-caption">
             {{ content.brand.labels.published_on }} {{ intlDate(blog.publication_date, locale) }}
           </p>

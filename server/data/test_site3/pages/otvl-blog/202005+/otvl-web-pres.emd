@@ -1,3 +1,7 @@
+Picture: "Web Content Manager Cartoon": kindly provided by [its author](https://www.kindpng.com/imgv/hRbToRx_web-content-manager-cartoon-hd-png-download/).
+![Article image](/assets/images/otvl-web-pres/WebContentManagerCartoon.jpg "Web Content Manager Cartoon"){: class="BRAND__page-img-full" }
+
+# Publishing content efficiently with otvl_web
 
 Otvl_web is an Open Source web application mainly intended to publish content efficiently.
 
@@ -33,3 +37,9 @@ The benefits of this tool are
 This application
 [ [![Image GitHub](/assets/images/common/github-logo-24.png)](https://github.com/t-beigbeder/otvl_web) ]
 is still a work-in-progress, however it is already hosting a few applications in production.
+The first concern is obviously the lack of documentation,
+however several samples that are used for tests can help to start a new site.
+A second concern is about the ability to customize the site's _look-and-feel_
+without having to modify the source code.
+Several options for this goal are already present but, with no doubt,
+the first future features implemented will target those concerns.
