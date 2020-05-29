@@ -9,16 +9,11 @@ content:
   heading:
   brand:
     labels:
-      index_title: List of otvl blogs
-      search_blogs: "Search blogs..."
+      index_title: List of articles
+      search_blogs: "Search articles..."
       search_criteria: "Other search criteria..."
       published_on: "Published on "
       read_more: "Read more..."
   stream_fields:
-  - type: md_data
-    data: |
-      ![Image Home](/assets/images/common/versEtangDeSoulcem.jpeg){: class="BRAND__page-img-full" }
-
-      # Welcome to otvl.org blog!
-
-      Here is a list of the published articles.
+  - type: md_file
+    file: otvl-blog.emd

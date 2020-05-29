@@ -1,3 +1,7 @@
+![Image Home](/assets/images/common/portVendres.jpg "Vers Port Vendres"){: class="BRAND__page-img-full" }
+
+# Working locally with Kubernetes for Data Science
+
 ## Introduction
 
 ![logo work in progess](/assets/images/common/wip.png "Logo work in progress") This is a work in progress.
@@ -29,9 +33,3 @@ Not yet
 This section provides you with useful references.
 
 Not yet.
-
-
-## Legal
-
-This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/legalcode)
-![Creative Commons License](https://i.creativecommons.org/l/by-sa/4.0/88x31.png "Logo Creative Commons License")

@@ -8,7 +8,7 @@ meta:
 
 content:
   title: Working locally with Kubernetes for Data Science
-  heading: Working locally with Kubernetes for Data Science
+  heading:
   stream_fields:
   - type: md_file
     file: k8s-local-dev.emd

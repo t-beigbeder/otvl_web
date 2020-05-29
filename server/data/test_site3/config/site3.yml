@@ -21,7 +21,7 @@ config:
       brand_img: images/common/otvl-blog-brand.png
     locale: en
     labels:
-      toolbar: Otvl Blog
+      toolbar: Blog
       account_tooltip: Account
 
 pages:
