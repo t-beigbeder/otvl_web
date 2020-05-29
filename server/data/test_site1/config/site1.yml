@@ -21,6 +21,7 @@ config:
     labels:
       toolbar: Otvl Web
       account_tooltip: Account
+    behavior: {}
 
 pages:
   - id: home

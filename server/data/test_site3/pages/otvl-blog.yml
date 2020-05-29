@@ -8,7 +8,7 @@ content:
   title: Otvl Blog Home
   heading:
   brand:
-    no_dates: false
+    no_dates: true
     labels:
       index_title: List of articles
       search_blogs: "Search articles..."

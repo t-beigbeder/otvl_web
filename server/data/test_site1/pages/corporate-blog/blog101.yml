@@ -15,6 +15,7 @@ content:
   title: Blog 101
   heading: Heading for blog 101
   brand:
+    no_dates: true
     labels:
       index_title: List of blog 101 blogs
       search_blogs: "Search blogs..."

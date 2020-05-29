@@ -32,7 +32,11 @@ export default {
   data: function () {
     return {
       content: {
-        index_url: ''
+        index_url: '',
+        brand: {
+          labels: {
+          }
+        }
       }
     }
   }
