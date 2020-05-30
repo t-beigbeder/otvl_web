@@ -1,0 +1,16 @@
+site_config_file: ../../otvl_blog/docs/otvl_web/otvl.org/config/otvl_org.yml
+pages_directory: ../../otvl_blog/docs/otvl_web/otvl.org//pages
+assets_directory: ../../otvl_blog/docs/otvl_web/otvl.org//assets
+
+version:
+  server: "1.0"
+  application: "1.0"
+  server_config_file: data/tests/test_server_otvl_org.yml
+  site_config_file: ../../otvl_blog/docs/otvl_web/otvl.org/config/otvl_org.yml
+
+cors_mapping:
+  'http://dxpydk:8080': 'http://dxpydk:8888'
+
+base_url: "#"
+assets_url: "http://dxpydk:8888/api/assets/"
+sitemap_root: "http://dxpydk:8080/#"
