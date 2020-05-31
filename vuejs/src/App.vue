@@ -18,7 +18,7 @@ export default {
   data: function () {
     return {
       app_debug: false,
-      app_debug_console: false,
+      app_debug_console: true,
       odbg: {},
       pageClassesByName: {
         StandardPage: StandardPage,
@@ -29,6 +29,7 @@ export default {
       site_configuration_updated: false,
       site_pages: [],
       site_pages_updated: false,
+      routes_configured: false,
       brand: {
         urls: {
           home: 'urls_home_tbd'
@@ -113,7 +114,19 @@ export default {
         })
     },
     buildRoutes: function () {
-      this.$router.addRoutes(this.buildRoutesFromConf())
+      if (!this.routes_configured) {
+        this.routes_configured = true
+        const routes = this.buildRoutesFromConf()
+        if (this.app_debug_console) {
+          console.log('buildRoutes')
+          console.log(routes)
+        }
+        this.$router.addRoutes(routes)
+      } else {
+        if (this.app_debug_console) {
+          console.log('buildRoutes: up to date')
+        }
+      }
     },
     fetchSitePages: function () {
       this.$axios.get(this.rtc.api_server_url + '/site/pages/')

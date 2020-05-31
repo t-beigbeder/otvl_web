@@ -186,7 +186,13 @@ class BasePageHandler(BaseHandler):
             if "base_url" in self.server_config:
                 extension_configs["mdx_wikilink_plus"] = {"base_url": self.server_config["base_url"]}
             BasePageHandler.md = markdown.Markdown(extensions=extensions, extension_configs=extension_configs)
-        return self._patch_html_src_assets(self.md.convert(self._patch_assets_wiki_links(md_text)))
+        patched_md_text = self._patch_assets_wiki_links(md_text)
+        html_text = self.md.convert(patched_md_text)
+        res = self._patch_html_src_assets(html_text)
+        if "reset_markdown" in self.server_config and self.server_config["reset_markdown"]:
+            # some extensions have a strange cache behavior
+            BasePageHandler.md = None
+        return res
 
     def _get_page_content(self, section, sub_section, slug):
         file_path = self.server_config["pages_directory"]
