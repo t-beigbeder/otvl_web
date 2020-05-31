@@ -13,8 +13,8 @@ for site in site2 ; do
   VERSION="1.0.dev003"
   EXPORT_DIR=/srv/export_dir/guest
   (cd /srv/www/${site}/web && tar xzf ${EXPORT_DIR}/otvl_web_vuejs-${VERSION}.tgz)
-  sed -e 's=default_api_server_url=https://site2.dxpydk/api=' -i /srv/www/${site}/web/index.html
-  sed -e 's=default_web_server_url=https://site2.dxpydk=' -i /srv/www/${site}/web/index.html
+  sed -e 's=default_api_server_url=https://site2.vjs-dev-host/api=' -i /srv/www/${site}/web/index.html
+  sed -e 's=default_web_server_url=https://site2.vjs-dev-host=' -i /srv/www/${site}/web/index.html
   cp -a ../server/data/test_${site}/assets/. /srv/www/${site}/web/assets/
   chmod -R go+rX /srv/www/${site}
 done

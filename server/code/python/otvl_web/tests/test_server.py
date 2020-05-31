@@ -47,7 +47,7 @@ def test_get_site_config(http_client, base_url, caplog, monkeypatch):
     assert response.code == 200
     resp_o = body_to_obj(response.body)
     assert resp_o["home_section"] == "home" and len(resp_o["types"]) == 3
-    assert resp_o["assets_url"] == "http://dxpydk:8888/api/assets/"
+    assert resp_o["assets_url"] == "http://vjs-dev-host:8888/api/assets/"
 
 
 @pytest.mark.gen_test
@@ -85,7 +85,7 @@ def test_get_home_asset_content(http_client, base_url, caplog, monkeypatch):
     assert len(resp_o["content"]["stream_fields"]) == 3
     sf1c = resp_o["content"]["stream_fields"][0]["content"]
     ix = sf1c.index(" src=\"")
-    asset_url = "http://dxpydk:8888/api/assets/"
+    asset_url = "http://vjs-dev-host:8888/api/assets/"
     assert sf1c[ix+6:].startswith(asset_url)
     sf2c = resp_o["content"]["stream_fields"][1]["content"]
     ix = sf2c.index(" href=\"")

@@ -7,4 +7,4 @@ version:
   site_config_file: data/test_site1/config/site1.yml
 
 cors_mapping:
-  'http://dxpydk:8080': 'http://dxpydk:8888'
+  'http://vjs-dev-host:8080': 'http://vjs-dev-host:8888'

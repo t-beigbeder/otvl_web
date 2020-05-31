@@ -9,8 +9,8 @@ version:
   site_config_file: data/test_site2/config/site2.yml
 
 cors_mapping_bck:
-  'http://dxpydk:8080': 'http://dxpydk:8888'
+  'http://vjs-dev-host:8080': 'http://vjs-dev-host:8888'
 
 base_url_bck: "#"
-assets_url_bck: "http://dxpydk:8888/api/assets/"
-sitemap_root: "https://site2.dxpydk"
+assets_url_bck: "http://vjs-dev-host:8888/api/assets/"
+sitemap_root: "https://site2.vjs-dev-host"

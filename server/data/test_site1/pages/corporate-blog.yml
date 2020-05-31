@@ -36,4 +36,4 @@ content:
 
       End text in md_data
   - type: sf_img
-    src: http://dxpydk:8888/assets/images/home/nature.jpg
+    src: http://vjs-dev-host:8888/assets/images/home/nature.jpg
