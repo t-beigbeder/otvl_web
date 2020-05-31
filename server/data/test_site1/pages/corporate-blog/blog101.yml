@@ -12,7 +12,7 @@ meta:
     - thierry otvl
 
 content:
-  title: Blog 101
+  title: "Blog 101 corporate"
   heading: Heading for blog 101
   brand:
     no_dates: true
@@ -35,5 +35,14 @@ content:
       - list in md_data # 2
 
       End text in md_data
+
+      _Illustration credit: [^illustration_credit]_
+
+      Blah blah
+
+      ///Footnotes Go Here///
+      [^illustration_credit]: Illustration above thanks to [source](https://www.piqsels.com/en/public-domain-photo-jrrkb)
+
+
   - type: sf_img
     src: /assets/images/home/nature.jpg

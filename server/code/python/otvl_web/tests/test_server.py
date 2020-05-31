@@ -127,6 +127,8 @@ def test_get_blogs_content(http_client, base_url, caplog, monkeypatch):
         resp_o = body_to_obj(response.body)
         assert "meta" in resp_o
         assert "content" in resp_o
+        if resp_o["content"]["title"] == "Blog 101 corporate":
+            assert True
         assert resp_o["content"]["brand"]["labels"]["index_title"] == "List of corporate blogs"
         assert resp_o["content"]["index_url"] == "/blox/corporate-blog/"
 

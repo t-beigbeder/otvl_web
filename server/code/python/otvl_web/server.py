@@ -132,7 +132,6 @@ class SiteHandler(BaseHandler):
 
 class BasePageHandler(BaseHandler):
     logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
-    md = None
     default_assets_url = None
     assets_url = None
 
@@ -143,6 +142,27 @@ class BasePageHandler(BaseHandler):
             BasePageHandler.assets_url = self.default_assets_url
         else:
             BasePageHandler.assets_url = self.server_config["assets_url"]
+
+    def _get_url(self):
+        if "base_url" in self.server_config:
+            loc = f"/{self.server_config['base_url']}"
+        else:
+            loc = ""
+        loc += f"/{self.path_args[0]}/{self.path_args[1]}"
+        for ix in (2, 3):
+            if len(self.path_args) > ix:
+                if self.path_args[ix] != "":
+                    loc += f"/{self.path_args[ix]}"
+        return loc
+
+    def _patch_html_loc_anchors(self, html_text):
+        loc_anchor_str = 'href="#'
+        page_url_str = self._get_url()
+        while loc_anchor_str in html_text:
+            ix = html_text.index(loc_anchor_str)
+            html_text = html_text[0:ix + len(loc_anchor_str) - 1] + page_url_str \
+                + html_text[ix + len(loc_anchor_str) - 1:]
+        return html_text
 
     def _patch_html_src_assets(self, html_text):
         if self.assets_url == self.default_assets_url:
@@ -182,17 +202,14 @@ class BasePageHandler(BaseHandler):
             ]
         extension_configs = {}
 
-        if self.md is None:
-            if "base_url" in self.server_config:
-                extension_configs["mdx_wikilink_plus"] = {"base_url": self.server_config["base_url"]}
-            BasePageHandler.md = markdown.Markdown(extensions=extensions, extension_configs=extension_configs)
+        if "base_url" in self.server_config:
+            extension_configs["mdx_wikilink_plus"] = {"base_url": self.server_config["base_url"]}
+        md = markdown.Markdown(extensions=extensions, extension_configs=extension_configs)
         patched_md_text = self._patch_assets_wiki_links(md_text)
-        html_text = self.md.convert(patched_md_text)
-        res = self._patch_html_src_assets(html_text)
-        if "reset_markdown" in self.server_config and self.server_config["reset_markdown"]:
-            # some extensions have a strange cache behavior
-            BasePageHandler.md = None
-        return res
+        html_text = md.convert(patched_md_text)
+        patched_assets_html_text = self._patch_html_src_assets(html_text)
+        patched_anchors_html_text = self._patch_html_loc_anchors(patched_assets_html_text)
+        return patched_anchors_html_text
 
     def _get_page_content(self, section, sub_section, slug):
         file_path = self.server_config["pages_directory"]
