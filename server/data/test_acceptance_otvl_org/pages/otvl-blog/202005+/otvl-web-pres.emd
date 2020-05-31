@@ -1,10 +1,11 @@
 ![Article image](/assets/images/otvl-web-pres/business-background-illustration-people.jpg "Web Content Manager Cartoon"){: class="BRAND__page-img-full" }
 
+_[Illustration above credit](https://www.piqsels.com/en/public-domain-photo-jrrkb)_
+
 # Publishing content efficiently with otvl_web
 
-_Illustration credit: [^illustration_credit]_
-
-Otvl_web is an open Source
+Otvl_web is an
+[Open Source](https://en.wikipedia.org/wiki/Free_and_open-source_software)
 web application mainly intended to publish content efficiently.
 
 There is at this time no GUI for publishing, so the content publisher has to update the site
@@ -26,8 +27,11 @@ From a content publisher point of view, the benefits of this tool are
   as hyperlinks and some page layout directive;
 - the site configuration, the pages content,
   media files such as documents, images and video files
-  are managed directly as YAML [^yaml] files on the server;
-- the pages contents are described in markdown [^markdown].
+  are managed directly as
+  [YAML](https://yaml.org/)
+  files on the server;
+- the pages contents are described in
+  [markdown](https://daringfireball.net/projects/markdown/syntax).
 
 Uploading YAML and markdown sources along with media files
 can become a very efficient way of working in organizations where the site publisher
@@ -35,8 +39,10 @@ and the site administrator are the same person.
 
 From a developper point of view, the benefits of this tool are
 
-- the front-end is developped with Vue.js [^vuejs]
-  and more specifically the Quasar framework [^quasar]
+- the front-end is developped with
+  [Vue.js](https://vuejs.org/)
+  and more specifically
+  [quasar](https://quasar.dev/)
   layouts and components,
   so the site general _look-and-feel_ may be customized and enriched efficiently;
 - on the server side, a collection of simple REST web services are developped in python,
@@ -62,9 +68,11 @@ the first future features implemented will target this concern.
 
 ### Vue.js
 
-The front-end is implemented as mentioned above with Vue.js,
-a major framework for building single-page applications [^SPA],
-with the characteristic to be incrementally adoptable.
+The front-end is implemented as mentioned above with
+[Vue.js](https://vuejs.org/),
+a major framework for building single-page applications
+[single-page applications](https://en.wikipedia.org/wiki/Single-page_application),
+with the characteristic of being incrementally adoptable.
 
 Vue.js is one of the Open Source projects with the most amazing documentation quality.
 Being very compact, the documentation can be read easily in a few hours.
@@ -100,7 +108,7 @@ Another benefit of single-page application architecture might not be obvious at 
 the GUI design may in that case be achieved using a static GUI mockup along with mock data,
 but this mockup will not be throwable because it uses the same tools as the final product will.
 With the added availability of off-the-shelf components like in the case of the 
-quasar framework
+[quasar framework](https://quasar.dev/)
 the developper becomes much more efficient when implementing new designs.
 By contrast, GUI design with a classical web "client-server" architecture
 is achieved with static HTML and has to be translated to server-side templates.
@@ -121,14 +129,6 @@ TBC
 
 TBC
 
-///Footnotes Go Here///
+## Useful links
 
-## References
-
-[^illustration_credit]: Illustration above thanks to [source](https://www.piqsels.com/en/public-domain-photo-jrrkb)
-[^yaml]: YAML [reference](https://yaml.org/)
-[^markdown]: markdown [reference](https://daringfireball.net/projects/markdown/syntax)
-[^vuejs]: Vue.js [site](https://vuejs.org/)
-[^quasar]: Quasar framework [site](https://quasar.dev/)
-[^SPA]: Single-Page Application or [SPA](https://en.wikipedia.org/wiki/Single-page_application)
-
+TBC
