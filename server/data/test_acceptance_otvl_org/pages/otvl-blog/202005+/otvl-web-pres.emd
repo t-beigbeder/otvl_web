@@ -176,11 +176,37 @@ The
 also integrates those tools very efficiently though a dedicated
 [command-line interface](https://quasar.dev/start/quasar-cli).
 
-A second concern is about the very single-page application technology.
+A second concern is about the
+[single-page application](https://en.wikipedia.org/wiki/Single-page_application),
+technology.
 While it has many benefits for the user and the developper,
-it also comes with its constraints.
+it also comes with some constraints, generally related to URL handling.
+URL changes appear on the client-side,
+while the browser bar and
+[history](https://developer.mozilla.org/en-US/docs/Web/API/History_API/Working_with_the_History_API)
+are updated at the same time
+so that the user sees and handles familiar URLs.
+But even if the URL changes are performed locally only in the browser,
+as the user may bookmark or refresh the current one,
+all of them have to be also honored on the server side.
+The
+[vue router documentation](https://router.vuejs.org/guide/essentials/history-mode.html)
+provides detailed instructions about how to handle this specific requirement.
+It is finally important to note that the implementation of the
+[history API](https://developer.mozilla.org/en-US/docs/Web/API/History_API/Working_with_the_History_API)
+in the browsers has various status.
 
-TBC: concerns about deployment
+Another issue related to URL management concerns the use of HTML anchors.
+It appears like if the current implementation of the
+[history API](https://developer.mozilla.org/en-US/docs/Web/API/History_API/Working_with_the_History_API)
+were not consistent with the use of anchors from a user perspective.
+
+The final concern is about deployment: even if the separation of concerns
+between the browser and the server is clear,
+some topics have to be taken into account on both sides:
+we have seen the case for URLs handling
+
+TBC
 
 ### Quasar
 
@@ -196,4 +222,15 @@ TBC
 
 ## Useful links
 
-TBC
+### Articles and guides
+
+- [codemag - HTML5 History](https://www.codemag.com/Article/1301091/HTML5-History-Clean-URLs-for-Deep-linking-Ajax-Applications)
+- [css-tricks - Using the HTML5 History API](https://css-tricks.com/using-the-html5-history-api/)
+- [mozilla - Working with the History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API/Working_with_the_History_API)
+- [vue router - HTML5 History Mode](https://router.vuejs.org/guide/essentials/history-mode.html)
+
+### References
+
+- [Vue.js](https://vuejs.org/)
+- [Quasar framework](https://quasar.dev/)
+- [History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API)
