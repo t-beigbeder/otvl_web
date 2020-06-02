@@ -2,11 +2,16 @@
 
 _[Illustration above credit](https://www.piqsels.com/en/public-domain-photo-jrrkb)_
 
-# Publishing content efficiently with otvl_web
+# Publishing content as a single page application with otvl_web
 
 Otvl_web is an
 [Open Source](https://en.wikipedia.org/wiki/Free_and_open-source_software)
 web application mainly intended to publish content efficiently.
+
+It is built over the
+[Vue.js framework](https://vuejs.org/)
+as a
+_[single-page application](https://en.wikipedia.org/wiki/Single-page_application)_.
 
 There is at this time no GUI for editing a site content,
 so the content publisher has to update the site
@@ -34,7 +39,11 @@ From a content publisher point of view, the benefits of this tool are
   [YAML](https://yaml.org/)
   files on the server;
 - the pages contents are described in
-  [markdown](https://daringfireball.net/projects/markdown/syntax);
+  [markdown](https://daringfireball.net/projects/markdown/syntax),
+  a simple language widely used to describe web page contents;
+- the underlying 
+  _[single-page application](https://en.wikipedia.org/wiki/Single-page_application)_
+  architecture enables smoother pages transitions and consumes less bandwidth;
 - the underlying technology can provide the user with
   a high level of ergonomy:
   you may browse the collection of
@@ -75,20 +84,21 @@ is still a work-in-progress, however it is already hosting a few web sites in pr
 including this one.
 
 The first concern at this time is obviously the lack of documentation.
-However several samples that are used for tests and a demonstration site
-can help to start a new site,
-moreover this gap may be filled easily, thus quickly.
+However this gap may be filled easily, thus quickly,
+moreover, several samples that are used for tests
+and a demonstration site can help to start a new site,
 
 A second concern is about the ability to customize the site's _look-and-feel_
 without having to modify the source code.
 Several options for this goal are already present but, with no doubt,
-the first future features implemented will target this concern.
+the first future features implemented will target this concern
+through a clean packaging for reuse and extension.
 
 ## Development feedback
 
 ### Vue.js
 
-#### Single page
+#### Core
 
 The front-end is implemented as mentioned above with
 [Vue.js](https://vuejs.org/),
@@ -104,14 +114,14 @@ while remaining as simple to use as possible.
 All the complexity is kept in the implementation of the framework itself.
 
 Even if the full otvl_web application is implemented as a single page,
-I also found the incremental adoption design very valuable concerning the learning curve:
+I also found the _incremental adoption_ design very valuable concerning the learning curve:
 you can start the application design relying on simple and possibly naive choices,
 while progressively refactoring the existing codebase towards a more efficient implementation,
 as your self-confidence increases.  
 For instance, the use of components may appear intimidating to newcomers,
 specifically concerning the organization of the information among parent and children components.
-However, with a little bit of practice, the refactoring of duplicated code relying on components
-can be achieved rather easily and incrementally,
+However, with a little bit of practice, the refactoring of duplicated code
+relying on new components can be achieved rather easily and incrementally,
 while the information reorganization appears rather spontaneously.
 
 #### Routing
@@ -124,12 +134,12 @@ In the case of single-page applications, the routing is achieved on the client s
 [router](https://router.vuejs.org/) component,
 which is as compact and simple to use as Vue.js itself.
 Being said very schematically, its role is to trigger the execution of specific page handlers
-when a new URL scheme is requested from another page, on user demand.
+when a new URL scheme is requested from another page, in response to user demand.
 Because URL schemes are hierarchic by nature, so the organization of those page handlers has to be.
 This can appear as a constraint in the case of otvl_web where the URLs
 should map the site content hierarchy rather than specific parts implementation.
 For such a specific requirement, a dedicated router
-or a better understanding of Vue.js router API is required.  
+or perhaps a better understanding of Vue.js router API is required.  
 
 ### Single-page applications
 
@@ -137,7 +147,7 @@ or a better understanding of Vue.js router API is required.
 
 The design of a single-page application compared to
 the design of a classical web "client-server" application
-also provides the developper with much more simplicity and efficiency.
+provides the developper with much more simplicity and efficiency.
 The most obvious reason is that the separation of concerns
 between the client and the server appears really logical.
 Even if the developper has "full-stack" competencies,
@@ -163,9 +173,9 @@ The first concern is about tooling.
 Each Vue.js project has to create a local repository (`node_modules`) of JavaScript modules
 for the support of development, packaging and run-time tooling and services.
 In the case of otvl_web, this repository contains more than 300 MB,
-without using automatic testing tools (shame on me).
+even without using automatic testing tools (shame on me) which add a lot of other modules.
 This consumes a lot of bandwidth and storage space and it has to be instantiated for each project.
-The resulting development framework is also very complex and difficult to be mastered by newcomers.
+The resulting development framework is also quite complex and difficult to be mastered by newcomers.
 
 That being said, the downloaded modules quality is generally excellent,
 moreover development and packaging tools
@@ -182,7 +192,7 @@ technology.
 While it has many benefits for the user and the developper,
 it also comes with some constraints, generally related to URL handling.
 URL changes appear on the client-side,
-while the browser bar and
+while the browser navigation bar and
 [history](https://developer.mozilla.org/en-US/docs/Web/API/History_API/Working_with_the_History_API)
 are updated at the same time
 so that the user sees and handles familiar URLs.
@@ -204,13 +214,45 @@ were not consistent with the use of anchors from a user perspective.
 The final concern is about deployment: even if the separation of concerns
 between the browser and the server is clear,
 some topics have to be taken into account on both sides:
-we have seen the case for URLs handling
-
-TBC
+we have seen the case for URLs handling,
+but other topics like robots.txt or sitemap.xml rendering also require a shared knowledge
+of URL schemes.
+As those topics reside at the border between development and operations,
+a real [DevOps](https://en.wikipedia.org/wiki/DevOps) culture is a great help
+to provide efficient and simple solutions through a clear understanding of both parts constraints.
 
 ### Quasar
 
-TBC
+The
+[Quasar framework](https://quasar.dev/)
+is based on
+[Vue.js](https://vuejs.org/)
+and it adds a lot of high level features from a developper perspective
+to enable a very efficient development of new applications.
+Some specific features are the ability to share the same design
+for classic browsers, for mobile browsers and for mobile applications,
+but in the case of otvl_web, we will keep the focus here on the features dedicated
+to the style and the ergonomy of web applications.
+
+For those familiar with the
+[Twitter Bootstrap](https://getbootstrap.com/) library,
+Quasar provides the web designer with the same kind of features
+but translated in the Vue.js world:
+
+- the Quasar framework contains a rich collection of Vue.js ready-to-use
+[components](https://quasar.dev/vue-components/)
+fully integrated with the other characteristics of the framework;
+- the site's identity may be easily customized using existing CSS tools;
+- the general pages layout may be easily designed using a responsive grid system.
+
+The documentation of the framework is as excellent as Vue.js documentation itself.
+The framework is a little bit more complex for beginners as it relies exclusively Vue.js components.
+Like Vue.js, it is very modular, and even if it integrates well with Vue router or Vuex extensions,
+their use is absolutely not required for simple applications.
+
+Finally, it offers a powerful
+[command-line interface](https://quasar.dev/start/quasar-cli)
+that helps the newcomer to start a new project easily.
 
 ## Deployment
 

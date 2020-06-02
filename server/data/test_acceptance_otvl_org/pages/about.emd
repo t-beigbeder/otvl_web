@@ -11,11 +11,27 @@ but as my native language is French, please forgive any errors and ungraceful co
 
 ### What
 
+You will find here articles in the domains of software development, data science,
+software engineering, system architecture, system deployment,
+and related methods and practices.
+
+The articles contents are rather technical, yet by no means reserved to specialists.
+The goal is to share information and know-how acquired through readings, work, practice,
+but in first place thanks to the work and help of so many other people.
+
 ### With what
 
+**Copyleft**  
 Unless explicitly mentioned, the text contents and technical diagrams of the blog articles are published under a
-[![Creative Commons License](https://i.creativecommons.org/l/by-sa/4.0/88x31.png "Logo Creative Commons License")](https://creativecommons.org/licenses/by-sa/4.0/legalcode)
-license.  
-However, some artistic works hosted on this site may be subject to copyright, please don't reuse them without checking.
+[![Creative Commons License](/assets/images/common/cc-by-sa-80x15.png "Logo Creative Commons License")](https://creativecommons.org/licenses/by-sa/4.0/legalcode)
+license.
 
-Unless explicitly mentioned, the code related to some articles is hosted with this git repository under a GNU Affero General Public License.
+**Copyright**  
+However, some artistic works hosted or referenced on this site may be subject to copyright,
+please don't reuse them without checking.
+
+**Copyleft**  
+Unless explicitly mentioned,
+the code related to some articles is hosted with this git repository under
+a GNU Affero General Public License
+![AGPL](/assets/images/common/agpl-logo-52x32.jpg "AGPL logo").
