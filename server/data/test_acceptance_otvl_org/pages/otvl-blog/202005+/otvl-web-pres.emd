@@ -2,7 +2,7 @@
 
 _[Illustration above credit](https://www.piqsels.com/en/public-domain-photo-jrrkb)_
 
-# Publishing content as a single page application with otvl_web
+# Publishing content efficiently with otvl_web
 
 Otvl_web is an
 [Open Source](https://en.wikipedia.org/wiki/Free_and_open-source_software)
@@ -43,7 +43,7 @@ From a content publisher point of view, the benefits of this tool are
   a simple language widely used to describe web page contents;
 - the underlying 
   _[single-page application](https://en.wikipedia.org/wiki/Single-page_application)_
-  architecture enables smoother pages transitions and consumes less bandwidth;
+  architecture enables smoother pages transitions and uses less data over the network;
 - the underlying technology can provide the user with
   a high level of ergonomy:
   you may browse the collection of
@@ -218,7 +218,7 @@ we have seen the case for URLs handling,
 but other topics like robots.txt or sitemap.xml rendering also require a shared knowledge
 of URL schemes.
 As those topics reside at the border between development and operations,
-a real [DevOps](https://en.wikipedia.org/wiki/DevOps) culture is a great help
+an effective [DevOps](https://en.wikipedia.org/wiki/DevOps) help
 to provide efficient and simple solutions through a clear understanding of both parts constraints.
 
 ### Quasar
@@ -256,7 +256,19 @@ that helps the newcomer to start a new project easily.
 
 ## Deployment
 
-TBC
+Questions and solutions specific to the deployment of a Vue.js
+_single-page application_ are detailed in the article
+_**[Deploying a Vue.js Single Page Application](/blog/otvl-blog/deploy-vjs-spa)**_.
+
+The ovl_web application
+[ git [![Image GitHub](/assets/images/common/github-logo-24.png)](https://github.com/t-beigbeder/otvl_web) ]
+comes with Dockerfiles to produce the different components of the following architecture.
+
+TBC: schema to come.
+
+The otvl_ansible
+[ git [![Image GitHub](/assets/images/common/github-logo-24.png)](https://github.com/t-beigbeder/otvl_ansible) ]
+project enables to deploy those components on physical or virtual servers.
 
 ## Conclusion
 
@@ -270,6 +282,7 @@ TBC
 - [css-tricks - Using the HTML5 History API](https://css-tricks.com/using-the-html5-history-api/)
 - [mozilla - Working with the History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API/Working_with_the_History_API)
 - [vue router - HTML5 History Mode](https://router.vuejs.org/guide/essentials/history-mode.html)
+- [Deploying a Vue.js Single Page Application](/blog/otvl-blog/deploy-vjs-spa)
 
 ### References
 

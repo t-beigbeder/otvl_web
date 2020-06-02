@@ -1,7 +1,7 @@
 meta:
   version: "1.0"
-  publication_date: "20200529"
-  summary_heading: "Publishing content as a single page application with otvl_web"
+  publication_date: "20200602"
+  summary_heading: "Publishing content efficiently with otvl_web"
   summary: |
     Otvl_web is a web application mainly intended to publish content efficiently.
     It is built over the Vue.js framework as a "single page application".

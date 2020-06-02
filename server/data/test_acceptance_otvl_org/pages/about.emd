@@ -4,9 +4,9 @@ This site's articles are written and published by Thierry Beigbeder:
 [ [![Image LinkedIn](/assets/images/common/linkedin-logo-24.png "LinkedIn")](https://www.linkedin.com/in/thierry-beigbeder-358169/) ]
 [ [![Image GitHub](/assets/images/common/github-logo-24.png)](https://github.com/t-beigbeder) ]
 [ [![Image Twitter](/assets/images/common/twitter-logo-24.png)](https://twitter.com/t_beigbeder) ]
-.
+. Feedback is appreciated through these networks.
 
-The articles are written in English in the hope it will be helpful to more people,
+The articles are written in English in the hope they will be helpful to more people,
 but as my native language is French, please forgive any errors and ungraceful content.
 
 ### What
@@ -20,6 +20,9 @@ The goal is to share information and know-how acquired through readings, work, p
 but in first place thanks to the work and help of so many other people.
 
 ### With what
+
+This site runs thanks to: the Internet, Linux, Debian, Apache, Python, ES6, Vue.js, Quasar framework
+and a multitude of Open Source tools and libraries.
 
 **Copyleft**  
 Unless explicitly mentioned, the text contents and technical diagrams of the blog articles are published under a

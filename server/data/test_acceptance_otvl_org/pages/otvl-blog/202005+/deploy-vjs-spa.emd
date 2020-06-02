@@ -1,0 +1,51 @@
+![Article image](/assets/images/otvl-web-pres/business-background-illustration-people.jpg "Web Content Manager Cartoon"){: class="BRAND__page-img-full" }
+
+# Deploying a Vue.js Single Page Application
+
+The [Single-Page Application](https://en.wikipedia.org/wiki/Single-page_application) architecture
+provides great features to the users and the developpers.
+On the user side, page transitions will be smoother and network data usage will be optimal.
+On the developper side, the software architecture
+and the corresponding client and server implementations will be simpler to design and to maintain.
+And finally, from both point of views,
+the use of graphical components libraries enable to achieve a great level of ergonomy.
+
+The deployment of such applications require a good understanding between
+the developpers and the operation people because some solutions lie at the border between
+development and system integration competencies.
+And the security of the production application  is the shared responsibility of both teams.
+Fortunately, the
+[DevOps](https://en.wikipedia.org/wiki/DevOps)
+culture helps!
+
+## Deployed components architecture
+
+## Routing
+
+### Vue.js router
+
+### Apache fallback URLs
+
+## Configuring at deployment time
+
+### Vue.js packaging
+
+### Static content
+
+
+## CORS
+
+## Useful links
+
+### Articles and guides
+
+- [codemag - HTML5 History](https://www.codemag.com/Article/1301091/HTML5-History-Clean-URLs-for-Deep-linking-Ajax-Applications)
+- [css-tricks - Using the HTML5 History API](https://css-tricks.com/using-the-html5-history-api/)
+- [mozilla - Working with the History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API/Working_with_the_History_API)
+- [vue router - HTML5 History Mode](https://router.vuejs.org/guide/essentials/history-mode.html)
+
+### References
+
+- [Vue.js](https://vuejs.org/)
+- [Quasar framework](https://quasar.dev/)
+- [History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API)
