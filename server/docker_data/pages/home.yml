@@ -1,0 +1,37 @@
+meta:
+  version: "1.0"
+  creation_date: 20200429
+  publication_date: "20200430"
+  last_update_date: "20200501"
+  summary: |
+    Home summary.
+    Line2.
+    Line3 of home summary.
+  authors:
+    - no nem
+    - thierry otvl
+
+content:
+  title: Home for Otvl Web
+  heading: Heading for Otvl Web's home
+  stream_fields:
+  - type: md_file
+    file: home.emd
+  - type: md_data
+    data: |
+      # heading in md_data
+
+      Text in md_data
+
+      - list in md_data
+          - sub list in md_data
+          - sub list in md_data # 2
+      - list in md_data # 2
+
+      End text in md_data
+
+      And this is a [[/assets/images/home/nature.jpg | wiki link towards an image]]
+
+      And a second one [[/assets/images/home/boutDuMonde.jpg | wiki link towards an image]]
+  - type: sf_img
+    src: /assets/images/home/nature.jpg

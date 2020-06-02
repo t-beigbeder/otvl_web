@@ -12,12 +12,14 @@ else
     echo >&2 "No ${base_dir}/dev/shell/common_dev.sh"
     exit 1
 fi
-VERSION="1.0.dev009"
+VERSION="1.0.dev010"
 EXPORT_DIR=/srv/export_dir/guest
-run_command docker build --pull \
-   -t otvl_web_vuejs:${VERSION} vuejs && \
+run_command \
+  docker build --pull \
+    -t otvl_web_vuejs:${VERSION} vuejs && \
   info "run command docker run --rm otvl_web_vuejs:${VERSION}" && \
-  docker run --rm otvl_web_vuejs:${VERSION} > ${EXPORT_DIR}/otvl_web_vuejs-${VERSION}.tgz && \
+  docker run --rm otvl_web_vuejs:${VERSION} /shell/export_venv_as_tgz.sh \
+    > ${EXPORT_DIR}/otvl_web_vuejs-${VERSION}.tgz && \
   run_command ls -l ${EXPORT_DIR}/otvl_web_vuejs-${VERSION}.tgz && \
   info "Archive ${EXPORT_DIR}/otvl_web_vuejs-${VERSION}.tgz is available" && \
   true || exit 1

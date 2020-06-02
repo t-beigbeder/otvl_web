@@ -1,0 +1,39 @@
+meta:
+  version: "1.0"
+  creation_date: 20200507
+  publication_date: 20200508
+  last_update_date: 20200509
+  summary: |
+    Home summary.
+    Line2.
+    Line3 of home summary.
+  authors:
+    - no nem
+    - thierry otvl
+
+content:
+  title: A big blog for Otvl Web
+  heading: Heading for Otvl Web's big blog
+  brand:
+    labels:
+      index_title: Big blog index
+      search_blogs: "Search blogs..."
+      search_criteria: "Other search criteria..."
+      published_on: "Published on "
+      read_more: "Read more..."
+
+  stream_fields:
+  - type: md_data
+    data: |
+      # heading in md_data
+
+      Text in md_data
+
+      - list in md_data
+          - sub list in md_data
+          - sub list in md_data # 2
+      - list in md_data # 2
+
+      End text in md_data
+  - type: sf_img
+    src: /assets/images/home/nature.jpg

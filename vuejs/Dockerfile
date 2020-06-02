@@ -12,7 +12,8 @@ COPY . /code/
 WORKDIR /code
 RUN ln -s /tmp/node_modules
 RUN quasar build
-COPY .dev/* /shell/
 
-ENTRYPOINT [ "/shell/docker_entrypoint.sh" ]
-CMD [ "/shell/docker_cmd.sh" ]
+FROM httpd:2.4
+COPY --from=build_stage_1 /code/dist/spa/ /srv/www/site1/web/
+COPY .dev/docker/shell/* /shell/
+COPY .dev/docker/apache2/conf/ /usr/local/apache2/conf/
