@@ -17,3 +17,13 @@ FROM httpd:2.4
 COPY --from=build_stage_1 /code/dist/spa/ /srv/www/site1/web/
 COPY .dev/docker/shell/* /shell/
 COPY .dev/docker/apache2/conf/ /usr/local/apache2/conf/
+
+ENV WEB_PORT 9981
+ENV WEB_SERVER otvl-web-vuejs
+
+ENV API_PORT 9991
+ENV SERVER_NAME vjs-dev-host
+ENV APP_PORT 9443
+
+RUN /shell/patch_conf_file_from_env.sh /usr/local/apache2/conf/httpd.conf
+RUN /shell/patch_conf_file_from_env.sh /srv/www/site1/web/index.html

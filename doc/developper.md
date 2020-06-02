@@ -8,6 +8,7 @@ This repository is organized as following:
 
 - dev: files used for development
 - doc: documentation
+- revproxy: a reverse proxy apache2 configuration for docker
 - server: a REST API server implemented in python
 - vuejs: the web site GUI is implemented with Vue.js and more specifically quasar
 

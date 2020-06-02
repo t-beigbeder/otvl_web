@@ -31,6 +31,6 @@ USER ${V_USER}:${V_GROUP}
 
 ENV SRV_DATA /srv/data
 ENV API_PORT 9991
-ENV API_ADDRESS otvl_web_server
+ENV API_ADDRESS otvl-web-server
 
 CMD [ "/shell/docker_cmd.sh" ]
