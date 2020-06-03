@@ -15,6 +15,8 @@ services:
 
   vuejs:
     image: "${VAR_ACT_V_IMAGE}"
+    volumes:
+      - ${VAR_DATA_TMP}/assets:/srv/data/assets
     ports:
       - "9989:9981"
     hostname: "otvl-web-vuejs"

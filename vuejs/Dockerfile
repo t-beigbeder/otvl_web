@@ -17,6 +17,7 @@ FROM httpd:2.4
 COPY --from=build_stage_1 /code/dist/spa/ /srv/www/site1/web/
 COPY .dev/docker/shell/* /shell/
 COPY .dev/docker/apache2/conf/ /usr/local/apache2/conf/
+COPY .dev/docker/data/assets/ /srv/data/assets/
 
 ENV WEB_PORT 9981
 ENV WEB_SERVER otvl-web-vuejs

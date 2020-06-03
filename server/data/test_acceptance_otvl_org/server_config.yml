@@ -1,4 +1,4 @@
-site_config_file: config/site.yml
+site_config_file: config/otvl_org.yml
 pages_directory: pages
 assets_directory: assets
 

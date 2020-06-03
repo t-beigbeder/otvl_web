@@ -26,7 +26,8 @@ COPY --from=build_stage_1 /srv/pkg/otvl_web_server_venv /srv/pkg/otvl_web_server
 RUN addgroup --gid ${V_GID} ${V_GROUP} && \
   adduser --disabled-password --ingroup ${V_GROUP} --uid ${V_UID} --shell /bin/sh --gecos ${V_USER} ${V_USER}
 COPY code/shell/* /shell/
-COPY docker_data/ /srv/data/
+COPY docker_data/config/ /srv/data/config/
+COPY docker_data/pages/ /srv/data/pages/
 USER ${V_USER}:${V_GROUP}
 
 ENV SRV_DATA /srv/data
