@@ -1,14 +1,14 @@
 <template>
   <q-page class="BRAND__page-content">
     <div class="row">
-      <div class="col-12 col-md-9 q-pr-md-sm">
+      <div class="col-md-9 q-pr-md-sm">
         <PageHeaderAndFooter :page="this" :app="app" is_header></PageHeaderAndFooter>
         <h1>{{ content.heading }}</h1>
         <StreamField v-for="(stream_field, index) in content.stream_fields" v-bind="stream_field" :key="str_id + index">
         </StreamField>
         <p v-if="app.app_debug">site_configuration {{ app.site_configuration }}</p>
         <q-separator spaced />
-        <div v-for="blog in blogs" :key="blog.slug" class="row q-pl-md">
+        <div v-for="blog in published_blogs" :key="blog.slug" class="row q-pl-md">
           <h2 class="col-12 col-md-9">{{ blog.summary_heading }}</h2>
           <p class="col-12 col-md-3 q-my-auto text-caption">
             {{ content.brand.labels.published_on }} {{ intlDate(blog.publication_date, locale) }}
@@ -21,10 +21,15 @@
         </div>
 
       </div>
-      <div class="col-3 q-mt-xl q-pl-md-sm">
-        <BlogBrowser :app="app" :brand="content.brand" :index_url="content.index_url"></BlogBrowser>
+      <div class="col-md-3 col-sm-4 q-pl-md-sm">
+        <div v-if="content.brand.promotion" class="col q-mt-xl">
+          <BlogPromotion :app="app" :brand="content.brand" :preview_blogs="preview_blogs" :blog_prefix_link="blogPrefixLink"></BlogPromotion>
+        </div>
+        <div class="col q-mt-lg">
+          <BlogBrowser :app="app" :brand="content.brand" :index_url="content.index_url"></BlogBrowser>
+        </div>
       </div>
-      <div class="col-12 col-md-9 q-pr-md-sm">
+      <div class="col-md-9 q-pr-md-sm">
         <PageHeaderAndFooter :page="this" :app="app"></PageHeaderAndFooter>
       </div>
     </div>
@@ -34,12 +39,14 @@
 <script>
 import PageMixin from '../mixins/PageMixin'
 import BlogBrowser from 'src/components/BlogBrowser'
+import BlogPromotion from 'src/components/BlogPromotion'
 
 export default {
   mixins: [PageMixin],
   name: 'BlogIndexPage',
   components: {
-    BlogBrowser
+    BlogBrowser,
+    BlogPromotion
   },
   data: function () {
     return {
@@ -53,6 +60,20 @@ export default {
     }
   },
   computed: {
+    published_blogs: function () {
+      return this.blogs.filter(
+        function (blog) {
+          return (!('preview' in blog) || !blog.preview)
+        }
+      )
+    },
+    preview_blogs: function () {
+      return this.blogs.filter(
+        function (blog) {
+          return (('preview' in blog) && blog.preview)
+        }
+      )
+    },
     blogPrefixLink: function () {
       const blogType = this.app.site_configuration.types[this.type].blog_type
       return (this.id.sub_section ? `/${blogType}/${this.id.section}/${this.id.sub_section}` : `/${blogType}/${this.id.section}`)

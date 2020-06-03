@@ -4,7 +4,7 @@ This site's articles are written and published by Thierry Beigbeder:
 [ [![Image LinkedIn](/assets/images/common/linkedin-logo-24.png "LinkedIn")](https://www.linkedin.com/in/thierry-beigbeder-358169/) ]
 [ [![Image GitHub](/assets/images/common/github-logo-24.png)](https://github.com/t-beigbeder) ]
 [ [![Image Twitter](/assets/images/common/twitter-logo-24.png)](https://twitter.com/t_beigbeder) ]
-. Feedback is appreciated through these networks.
+. Feedback appreciated through these networks.
 
 The articles are written in English in the hope they will be helpful to more people,
 but as my native language is French, please forgive any errors and ungraceful content.
@@ -19,10 +19,7 @@ The articles contents are rather technical, yet by no means reserved to speciali
 The goal is to share information and know-how acquired through readings, work, practice,
 but in first place thanks to the work and help of so many other people.
 
-### With what
-
-This site runs thanks to: the Internet, Linux, Debian, Apache, Python, ES6, Vue.js, Quasar framework
-and a multitude of Open Source tools and libraries.
+### Take care
 
 **Copyleft**  
 Unless explicitly mentioned, the text contents and technical diagrams of the blog articles are published under a
@@ -35,6 +32,8 @@ please don't reuse them without checking.
 
 **Copyleft**  
 Unless explicitly mentioned,
-the code related to some articles is hosted with this git repository under
+the code related to some articles is hosted with this git repository
+[![Image GitHub](/assets/images/common/github-logo-24.png)](https://github.com/t-beigbeder/otvl_blog)
+under
 a GNU Affero General Public License
-![AGPL](/assets/images/common/agpl-logo-52x32.jpg "AGPL logo").
+![AGPL](/assets/images/common/agpl-logo-120x32.jpg "AGPL logo").

@@ -61,7 +61,7 @@
         </q-list>
       </q-scroll-area>
     </q-drawer>
-    <q-page-container class="q-mx-sm-lg q-mx-md-xl">
+    <q-page-container class="q-mx-xs-sm q-mx-sm-lg q-mx-md-xl">
       <p v-if="app.app_debug">SiteLayout odbg {{ app.odbg }}</p>
       <router-view v-bind:app="app"/>
     </q-page-container>
