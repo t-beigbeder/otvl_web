@@ -7,7 +7,7 @@
         <StreamField v-for="(stream_field, index) in content.stream_fields" v-bind="stream_field" :key="str_id + index">
         </StreamField>
         <p v-if="app.app_debug">site_configuration {{ app.site_configuration }}</p>
-        <q-separator spaced />
+        <q-separator spaced  size="2px" color="blue-grey-4"/>
         <div v-for="blog in published_blogs" :key="blog.slug" class="row q-pl-md">
           <h2 class="col-12 col-md-9">{{ blog.summary_heading }}</h2>
           <p class="col-12 col-md-3 q-my-auto text-caption">
@@ -17,7 +17,7 @@
             {{ blog.summary }}
             <q-btn class="q-ml-md" dense color="blue-grey-2" text-color="blue-grey-9" no-caps :to="blogPrefixLink + '/' + blog.slug" :label="content.brand.labels.read_more"></q-btn>
           </div>
-          <q-separator spaced class="col-12" />
+          <q-separator spaced class="col-12" size="2px" color="blue-grey-4"/>
         </div>
 
       </div>
