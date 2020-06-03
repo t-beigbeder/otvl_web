@@ -18,6 +18,7 @@ COPY --from=build_stage_1 /code/dist/spa/ /srv/www/site1/web/
 COPY .dev/docker/shell/* /shell/
 COPY .dev/docker/apache2/conf/ /usr/local/apache2/conf/
 COPY .dev/docker/data/assets/ /srv/data/assets/
+RUN ln -s /srv/data/assets /srv/www/site1/web/
 
 ENV WEB_PORT 9981
 ENV WEB_SERVER otvl-web-vuejs
