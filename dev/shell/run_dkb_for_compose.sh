@@ -12,13 +12,13 @@ else
     echo >&2 "No ${base_dir}/dev/shell/common_dev.sh"
     exit 1
 fi
-if [ -z "${DKB_R_VERSION}" ] ; then
-  VERSION="1.0.dev001"
-else
-  VERSION="${DKB_R_VERSION}"
-fi
-EXPORT_DIR=/srv/export_dir/guest
-run_command \
-  docker build --pull \
-    -t otvl_web_revproxy:${VERSION} revproxy && \
+
+export DKB_R_VERSION="${DK_ACT_VERSION}"
+export DKB_S_VERSION="${DK_ACT_VERSION}"
+export DKB_V_VERSION="${DK_ACT_VERSION}"
+
+true && \
+  ${base_dir}/dev/shell/run_dkb_revproxy.sh && \
+  ${base_dir}/dev/shell/run_dkb_server.sh && \
+  ${base_dir}/dev/shell/run_dkb_vuejs.sh && \
   true || exit 1

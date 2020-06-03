@@ -12,13 +12,13 @@ else
     echo >&2 "No ${base_dir}/dev/shell/common_dev.sh"
     exit 1
 fi
-if [ -z "${DKB_R_VERSION}" ] ; then
-  VERSION="1.0.dev001"
-else
-  VERSION="${DKB_R_VERSION}"
-fi
-EXPORT_DIR=/srv/export_dir/guest
-run_command \
-  docker build --pull \
-    -t otvl_web_revproxy:${VERSION} revproxy && \
+
+export VAR_DATA_TMP=${base_dir}/dev/tmp
+
+true && \
+  echo rm -rf ${VAR_DATA_TMP}/* && \
+  cp -r ${base_dir}/server/docker_data/. ${VAR_DATA_TMP}/ && \
+  run_command docker-compose -f ${base_dir}/dev/compose/docker-compose.yml up -d && \
   true || exit 1
+info "Stop the stack with ${base_dir}/dev/shell/run_compose_down.sh"
+exit 0

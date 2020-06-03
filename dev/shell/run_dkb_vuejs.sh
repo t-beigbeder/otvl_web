@@ -12,7 +12,11 @@ else
     echo >&2 "No ${base_dir}/dev/shell/common_dev.sh"
     exit 1
 fi
-VERSION="1.0.dev010"
+if [ -z "${DKB_V_VERSION}" ] ; then
+  VERSION="1.0.dev010"
+else
+  VERSION="${DKB_V_VERSION}"
+fi
 EXPORT_DIR=/srv/export_dir/guest
 run_command \
   docker build --pull \
