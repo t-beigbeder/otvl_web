@@ -1,0 +1,17 @@
+meta:
+  version: "1.0"
+  creation_date: "20200429"
+  publication_date: "20200430"
+  last_update_date: "20200501"
+
+content:
+  title: Menu1 page for otvl_web demo
+  heading: Menu1 page for otvl_web demo
+  stream_fields:
+  - type: md_data
+    data: |
+      ## Menu1 page sub title for otvl_web demo
+
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+      The end.

@@ -1,0 +1,19 @@
+meta:
+  version: "1.0"
+  publication_date: "20200402"
+  summary_heading: "Blog 102 is a thing to read!"
+  summary: |
+    Blog 102 was published first.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+content:
+  title: otvl_web demo Blog 102
+  heading: otvl_web demo Blog 102
+  stream_fields:
+  - type: md_data
+    data: |
+      ## Blog 102 page sub title for otvl_web demo
+
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+      The end.

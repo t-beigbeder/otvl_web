@@ -1,15 +1,9 @@
-This is the first paragraph of the document.
+![Image Home](/assets/images/home/boutDuMonde.jpg "Le bout du monde"){: class="BRAND__page-img-full" }
 
-![Image Home](/assets/images/home/boutDuMonde.jpg){: class="BRAND__page-img-full" }
-# Title
-## Sub title
-### Level 3
+# Home for otvl_web demo
 
-Some text
+La terre étant ronde, le
+[bout du monde](https://www.openstreetmap.org/export#map=11/48.8616/-64.4046)
+existe-t-il?
 
-- a list
-- below, a hr
-
----
-
-![Image Nature](/assets/images/home/nature.jpg){: class="BRAND__page-img-full" }
+This peaceful place certainly is favourable with contemplation and meditation. 

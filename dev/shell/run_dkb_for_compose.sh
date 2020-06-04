@@ -16,6 +16,7 @@ fi
 export DKB_R_VERSION="${DK_ACT_VERSION}"
 export DKB_S_VERSION="${DK_ACT_VERSION}"
 export DKB_V_VERSION="${DK_ACT_VERSION}"
+export DKB_NO_EXPORT=1
 
 true && \
   ${base_dir}/dev/shell/run_dkb_revproxy.sh && \

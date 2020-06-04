@@ -18,16 +18,27 @@ else
   VERSION="${DKB_S_VERSION}"
 fi
 EXPORT_DIR=/srv/export_dir/guest
-run_command \
-  docker build --pull \
-    --build-arg V_USER=`id -un` \
-    --build-arg V_UID=`id -u` \
-    --build-arg V_GROUP=`id -gn` \
-    --build-arg V_GID=`id -g` \
-    -t otvl_web_server:${VERSION} server && \
-  info "run command docker run --rm otvl_web_server:${VERSION}" && \
-  docker run --rm otvl_web_server:${VERSION} /shell/export_venv_as_tgz.sh \
-    > ${EXPORT_DIR}/otvl_web_server_venv-${VERSION}.tgz && \
-  run_command ls -l ${EXPORT_DIR}/otvl_web_server_venv-${VERSION}.tgz && \
-  info "Archive ${EXPORT_DIR}/otvl_web_server_venv-${VERSION}.tgz is available" && \
-  true || exit 1
+if [ -z "${DKB_NO_EXPORT}" ] ; then
+  run_command \
+    docker build --pull \
+      --build-arg V_USER=`id -un` \
+      --build-arg V_UID=`id -u` \
+      --build-arg V_GROUP=`id -gn` \
+      --build-arg V_GID=`id -g` \
+      -t otvl_web_server:${VERSION} server && \
+    info "run command docker run --rm otvl_web_server:${VERSION}" && \
+    docker run --rm otvl_web_server:${VERSION} /shell/export_venv_as_tgz.sh \
+      > ${EXPORT_DIR}/otvl_web_server_venv-${VERSION}.tgz && \
+    run_command ls -l ${EXPORT_DIR}/otvl_web_server_venv-${VERSION}.tgz && \
+    info "Archive ${EXPORT_DIR}/otvl_web_server_venv-${VERSION}.tgz is available" && \
+    true || exit 1
+else
+  run_command \
+    docker build --pull \
+      --build-arg V_USER=`id -un` \
+      --build-arg V_UID=`id -u` \
+      --build-arg V_GROUP=`id -gn` \
+      --build-arg V_GID=`id -g` \
+      -t otvl_web_server:${VERSION} server && \
+    true || exit 1
+fi

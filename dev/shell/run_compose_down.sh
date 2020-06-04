@@ -18,5 +18,4 @@ export VAR_DATA_TMP=${base_dir}/dev/tmp
 true && \
   run_command docker-compose -f ${base_dir}/dev/compose/docker-compose.yml down && \
   true || exit 1
-info "Stop the stack with ${base_dir}/dev/shell/run_compose_down.sh"
 exit 0

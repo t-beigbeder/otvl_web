@@ -13,17 +13,24 @@ else
     exit 1
 fi
 if [ -z "${DKB_V_VERSION}" ] ; then
-  VERSION="1.0.dev012"
+  VERSION="1.0.dev013"
 else
   VERSION="${DKB_V_VERSION}"
 fi
 EXPORT_DIR=/srv/export_dir/guest
-run_command \
-  docker build --pull \
-    -t otvl_web_vuejs:${VERSION} vuejs && \
-  info "run command docker run --rm otvl_web_vuejs:${VERSION}" && \
-  docker run --rm otvl_web_vuejs:${VERSION} /shell/export_venv_as_tgz.sh \
-    > ${EXPORT_DIR}/otvl_web_vuejs-${VERSION}.tgz && \
-  run_command ls -l ${EXPORT_DIR}/otvl_web_vuejs-${VERSION}.tgz && \
-  info "Archive ${EXPORT_DIR}/otvl_web_vuejs-${VERSION}.tgz is available" && \
-  true || exit 1
+if [ -z "${DKB_NO_EXPORT}" ] ; then
+  run_command \
+    docker build --pull \
+      -t otvl_web_vuejs:${VERSION} vuejs && \
+    info "run command docker run --rm otvl_web_vuejs:${VERSION}" && \
+    docker run --rm otvl_web_vuejs:${VERSION} /shell/export_venv_as_tgz.sh \
+      > ${EXPORT_DIR}/otvl_web_vuejs-${VERSION}.tgz && \
+    run_command ls -l ${EXPORT_DIR}/otvl_web_vuejs-${VERSION}.tgz && \
+    info "Archive ${EXPORT_DIR}/otvl_web_vuejs-${VERSION}.tgz is available" && \
+    true || exit 1
+else
+  run_command \
+    docker build --pull \
+      -t otvl_web_vuejs:${VERSION} vuejs && \
+    true || exit 1
+fi

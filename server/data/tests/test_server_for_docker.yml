@@ -1,0 +1,16 @@
+site_config_file: server/docker_data/config/site.yml
+pages_directory: server/docker_data/pages
+assets_directory: vuejs/.dev/docker/data/assets
+
+version:
+  server: "1.0"
+  application: "1.0"
+  server_config_file: server/data/tests/test_server_for_docker.yml
+  site_config_file: server/docker_data/config/site.yml
+
+cors_mapping:
+  'http://vjs-dev-host:8080': 'http://vjs-dev-host:8888'
+
+base_url_bck: "#"
+assets_url: "http://vjs-dev-host:8888/api/assets/"
+sitemap_root: "http://vjs-dev-host:8080"
