@@ -7,6 +7,8 @@ meta:
 content:
   title: Sub-menu2 page for otvl_web demo
   heading: Sub-menu2 page for otvl_web demo
+  brand:
+    no_dates: true
   stream_fields:
   - type: md_data
     data: |
