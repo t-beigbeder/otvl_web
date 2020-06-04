@@ -6,7 +6,7 @@ _[Illustration above credit](https://www.piqsels.com/en/public-domain-photo-jrrk
 
 Otvl_web is an
 [Open Source](https://en.wikipedia.org/wiki/Free_and_open-source_software)
-web application mainly intended to publish content efficiently.
+web application whose main objective is an efficient digital content publishing.
 
 It is built over the
 [Vue.js framework](https://vuejs.org/)
@@ -22,25 +22,25 @@ This article first gives a short presentation of the application.
 In a second part, some feeback from a development point of view is detailed.
 Finally, some information concerning the deployment is provided.
 
+You will find useful references at the bottom of this page.
+
 ## General presentation
 
 ### Content publisher point of view
 
-From a content publisher point of view, the benefits of this tool are
+From a content publisher point of view, the benefits of this tool are that
 
 - the site structure and how it is navigable by the end-user through menus/sub-menus
-  is configurable;
-- the web application also features a simple blog publish application;
-- the pages content is described by a sequence of textual, graphical or video items, as well
-  as hyperlinks and some page layout directive;
-- the site configuration, the pages content,
-  media files such as documents, images and video files
-  are managed directly as
+  is easily configurable;
+- the web application also features a simple application for blog publishing;
+- the site configuration, the pages content, media files such as documents, images and video files
+  are managed directly as files on the server;
+- the site configuration and the pages metadata are described through
   [YAML](https://yaml.org/)
-  files on the server;
+  files, a simple language to describe structured data;
 - the pages contents are described in
   [markdown](https://daringfireball.net/projects/markdown/syntax),
-  a simple language widely used to describe web page contents;
+  a simple language widely used to describe web page (and other) contents;
 - the underlying 
   _[single-page application](https://en.wikipedia.org/wiki/Single-page_application)_
   architecture enables smoother pages transitions and uses less data over the network;
@@ -52,18 +52,20 @@ From a content publisher point of view, the benefits of this tool are
 - the simple publication application can be extended to provide dedicated features
   through rapid development.
 
+Uploading YAML and markdown source files along with media files
+is an efficient way of working in organizations where the site publisher
+and the site administrator are the same person.
+
 As mentioned above, there is no GUI for editing content.
 The content publisher must have direct or indirect access to the content files on the server.
 An example of indirect access is the use of [git](https://git-scm.com/) along with triggers
-to upload files after commit. 
+to upload files after commit.
 
-Uploading YAML and markdown source files along with media files
-can appear as a very efficient way of working in organizations where the site publisher
-and the site administrator are the same person.
+There is yet no access control on the publish content either.
 
 ### Developper point of view
 
-From a developper point of view, the benefits of this tool are
+From a developper point of view, the benefits of this tool are that
 
 - the front-end is developped with
   [Vue.js](https://vuejs.org/)
@@ -94,7 +96,7 @@ Several options for this goal are already present but, with no doubt,
 the first future features implemented will target this concern
 through a clean packaging for reuse and extension.
 
-## Development feedback
+## Feedback from the development
 
 ### Vue.js
 
@@ -122,7 +124,7 @@ For instance, the use of components may appear intimidating to newcomers,
 specifically concerning the organization of the information among parent and children components.
 However, with a little bit of practice, the refactoring of duplicated code
 relying on new components can be achieved rather easily and incrementally,
-while the information reorganization appears rather spontaneously.
+while the information reorganization among components appears rather spontaneously.
 
 #### Routing
 
@@ -139,7 +141,7 @@ Because URL schemes are hierarchic by nature, so the organization of those page 
 This can appear as a constraint in the case of otvl_web where the URLs
 should map the site content hierarchy rather than specific parts implementation.
 For such a specific requirement, a dedicated router
-or perhaps a better understanding of Vue.js router API is required.  
+or perhaps a better understanding of Vue.js router API would be required.  
 
 ### Single-page applications
 
@@ -211,6 +213,11 @@ It appears like if the current implementation of the
 [history API](https://developer.mozilla.org/en-US/docs/Web/API/History_API/Working_with_the_History_API)
 were not consistent with the use of anchors from a user perspective.
 
+An important concern related to single-page applications is the
+[SEO](https://en.wikipedia.org/wiki/Search_engine_optimization).
+As the web crawler robots generally don't have performant JavaScript capabilities,
+the rendered content should better be provided as simple HTML for such clients.
+
 The final concern is about deployment: even if the separation of concerns
 between the browser and the server is clear,
 some topics have to be taken into account on both sides:
@@ -218,8 +225,10 @@ we have seen the case for URLs handling,
 but other topics like robots.txt or sitemap.xml rendering also require a shared knowledge
 of URL schemes.
 As those topics reside at the border between development and operations,
-an effective [DevOps](https://en.wikipedia.org/wiki/DevOps) help
-to provide efficient and simple solutions through a clear understanding of both parts constraints.
+an effective
+[DevOps](https://en.wikipedia.org/wiki/DevOps)
+practice help to provide efficient and simple solutions
+through a clear understanding of both parts constraints.
 
 ### Quasar
 
@@ -264,15 +273,25 @@ The ovl_web application
 [ git [![Image GitHub](/assets/images/common/github-logo-24.png)](https://github.com/t-beigbeder/otvl_web) ]
 comes with Dockerfiles to produce the different components of the following architecture.
 
-TBC: schema to come.
+![Docker components](/assets/images/otvl-web-pres/otvl_web_docker.jpg "Architecture schema for the docker components")
+
+If you have
+[docker](https://docs.docker.com/)
+and
+[docker-compose](https://docs.docker.com/compose/)
+installed on a development environment, you may simply run those components using the following commands:
+
+    :::sh
+    # run docker build for the three components
+    $ dev/shell/run_dkb_for_compose.sh  
+    # run the three components with docker compose
+    $ dev/shell/run_compose_up.sh [/path/to/a/specific/otvl_web/site]
 
 The otvl_ansible
 [ git [![Image GitHub](/assets/images/common/github-logo-24.png)](https://github.com/t-beigbeder/otvl_ansible) ]
-project enables to deploy those components on physical or virtual servers.
-
-## Conclusion
-
-TBC
+project enables to deploy those components on physical or virtual servers using
+[Ansible](https://docs.ansible.com/ansible/latest/)
+playbooks.
 
 ## Useful links
 

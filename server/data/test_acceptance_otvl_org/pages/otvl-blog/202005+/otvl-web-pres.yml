@@ -3,8 +3,8 @@ meta:
   publication_date: "20200602"
   summary_heading: "Publishing content efficiently with otvl_web"
   summary: |
-    Otvl_web is a web application mainly intended to publish content efficiently.
-    It is built over the Vue.js framework as a "single page application".
+    Otvl_web is a web application for efficient digital content publishing.
+    Discover what it does and how it is developped with Vue.js.
 
 content:
   title: Otvl_web presentation
