@@ -136,4 +136,8 @@ export default {
   &__page-img-full
     width: 100%
 
+  &__page-img-max-itself
+    max-width: 100%
+    height: auto
+
 </style>

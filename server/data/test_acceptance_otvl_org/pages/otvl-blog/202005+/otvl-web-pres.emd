@@ -1,4 +1,4 @@
-![Article image](/assets/images/otvl-web-pres/business-background-illustration-people.jpg "Web Content Manager Cartoon"){: class="BRAND__page-img-full" }
+![Article image](/assets/images/otvl-web-pres/business-background-illustration-people.jpg "Web Content Manager Cartoon"){: class="BRAND__page-img-max-itself" }
 
 _[Illustration above credit](https://www.piqsels.com/en/public-domain-photo-jrrkb)_
 
@@ -78,6 +78,14 @@ From a developper point of view, the benefits of this tool are that
   with trivial yaml-to-json conversion;
 - this simple design also enables to add specific site features through rapid development.
 
+### Operations point of view
+
+The following topics are detailed in the section "Deployment" below:
+
+- the application supports web crawler bots through sitemap.xml generation
+  and server-side HTML rendering;
+- a static Vue.js site may be configured at deployment time concerning the actual server DNS name.
+
 ### Current status
 
 This application
@@ -143,6 +151,40 @@ should map the site content hierarchy rather than specific parts implementation.
 For such a specific requirement, a dedicated router
 or perhaps a better understanding of Vue.js router API would be required.  
 
+### Quasar
+
+The
+[Quasar framework](https://quasar.dev/)
+is based on
+[Vue.js](https://vuejs.org/)
+and it adds a lot of high level features from a developper perspective
+to enable a very efficient development of new applications.
+Some specific features are the ability to share the same design
+for classic browsers, for mobile browsers and for mobile applications,
+but in the case of otvl_web, we will keep the focus here on the features dedicated
+to the style and the ergonomy of web applications.
+
+For those familiar with the
+[Twitter Bootstrap](https://getbootstrap.com/) library,
+Quasar provides the web designer with the same kind of features
+but "translated" in the Vue.js world:
+
+- the Quasar framework contains a rich collection of Vue.js ready-to-use
+[components](https://quasar.dev/vue-components/)
+fully integrated with the other characteristics of the framework;
+- the site's identity may be easily customized using existing CSS tools;
+- the general pages layout may be easily designed using a responsive grid system.
+
+The documentation of the framework is as excellent as the Vue.js documentation is.
+The framework is a little bit more complex for beginners as it relies exclusively Vue.js components.
+Like Vue.js, it is very modular, and even if it integrates well with Vue router or Vuex extensions,
+their use is absolutely not required for simple applications.
+
+Finally, it offers a powerful
+[command-line interface](https://quasar.dev/start/quasar-cli)
+that helps the newcomer to start a new project easily
+and support the developper for configuring complex sets of development options.
+
 ### Single-page applications
 
 #### Benefits
@@ -169,7 +211,7 @@ In that case, the static design becomes more and more outdated as the applicatio
 #### Mitigated concerns
 
 Every technology comes with its constraints,
-yet JavaScript based technologies have very specific ones.
+yet technologies based on JavaScript or single-page application have very specific ones.
 
 The first concern is about tooling.
 Each Vue.js project has to create a local repository (`node_modules`) of JavaScript modules
@@ -216,7 +258,9 @@ were not consistent with the use of anchors from a user perspective.
 An important concern related to single-page applications is the
 [SEO](https://en.wikipedia.org/wiki/Search_engine_optimization).
 As the web crawler robots generally don't have performant JavaScript capabilities,
-the rendered content should better be provided as simple HTML for such clients.
+or sometimes don't support Javascript at all,
+the rendered content must be provided as simple HTML for such clients.
+If not, the web crawler will only download a page template with no specific content.
 
 The final concern is about deployment: even if the separation of concerns
 between the browser and the server is clear,
@@ -230,42 +274,14 @@ an effective
 practice help to provide efficient and simple solutions
 through a clear understanding of both parts constraints.
 
-### Quasar
-
-The
-[Quasar framework](https://quasar.dev/)
-is based on
-[Vue.js](https://vuejs.org/)
-and it adds a lot of high level features from a developper perspective
-to enable a very efficient development of new applications.
-Some specific features are the ability to share the same design
-for classic browsers, for mobile browsers and for mobile applications,
-but in the case of otvl_web, we will keep the focus here on the features dedicated
-to the style and the ergonomy of web applications.
-
-For those familiar with the
-[Twitter Bootstrap](https://getbootstrap.com/) library,
-Quasar provides the web designer with the same kind of features
-but translated in the Vue.js world:
-
-- the Quasar framework contains a rich collection of Vue.js ready-to-use
-[components](https://quasar.dev/vue-components/)
-fully integrated with the other characteristics of the framework;
-- the site's identity may be easily customized using existing CSS tools;
-- the general pages layout may be easily designed using a responsive grid system.
-
-The documentation of the framework is as excellent as Vue.js documentation itself.
-The framework is a little bit more complex for beginners as it relies exclusively Vue.js components.
-Like Vue.js, it is very modular, and even if it integrates well with Vue router or Vuex extensions,
-their use is absolutely not required for simple applications.
-
-Finally, it offers a powerful
-[command-line interface](https://quasar.dev/start/quasar-cli)
-that helps the newcomer to start a new project easily.
-
 ## Deployment
 
-Questions and solutions specific to the deployment of a Vue.js
+Concerning the deployment of the otvl_web application,
+we have seen that single-page applications require specific configuration
+on the server-side to handle the URL otherwise routed on the client-side,
+but also to support web crawler robots.
+
+Some questions and solutions specific to the deployment of a Vue.js
 _single-page application_ are detailed in the article
 _**[Deploying a Vue.js Single Page Application](/blog/otvl-blog/deploy-vjs-spa)**_.
 
@@ -273,25 +289,25 @@ The ovl_web application
 [ git [![Image GitHub](/assets/images/common/github-logo-24.png)](https://github.com/t-beigbeder/otvl_web) ]
 comes with Dockerfiles to produce the different components of the following architecture.
 
-![Docker components](/assets/images/otvl-web-pres/otvl_web_docker.jpg "Architecture schema for the docker components")
+![Docker components](/assets/images/otvl-web-pres/otvl_web_docker.jpg "Architecture schema for the docker components"){: class="BRAND__page-img-max-itself" }
 
 If you have
 [docker](https://docs.docker.com/)
 and
 [docker-compose](https://docs.docker.com/compose/)
-installed on a development environment, you may simply run those components using the following commands:
+installed on a development environment, you can run those components using the following commands:
 
     :::sh
     # run docker build for the three components
     $ dev/shell/run_dkb_for_compose.sh  
     # run the three components with docker compose
-    $ dev/shell/run_compose_up.sh [/path/to/a/specific/otvl_web/site]
+    $ dev/shell/run_compose_up.sh \
+      [/path/to/a/specific/otvl_web/site]
 
 The otvl_ansible
 [ git [![Image GitHub](/assets/images/common/github-logo-24.png)](https://github.com/t-beigbeder/otvl_ansible) ]
-project enables to deploy those components on physical or virtual servers using
+project provides
 [Ansible](https://docs.ansible.com/ansible/latest/)
-playbooks.
 
 ## Useful links
 
