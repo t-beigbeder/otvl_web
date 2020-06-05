@@ -13,13 +13,22 @@ else
     exit 1
 fi
 
+# run_dkb_for_compose [ "r" | "s" | "v" | "rs" | "rv" | "sv" ]
+v_r=1
+v_s=1
+v_v=1
+if [ -n "$1" ] ; then
+  v_r=`echo "$1" | grep "r"`
+  v_s=`echo "$1" | grep "s"`
+  v_v=`echo "$1" | grep "v"`
+fi
 export DKB_R_VERSION="${DK_ACT_VERSION}"
 export DKB_S_VERSION="${DK_ACT_VERSION}"
 export DKB_V_VERSION="${DK_ACT_VERSION}"
 export DKB_NO_EXPORT=1
 
 true && \
-  ${base_dir}/dev/shell/run_dkb_revproxy.sh && \
-  ${base_dir}/dev/shell/run_dkb_server.sh && \
-  ${base_dir}/dev/shell/run_dkb_vuejs.sh && \
+  ([ -z "$v_r" ] || ${base_dir}/dev/shell/run_dkb_revproxy.sh) && \
+  ([ -z "$v_s" ] || ${base_dir}/dev/shell/run_dkb_server.sh) && \
+  ([ -z "$v_v" ] || ${base_dir}/dev/shell/run_dkb_vuejs.sh) && \
   true || exit 1
