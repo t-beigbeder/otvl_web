@@ -62,6 +62,7 @@ def test_get_site_pages(http_client, base_url, caplog, monkeypatch):
 def test_get_home_content(http_client, base_url, caplog, monkeypatch):
     response = yield http_client.fetch(base_url + "/api/page/home/")
     assert response.code == 200
+    assert response.headers["Content-Type"] == "application/json"
     resp_o = body_to_obj(response.body)
     assert "meta" in resp_o
     assert "content" in resp_o
@@ -137,6 +138,7 @@ def test_get_blogs_content(http_client, base_url, caplog, monkeypatch):
 def test_get_sitemap(http_client, base_url, caplog, monkeypatch):
     response = yield http_client.fetch(base_url + "/api/sitemap.xml", raise_error=False)
     assert response.code == 200
+    assert response.headers["Content-Type"] == "text/xml; charset=utf-8"
     lines = response.body.decode("utf-8").split('\n')
     assert "urlset" in lines[1]
     assert len(lines) >= 6
@@ -170,12 +172,14 @@ def test_get_sitemap(http_client, base_url, caplog, monkeypatch):
             base_url + api_url,
             raise_error=False)
         assert response.code == 200
+        assert response.headers["Content-Type"] == "application/json"
 
 
 @pytest.mark.gen_test
 def test_get_html_home_content(http_client, base_url, caplog, monkeypatch):
     response = yield http_client.fetch(base_url + "/api/html4/page/home/", raise_error=False)
     assert response.code == 200
+    assert response.headers["Content-Type"] == "text/html"
     body = response.body.decode("utf-8")
     assert "<title>Home for Otvl Web</title>" in body
 
@@ -217,6 +221,7 @@ def test_get_sitemap_pages_as_html(http_client, base_url, caplog, monkeypatch):
             base_url + api_url,
             raise_error=False)
         assert response.code == 200
+        assert response.headers["Content-Type"] == "text/html"
         body = response.body.decode("utf-8")  # noqa
 
 

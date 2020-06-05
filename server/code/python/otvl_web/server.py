@@ -44,9 +44,9 @@ class BaseHandler(tornado.web.RequestHandler):
         self.logger.debug(f"prepare: {self.request.method} {self.request.path}")
         if not self.request.path.endswith(".xml"):
             if "/html4/" not in self.request.path:
-                self.set_header("Content-Type", "text/html")
-            else:
                 self.set_header("Content-Type", "application/json")
+            else:
+                self.set_header("Content-Type", "text/html")
         else:
             self.set_header("Content-Type", "text/xml; charset=utf-8")
         if "Origin" in self.request.headers and \
@@ -264,16 +264,23 @@ class Html4PageHandler(BasePageHandler):
 
     def get(self, type_, section, *path_args):
         config_file = self.server_config["site_config_file"]
-        sub_section, slug = '', ''
-        if len(path_args) > 0:
-            sub_section = path_args[0]
-            if len(path_args) > 1:
-                slug = path_args[1]
-        self.logger.debug(f"GET: site_config_file {config_file} type '{type_}' section '{section}' sub_section '{sub_section}' slug '{slug}'")  # noqa
         if type_ not in self.site_config["config"]["types"]:
             return self._error(400, 'BadParameter', 'Parameter type {0} is unknown'.format(type_))
         if not self._check_par("section", section):
             return
+        sub_section, slug = '', ''
+        type_config = self.site_config["config"]["types"][type_]
+        if "blog_index_type" not in type_config:
+            if len(path_args) > 0:
+                sub_section = path_args[0]
+        else:
+            if len(path_args) > 1:
+                sub_section = path_args[0]
+                slug = path_args[1]
+            else:
+                slug = path_args[0]
+
+        self.logger.debug(f"GET: site_config_file {config_file} type '{type_}' section '{section}' sub_section '{sub_section}' slug '{slug}'")  # noqa
         page_content = self._get_page_content(section, sub_section, slug)
         if not page_content:
             return self._error(404, 'ResourceNotFound', 'The page content is missing')
