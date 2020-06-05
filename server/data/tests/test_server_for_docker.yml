@@ -1,6 +1,7 @@
 site_config_file: server/docker_data/config/site.yml
 pages_directory: server/docker_data/pages
 assets_directory: vuejs/.dev/docker/data/assets
+j24bots_directory: server/docker_data/config/j24bots
 
 version:
   server: "1.0"

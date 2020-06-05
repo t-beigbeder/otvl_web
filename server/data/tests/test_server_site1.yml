@@ -1,6 +1,7 @@
 site_config_file: data/test_site1/config/site1.yml
 pages_directory: data/test_site1/pages
 assets_directory: data/test_site1/assets
+j24bots_directory: data/test_site1/config/j24bots
 
 version:
   server: "1.0"

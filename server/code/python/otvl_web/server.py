@@ -13,6 +13,8 @@ import tornado.web
 import yaml
 import markdown
 
+import otvl_web.j24bots
+
 
 logger = logging.getLogger(__name__)
 
@@ -27,18 +29,24 @@ class BaseHandler(tornado.web.RequestHandler):
     logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
     server_config = {}
     site_config = {}
+    j24bots_loader = None
 
     def initialize(self, **kwargs):
         BaseHandler.server_config = kwargs["server_config"]
         del kwargs["server_config"]
         BaseHandler.site_config = kwargs["site_config"]
         del kwargs["site_config"]
+        BaseHandler.j24bots_loader = kwargs["j24bots_loader"]
+        del kwargs["j24bots_loader"]
         super().initialize(**kwargs)
 
     def prepare(self):
         self.logger.debug(f"prepare: {self.request.method} {self.request.path}")
         if not self.request.path.endswith(".xml"):
-            self.set_header("Content-Type", "application/json")
+            if "/html4/" not in self.request.path:
+                self.set_header("Content-Type", "text/html")
+            else:
+                self.set_header("Content-Type", "application/json")
         else:
             self.set_header("Content-Type", "text/xml; charset=utf-8")
         if "Origin" in self.request.headers and \
@@ -246,6 +254,31 @@ class BasePageHandler(BaseHandler):
             elif "src" in sf:
                 sf["src"] = self._patch_asset_in_src_sf(sf["src"])
         return page_content
+
+
+class Html4PageHandler(BasePageHandler):
+    logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
+
+    def initialize(self, **kwargs):
+        super().initialize(**kwargs)
+
+    def get(self, type_, section, *path_args):
+        config_file = self.server_config["site_config_file"]
+        sub_section, slug = '', ''
+        if len(path_args) > 0:
+            sub_section = path_args[0]
+            if len(path_args) > 1:
+                slug = path_args[1]
+        self.logger.debug(f"GET: site_config_file {config_file} type '{type_}' section '{section}' sub_section '{sub_section}' slug '{slug}'")  # noqa
+        if type_ not in self.site_config["config"]["types"]:
+            return self._error(400, 'BadParameter', 'Parameter type {0} is unknown'.format(type_))
+        if not self._check_par("section", section):
+            return
+        page_content = self._get_page_content(section, sub_section, slug)
+        if not page_content:
+            return self._error(404, 'ResourceNotFound', 'The page content is missing')
+        h4c = self.j24bots_loader.load(page_content, "page.j2")
+        return self.finish(h4c)
 
 
 class PageHandler(BasePageHandler):
@@ -471,10 +504,12 @@ def make_otvl_web_app(server_config):
     site_config_file = server_config["site_config_file"]
     with open(site_config_file) as ysd:
         site_config = yaml.load(ysd, Loader=yaml.FullLoader)
+        j24bots_loader = otvl_web.j24bots.Jinja2Loader(server_config["j24bots_directory"])
 
     handler_kwa = {
         "server_config": server_config,
-        "site_config": site_config
+        "site_config": site_config,
+        "j24bots_loader": j24bots_loader
         }
     assets_directory = server_config["assets_directory"]
     return tornado.web.Application([
@@ -486,6 +521,9 @@ def make_otvl_web_app(server_config):
         (r"/api/blogs/([^/]*)/([^/]*)/([^/]*)/?", BlogsHandler, handler_kwa),
         (r"/api/blogs/([^/]*)/([^/]*)/?", BlogsHandler, handler_kwa),
         (r"/api/blogs/([^/]*)/?", BlogsHandler, handler_kwa),
+        (r"/api/html4/([^/]*)/([^/]*)/([^/]*)/([^/]*)/?", Html4PageHandler, handler_kwa),
+        (r"/api/html4/([^/]*)/([^/]*)/([^/]*)/?", Html4PageHandler, handler_kwa),
+        (r"/api/html4/([^/]*)/([^/]*)/?", Html4PageHandler, handler_kwa),
         (r"/api/([^/]*)/([^/]*)/([^/]*)/([^/]*)/?", PageHandler, handler_kwa),
         (r"/api/([^/]*)/([^/]*)/([^/]*)/?", PageHandler, handler_kwa),
         (r"/api/([^/]*)/([^/]*)/?", PageHandler, handler_kwa),

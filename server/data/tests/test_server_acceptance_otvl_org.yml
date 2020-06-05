@@ -1,6 +1,7 @@
 site_config_file: data/test_acceptance_otvl_org/config/otvl_org.yml
 pages_directory: data/test_acceptance_otvl_org/pages
 assets_directory: data/test_acceptance_otvl_org/assets
+j24bots_directory: data/test_acceptance_otvl_org/config/j24bots
 
 version:
   server: "1.0"

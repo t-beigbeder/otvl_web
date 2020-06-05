@@ -172,6 +172,54 @@ def test_get_sitemap(http_client, base_url, caplog, monkeypatch):
         assert response.code == 200
 
 
+@pytest.mark.gen_test
+def test_get_html_home_content(http_client, base_url, caplog, monkeypatch):
+    response = yield http_client.fetch(base_url + "/api/html4/page/home/", raise_error=False)
+    assert response.code == 200
+    body = response.body.decode("utf-8")
+    assert "<title>Home for Otvl Web</title>" in body
+
+
+@pytest.mark.gen_test
+def test_get_sitemap_pages_as_html(http_client, base_url, caplog, monkeypatch):
+    response = yield http_client.fetch(base_url + "/api/sitemap.xml", raise_error=False)
+    assert response.code == 200
+    lines = response.body.decode("utf-8").split('\n')
+    assert "urlset" in lines[1]
+    assert len(lines) >= 6
+    for line in lines[2:-2]:
+        assert line.startswith("<url><loc>")
+        assert line.endswith("</lastmod></url>")
+        url = line[len("<url><loc>"):line.index("</loc")]
+        lm = line[line.index("<lastmod>")+len("<lastmod>"):line.index("</lastmod")]
+        assert len(url)
+        if lm == "1970-01-01":
+            continue
+        # web omit empty blog subsection, API does not
+        url_comps = url.split("/")
+        type_ = url_comps[1]
+        section = url_comps[2]
+        api_url = f"/api/html4/{type_}/{section}"
+        sub_section, slug = '', ''
+        if type_ != "blog":
+            if len(url_comps) > 3:
+                sub_section = url_comps[3]
+                api_url = f"/api/html4/{type_}/{section}/{sub_section}"
+        else:
+            if len(url_comps) <= 4:
+                slug = url_comps[3]
+            else:
+                sub_section = url_comps[3]
+                slug = url_comps[4]
+            api_url = f"/api/html4/{type_}/{section}/{sub_section}/{slug}"
+
+        response = yield http_client.fetch(
+            base_url + api_url,
+            raise_error=False)
+        assert response.code == 200
+        body = response.body.decode("utf-8")  # noqa
+
+
 if __name__ == "__main__":
     # pytest.main()
     pytest.main(['-v', '-s', '-k', 'test_server.py'])

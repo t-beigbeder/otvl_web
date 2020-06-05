@@ -1,6 +1,7 @@
 site_config_file: ../../otvl_blog/docs/otvl_web/otvl_org/config/otvl_org.yml
 pages_directory: ../../otvl_blog/docs/otvl_web/otvl_org/pages
 assets_directory: ../../otvl_blog/docs/otvl_web/otvl_org/assets
+j24bots_directory: ../../otvl_blog/docs/otvl_web/otvl_org/config/j24bots
 
 version:
   server: "1.0"
