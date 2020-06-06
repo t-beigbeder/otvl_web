@@ -3,9 +3,9 @@ meta:
   publication_date: "20200529"
   summary_heading: "Deploying a Vue.js Single Page Application"
   summary: |
-    The Single Page Application Architecture provides great features to the users and the developpers.
-    The deployment of such applications require a good understanding between
-    the developpers and the operation team.
+    While the Single Page Application Architecture provides great features
+    to the users and the developpers,
+    the deployment of such applications requires implementing several specific solutions.
 
 content:
   title: "Deploying a Vue.js Single Page Application"

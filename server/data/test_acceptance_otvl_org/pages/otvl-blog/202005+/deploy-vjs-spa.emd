@@ -2,52 +2,94 @@
 
 # Deploying a Vue.js Single Page Application
 
-The article describes a few questions related to the deployment of a Vue.js single-page application
-and corresponding solutions.
+While the
+[Single Page Application (SPA)](https://en.wikipedia.org/wiki/Single-page_application)
+Architecture
+provides great features to the users and the developpers,
+the deployment of such applications requires implementing several specific solutions.
+
+(It must be noted that important questions and solutions specific to the security of the communication
+between the browsers and the servers are not covered here,
+and will be discussed more specifically in the future on this Blog).
 
 ## A short presentation
 
 ### Technical overview
 
+It is difficult to talk about SPA applications without a small amount of technical details.
+On the schema above, we can see the application users dealing with media files and application data
+by using a Web browser where those informations are presented
+and the application data may be updated.
+
+The SPA architecture introduces in this general context a clear separation of concerns
+in the design of the application:
+
+- the browser is fully responsible for rendering the Graphical User Interface (GUI)
+  and handling the interactions with the user;
+- an application server, the API (Application Programming Interface) server,
+  is fully responsible for accessing and updating application data.
+
+Because the application is still a Web Application,
+some HTML files required for GUI rendering still need to be served to the browser
+by an HTTP server.
+
+When the application is first launched (see the schema below), the browser downloads a basic HTML page
+and corresponding JavaScript, CSS, images and other media files,
+and in the same step a main JavaScript application that renders the GUI by updating the
+browser's DOM (Document Object Model),
+using some application data downloaded at the same time.
+
+![First Launch Schema](/assets/images/deploy-vjs-spa/deploy_vjs_spa_start.jpg "Vue.js first launch schema"){: class="BRAND__page-img-max-itself" }
+
+After this initial step, all interaction with the user is achieved under the control of the
+application running in the browser.
+More application data is downloaded on demand and is possibly updated.
+
 ### Benefits and constraints
 
-The [Single-Page Application](https://en.wikipedia.org/wiki/Single-page_application) architecture
-provides great features to the users and the developpers.
+The SPA architecture provides great features to the users and the developpers.
 On the user side, page transitions are smoother and network data usage is optimal.
 On the developper side, the software architecture
-and the corresponding client and server implementations are simpler to design and to maintain.
+and the corresponding client and server implementations are much simpler to design and to maintain.
 And finally, from both point of views,
 the use of graphical components libraries enable to achieve a great level of ergonomy.
 
+On the other hand, the development must be concerned about
+how the application may be crawled by Search Engine robots:
+as those robots sometimes don't support Javascript at all,
+the rendered content must be provided as simple HTML for such clients.
+A consequence is that some application content must be rendered both on the client in JavaScript,
+but also on the API server using whatever technology is available there.
+This concern is often mitigated first because dynamic application content often does not benefit from
+Search Engine services,
+and secondly because the HTML rendering from application data can remain rather simple.
 
-## Deployed components architecture
+After this general overview, the following sections will discuss various questions
+that arise when deploying such applications and describe possible solutions.
 
-## Routing
+## Routing URLs
 
-### Vue.js router
+To be completed.
 
-### Apache fallback URLs
+## Deployment-time configuration
 
-## Configuring at deployment time
+To be completed.
 
-### Vue.js packaging
+## Supporting Search Engines
 
-### Static content
+To be completed.
 
+## Final configuration
 
-## CORS
+To be completed.
 
 ## Useful links
 
 ### Articles and guides
 
-- [codemag - HTML5 History](https://www.codemag.com/Article/1301091/HTML5-History-Clean-URLs-for-Deep-linking-Ajax-Applications)
-- [css-tricks - Using the HTML5 History API](https://css-tricks.com/using-the-html5-history-api/)
-- [mozilla - Working with the History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API/Working_with_the_History_API)
 - [vue router - HTML5 History Mode](https://router.vuejs.org/guide/essentials/history-mode.html)
 
 ### References
 
 - [Vue.js](https://vuejs.org/)
-- [Quasar framework](https://quasar.dev/)
-- [History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API)
+- [Vue Router](https://router.vuejs.org/)
