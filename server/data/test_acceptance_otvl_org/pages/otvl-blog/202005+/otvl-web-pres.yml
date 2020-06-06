@@ -7,7 +7,7 @@ meta:
     Discover what it does and how it is developped with Vue.js.
 
 content:
-  title: Otvl_web presentation
+  title: "Publishing content efficiently with otvl_web"
   heading:
   stream_fields:
   - type: md_file

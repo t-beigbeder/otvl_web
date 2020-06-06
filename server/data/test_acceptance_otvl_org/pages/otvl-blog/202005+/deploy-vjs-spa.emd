@@ -1,22 +1,24 @@
-![Article image](/assets/images/otvl-web-pres/business-background-illustration-people.jpg "Web Content Manager Cartoon"){: class="BRAND__page-img-full" }
+![Article image](/assets/images/deploy-vjs-spa/deploy_vjs_spa.jpg "Vue.js Single Page Application schema"){: class="BRAND__page-img-max-itself" }
 
 # Deploying a Vue.js Single Page Application
 
+The article describes a few questions related to the deployment of a Vue.js single-page application
+and corresponding solutions.
+
+## A short presentation
+
+### Technical overview
+
+### Benefits and constraints
+
 The [Single-Page Application](https://en.wikipedia.org/wiki/Single-page_application) architecture
 provides great features to the users and the developpers.
-On the user side, page transitions will be smoother and network data usage will be optimal.
+On the user side, page transitions are smoother and network data usage is optimal.
 On the developper side, the software architecture
-and the corresponding client and server implementations will be simpler to design and to maintain.
+and the corresponding client and server implementations are simpler to design and to maintain.
 And finally, from both point of views,
 the use of graphical components libraries enable to achieve a great level of ergonomy.
 
-The deployment of such applications require a good understanding between
-the developpers and the operation people because some solutions lie at the border between
-development and system integration competencies.
-And the security of the production application  is the shared responsibility of both teams.
-Fortunately, the
-[DevOps](https://en.wikipedia.org/wiki/DevOps)
-culture helps!
 
 ## Deployed components architecture
 
