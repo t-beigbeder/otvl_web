@@ -6,11 +6,12 @@ While the
 [Single Page Application (SPA)](https://en.wikipedia.org/wiki/Single-page_application)
 Architecture
 provides great features to the users and the developpers,
-the deployment of such applications requires implementing several specific solutions.
+the deployment of such applications requires implementing several specific solutions,
+some of them are being discussed here.
 
 (It must be noted that important questions and solutions specific to the security of the communication
 between the browsers and the servers are not covered here,
-and will be discussed more specifically in the future on this Blog).
+but they will be discussed with their specificity in the future on this Blog).
 
 ## A short presentation
 
@@ -43,7 +44,7 @@ using some application data downloaded at the same time.
 
 After this initial step, all interaction with the user is achieved under the control of the
 application running in the browser.
-More application data is downloaded on demand and is possibly updated.
+More application data is downloaded on demand and is possibly updated through the API.
 
 ### Benefits and constraints
 
@@ -64,13 +65,38 @@ This concern is often mitigated first because dynamic application content often 
 Search Engine services,
 and secondly because the HTML rendering from application data can remain rather simple.
 
-After this general overview, the following sections will discuss various questions
-that arise when deploying such applications and describe possible solutions.
+Several other constraints linked to SPA architecture appear
+beyond its apparent simplicity during the deployment of SPA applications.
+The following sections will discuss those specific questions
+and describe possible solutions.
 
 ## Routing URLs
 
-To be completed.
+### Single page with many URLs
 
+If a SPA application is called _single-page_,
+it must generally nevertheless manage a full set of URLs, as a classical Web Application would,
+in response to user navigation requests.
+Those URLs are displayed in the navigation bar and may be bookmarked by the users
+as well as handled through the browser's history menu.
+
+### Routing with Vue.js
+
+Any SPA application with numerous page contents must rely on some kind of routing.
+Vue.js comes with a dedicated [router](https://router.vuejs.org/) component,
+that helps developper to map URLs schemes to dedicated JavaScript components to handle them.
+
+The routing is generally achieved internally, no interaction with the server is required
+to change the URL and the page content. API calls are only necessary for application data exchange. 
+
+However the user must have the ability to launch the application by requesting a bookmarked URL.
+In such a case, the application still performs its standard initialization process,
+but the browser-side router must be invoked to map the requested URL
+to the corresponding JavaScript component to render the requested content and data,
+as it would do during standard navigation.
+
+The browser-side routing thus appear as a very natural programming model to the developper.
+ 
 ## Deployment-time configuration
 
 To be completed.
