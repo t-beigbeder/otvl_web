@@ -1,6 +1,7 @@
 meta:
   version: "1.0"
-  publication_date: "20200529"
+  publication_date: "20200124"
+  last_update_date: "20200607"
   summary_heading: "Deploying a Vue.js Single Page Application"
   summary: |
     While the Single Page Application Architecture provides great features

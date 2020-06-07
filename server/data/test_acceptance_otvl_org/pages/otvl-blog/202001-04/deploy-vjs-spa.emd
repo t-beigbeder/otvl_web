@@ -1,4 +1,4 @@
-![Article image](/assets/images/deploy-vjs-spa/deploy_vjs_spa.jpg "Vue.js Single Page Application schema"){: class="BRAND__page-img-max-itself" }
+![Article image](/assets/images/spa-short-pres/spa_short_pres.jpg "Vue.js Single Page Application schema"){: class="BRAND__page-img-max-itself" }
 
 # Deploying a Vue.js Single Page Application
 
@@ -114,6 +114,7 @@ To be completed.
 ### Articles and guides
 
 - [vue router - HTML5 History Mode](https://router.vuejs.org/guide/essentials/history-mode.html)
+- [otvl blog - Single Page Application short presentation](/blog/otvl-blog/spa-short-pres)
 
 ### References
 
