@@ -1,0 +1,34 @@
+meta:
+  version: "1.0"
+  publication_date: "20200430"
+
+content:
+  title: Menu1 title
+  heading: Menu1 heading
+  stream_fields:
+  - type: md_data
+    data: |
+      # heading in md_data
+
+      Text in md_data
+
+      - list in md_data
+          - sub list in md_data
+          - sub list in md_data # 2
+      - list in md_data # 2
+
+      Text
+
+          :::sh
+          # comment
+          ls file
+          # PageHeaderAndFooter PageHeaderAndFooter PageHeaderAndFooter PageHeaderAndFooter PageHeaderAndFooter
+
+
+      End text in md_data
+
+      And this is a [[/assets/images/home/nature.jpg | wiki link towards an image]]
+
+      And a second one [[/assets/images/home/boutDuMonde.jpg | wiki link towards an image]]
+  - type: sf_img
+    src: /assets/images/home/nature.jpg
