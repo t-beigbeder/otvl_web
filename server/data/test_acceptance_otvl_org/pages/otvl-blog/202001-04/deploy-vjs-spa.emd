@@ -1,10 +1,13 @@
-![Article image](/assets/images/spa-short-pres/spa_short_pres.jpg "Vue.js Single Page Application schema"){: class="BRAND__page-img-max-itself" }
+![Article image](/assets/images/deploy-vjs-spa/deploy_vjs_spa.jpg "Vue.js SPA deployment schema"){: class="BRAND__page-img-max-itself" }
 
 # Deploying a Vue.js Single Page Application
 
-While the
-[Single Page Application (SPA)](https://en.wikipedia.org/wiki/Single-page_application)
-Architecture
+A
+[short presentation](/blog/otvl-blog/spa-short-pres)
+of
+[Single Page Applications (SPA)](https://en.wikipedia.org/wiki/Single-page_application)
+has been provided on this blog.
+While the SPA architecture
 provides great features to the users and the developpers,
 the deployment of such applications requires implementing several specific solutions,
 some of them are being discussed here.
@@ -13,93 +16,76 @@ some of them are being discussed here.
 between the browsers and the servers are not covered here,
 but they will be discussed with their specificity in the future on this Blog).
 
-## A short presentation
+## Handling URL schemes
 
-### Technical overview
+The HTTP server must honor all the potential application URLs
+by providing the _single-page_ HTML file in response to HTTP requests to any of them.
 
-It is difficult to talk about SPA applications without a small amount of technical details.
-On the schema above, we can see the application users dealing with media files and application data
-by using a Web browser where those informations are presented
-and the application data may be updated.
+On the other hand, assets and other resource files that do not have strictly
+a URL for the application entry point must not be handled the same way.
+More specifically, such resources may be missing on the web server
+which must answer in this case with a 404 HTTP status
+and not with the default _single-page_ HTML file.
 
-The SPA architecture introduces in this general context a clear separation of concerns
-in the design of the application:
+Using Vue.js will for instance build the following static files structure to be deployed:
 
-- the browser is fully responsible for rendering the Graphical User Interface (GUI)
-  and handling the interactions with the user;
-- an application server, the API (Application Programming Interface) server,
-  is fully responsible for accessing and updating application data.
+    :::sh
+    spa
+    ├── css
+    │   └── app.607c7d80.css
+    ├── index.html
+    ├── js
+    │   ├── app.7dc9a54e.js
+    │   ├── runtime.d5cde5e4.js
+    │   └── vendor.87fc6fee.js
+    └── statics
+        ├── img
+        │   ├── favicon.ico
+        │   └── user.png
+        └── js
+            └── luxon.min.js
 
-Because the application is still a Web Application,
-some HTML files required for GUI rendering still need to be served to the browser
-by an HTTP server.
+Configuring Apache 2.4+ for such an aim can be achieved for instance with the following:
 
-When the application is first launched (see the schema below), the browser downloads a basic HTML page
-and corresponding JavaScript, CSS, images and other media files,
-and in the same step a main JavaScript application that renders the GUI by updating the
-browser's DOM (Document Object Model),
-using some application data downloaded at the same time.
+    :::apache
+    DocumentRoot "/path/to/document/root"
+    <Directory /path/to/document/root>
+      Require all granted
+      FallbackResource /index.html
+    </Directory>
+    <Directory /path/to/document/root/css>
+      FallbackResource disabled
+    </Directory>
+    # etc.
 
-![First Launch Schema](/assets/images/deploy-vjs-spa/deploy_vjs_spa_start.jpg "Vue.js first launch schema"){: class="BRAND__page-img-max-itself" }
-
-After this initial step, all interaction with the user is achieved under the control of the
-application running in the browser.
-More application data is downloaded on demand and is possibly updated through the API.
-
-### Benefits and constraints
-
-The SPA architecture provides great features to the users and the developpers.
-On the user side, page transitions are smoother and network data usage is optimal.
-On the developper side, the software architecture
-and the corresponding client and server implementations are much simpler to design and to maintain.
-And finally, from both point of views,
-the use of graphical components libraries enable to achieve a great level of ergonomy.
-
-On the other hand, the development must be concerned about
-how the application may be crawled by Search Engine robots:
-as those robots sometimes don't support Javascript at all,
-the rendered content must be provided as simple HTML for such clients.
-A consequence is that some application content must be rendered both on the client in JavaScript,
-but also on the API server using whatever technology is available there.
-This concern is often mitigated first because dynamic application content often does not benefit from
-Search Engine services,
-and secondly because the HTML rendering from application data can remain rather simple.
-
-Several other constraints linked to SPA architecture appear
-beyond its apparent simplicity during the deployment of SPA applications.
-The following sections will discuss those specific questions
-and describe possible solutions.
-
-## Routing URLs
-
-### Single page with many URLs
-
-If a SPA application is called _single-page_,
-it must generally nevertheless manage a full set of URLs, as a classical Web Application would,
-in response to user navigation requests.
-Those URLs are displayed in the navigation bar and may be bookmarked by the users
-as well as handled through the browser's history menu.
-
-### Routing with Vue.js
-
-Any SPA application with numerous page contents must rely on some kind of routing.
-Vue.js comes with a dedicated [router](https://router.vuejs.org/) component,
-that helps developper to map URLs schemes to dedicated JavaScript components to handle them.
-
-The routing is generally achieved internally, no interaction with the server is required
-to change the URL and the page content. API calls are only necessary for application data exchange. 
-
-However the user must have the ability to launch the application by requesting a bookmarked URL.
-In such a case, the application still performs its standard initialization process,
-but the browser-side router must be invoked to map the requested URL
-to the corresponding JavaScript component to render the requested content and data,
-as it would do during standard navigation.
-
-The browser-side routing thus appear as a very natural programming model to the developper.
- 
 ## Deployment-time configuration
 
-To be completed.
+Configuring a SPA at deployment-time is a little bit tricky,
+because the application is packaged during development
+as a fully static site that is viewed by the browser as such.
+
+To understand why, consider the following:
+the launch of a Vue.js SPA as described on the following schema
+involves several steps:
+
+1. The browser download the _single-page_ default HTML file 
+2. The browser parses the file, finds linked elements and downloads them,
+   among which the Vue.js application JavaScript file
+3. The Vue.js application calls the API server to get application data to be displayed
+
+![Launch Schema](/assets/images/spa-short-pres/spa_short_pres_start.jpg "SPA launch schema"){: class="BRAND__page-img-max-itself" }
+
+Configuring the client-side application can generally be done
+through the use of specific application data requested on the API server.  
+
+But some client-side configuration must
+TBC
+
+Because a good
+[DevOps](https://en.wikipedia.org/wiki/DevOps)
+practice is to rely on an
+[immutable deployment](https://www.digitalocean.com/community/tutorials/what-is-immutable-infrastructure),
+we don't want to deploy different packages on different environments.
 
 ## Supporting Search Engines
 

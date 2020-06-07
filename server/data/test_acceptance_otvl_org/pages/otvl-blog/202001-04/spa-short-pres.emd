@@ -123,20 +123,6 @@ Even if the routing in a SPA application is achieved on the browser's side,
 the HTTP server must honor all the potential application URLs
 by providing the _single-page_ HTML file in response to HTTP requests to any of them.
 
-Configuring Apache 2.4+ for such an aim can be achieved for instance with the following:
-
-    :::apache
-    DocumentRoot "/path/to/document/root"
-    <Directory /path/to/document/root>
-      Require all granted
-      FallbackResource /index.html
-    </Directory>
-    <Directory /path/to/document/root/assets>
-      FallbackResource disabled
-    </Directory>
-    # etc.
-
-
 ### Page rendering and search engines
 
 The developpers must be concerned about
