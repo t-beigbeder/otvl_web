@@ -1,7 +1,7 @@
 <template>
   <q-page class="BRAND__page-content">
     <div class="row">
-      <div class="col-md-9 q-pr-md-sm">
+      <div class="col-md-9 q-pr-md-sm page-article">
         <PageHeaderAndFooter :page="this" :app="app" is_header></PageHeaderAndFooter>
         <h1>{{ content.heading }}</h1>
         <StreamField v-for="(stream_field, index) in content.stream_fields" v-bind="stream_field" :key="str_id + index">

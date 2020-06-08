@@ -1,5 +1,5 @@
 <template>
-  <q-item clickable v-close-popup :to="target_url" dense class="M005__site-menu-item q-ml-md">
+  <q-item clickable v-close-popup :to="target_url" dense  active-class="BRAND__site-menu-item" class="BRAND__site-menu-item q-ml-md">
     {{ label }}
   </q-item>
 </template>

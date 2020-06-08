@@ -129,6 +129,8 @@ export default {
 
   &__site-menu-item
     color: $blue-grey-8
+    text-decoration: none;
+    text-decoration-line: none;
 
   &__page-content
     color: $blue-grey-8

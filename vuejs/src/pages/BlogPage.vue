@@ -1,6 +1,6 @@
 <template>
   <q-page class="BRAND__page-content">
-    <div class="row">
+    <div class="row page-article">
       <div class="col-grow col-md-9 q-pr-md-sm">
         <PageHeaderAndFooter :page="this" :app="app" is_header></PageHeaderAndFooter>
         <h1>{{ content.heading }}</h1>
