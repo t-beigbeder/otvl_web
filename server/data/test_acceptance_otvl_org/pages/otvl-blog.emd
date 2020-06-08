@@ -1,6 +1,8 @@
 <div otvl-web>
 type: sf_q_img_in_card
 src: http://vjs-dev-host:8888/api/assets/images/common/picCagire.jpg
+alt: Home image
+title: Pic Cagire
 </div>
 
 # Welcome to otvl.org's Blog!

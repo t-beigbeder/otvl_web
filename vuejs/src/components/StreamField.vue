@@ -1,7 +1,7 @@
 <template>
   <span v-if="type == 'html'" v-html="content"></span>
   <q-card v-else-if="type == 'sf_q_img_in_card'">
-    <img :src="src">
+    <img :src="src" :alt=alt :title=title>
   </q-card>
   <span v-else>type unknown: {{ type }}</span>
 </template>
@@ -21,6 +21,14 @@ export default {
     },
 
     src: {
+      type: String,
+      required: false
+    },
+    alt: {
+      type: String,
+      required: false
+    },
+    title: {
       type: String,
       required: false
     }

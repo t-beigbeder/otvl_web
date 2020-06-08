@@ -1,4 +1,9 @@
-![Article image](/assets/images/spa-short-pres/spa_short_pres.jpg "Single Page Application schema"){: class="BRAND__page-img-max-itself" }
+<div otvl-web>
+type: sf_q_img_in_card
+src: http://vjs-dev-host:8888/api/assets/images/spa-short-pres/spa_short_pres.jpg
+alt: Article image
+title: Single Page Application schema
+</div>
 
 # Single Page Application short presentation
 
