@@ -1,5 +1,5 @@
 <template>
-  <q-card bordered>
+  <q-card>
     <q-card-section class="q-py-none">
       <div class="q-my-sm text-h6 text-blue-grey-8 text-center">
         {{ brand.labels.search_blogs }}

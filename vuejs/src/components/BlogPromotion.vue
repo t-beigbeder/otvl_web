@@ -1,5 +1,5 @@
 <template>
-  <q-card bordered class="bg-blue-grey-1">
+  <q-card class="bg-blue-grey-1">
     <q-card-section class="q-py-none">
       <div class="q-my-sm text-h6 text-red-10 text-center">
         {{ brand.labels.promotion }}

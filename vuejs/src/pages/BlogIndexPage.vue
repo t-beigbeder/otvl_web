@@ -1,7 +1,7 @@
 <template>
   <q-page class="BRAND__page-content">
-    <div class="row">
-      <div class="col-md-9 q-pr-md-sm page-article">
+    <div class="row q-mx-sm-lg q-mx-md-xl q-mt-sm-lg">
+      <div class="col-grow col-md-9 q-pr-md-sm page-article">
         <PageHeaderAndFooter :page="this" :app="app" is_header></PageHeaderAndFooter>
         <h1>{{ content.heading }}</h1>
         <StreamField v-for="(stream_field, index) in content.stream_fields" v-bind="stream_field" :key="str_id + index">
@@ -19,10 +19,11 @@
           </div>
           <q-separator spaced class="col-12" size="2px" color="blue-grey-2"/>
         </div>
-
       </div>
       <div class="col-md-3 col-sm-4 q-pl-md-sm">
-        <div v-if="content.brand.promotion" class="col q-mt-xl">
+        <h1></h1>
+        <span></span>
+        <div v-if="content.brand.promotion" class="col">
           <BlogPromotion :app="app" :brand="content.brand" :preview_blogs="preview_blogs" :blog_prefix_link="blogPrefixLink"></BlogPromotion>
         </div>
         <div class="col q-mt-lg">

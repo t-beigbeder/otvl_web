@@ -1,4 +1,7 @@
-![Image Home](/assets/images/common/picCagire.jpg "Pic Cagire"){: class="BRAND__page-img-max-itself" }
+<div otvl-web>
+type: sf_q_img_in_card
+src: http://vjs-dev-host:8888/api/assets/images/common/picCagire.jpg
+</div>
 
 # Welcome to otvl.org's Blog!
 
