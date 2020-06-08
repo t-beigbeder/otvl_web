@@ -1,5 +1,7 @@
 This is the first paragraph of the document.
 
+Here is some HTML:
+
 ![Image Home](/assets/images/home/boutDuMonde.jpg){: class="BRAND__page-img-full" }
 # Title
 ## Sub title

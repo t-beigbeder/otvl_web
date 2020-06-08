@@ -219,6 +219,46 @@ class BasePageHandler(BaseHandler):
         patched_anchors_html_text = self._patch_html_loc_anchors(patched_assets_html_text)
         return patched_anchors_html_text
 
+    def _serialize_first_div(self, html_text):
+        changed = False
+        start = html_text
+        div, end = None, None
+        div_bx = html_text.find("<div otvl-web>\n")
+        if div_bx == -1:
+            return changed, start, div, end
+        changed = True
+        start = html_text[:div_bx]
+        end = html_text[div_bx + len("<div otvl-web>\n"):]
+        cdiv_bx = end.find("</div>\n")
+        if cdiv_bx == -1:
+            return changed, start, div, end
+        div = end[:cdiv_bx]
+        try:
+            div = yaml.load(div, Loader=yaml.FullLoader)
+        except yaml.parser.ParserError:
+            pass
+        end = end[cdiv_bx + len("</div>\n"):]
+        return changed, start, div, end
+
+    def _serialize_divs_in_content(self, page_content):
+        serialized_sf = []
+        for sf in page_content["content"]["stream_fields"]:
+            if sf["type"] != "html":
+                serialized_sf.append(sf)
+                continue
+            changed = True
+            next = sf["content"]
+            while changed:
+                changed, start, div, end = self._serialize_first_div(next)
+                serialized_sf.append(dict(type="html", content=start))
+                if changed:
+                    if div is not None:
+                        if type(div) is str:
+                            div = dict(type="html", content=div)
+                        serialized_sf.append(div)
+                    next = end
+        return serialized_sf
+
     def _get_page_content(self, section, sub_section, slug):
         file_path = self.server_config["pages_directory"]
         if file_path[-1] != "/":
@@ -253,6 +293,8 @@ class BasePageHandler(BaseHandler):
                 del sf["data"]
             elif "src" in sf:
                 sf["src"] = self._patch_asset_in_src_sf(sf["src"])
+        serialized_sf = self._serialize_divs_in_content(page_content)
+        page_content["content"]["stream_fields"] = serialized_sf
         return page_content
 
 
