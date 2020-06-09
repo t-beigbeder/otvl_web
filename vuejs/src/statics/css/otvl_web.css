@@ -6,6 +6,13 @@
   text-decoration: none;
 }
 
+.page-bottom a:link, .page-bottom a:visited, .page-bottom a:hover, .page-bottom a:active {
+  padding: 2px;
+  color: #003E68;
+  text-decoration: none;
+}
+
+
 .brand_img {
   border-radius: 50px;
 }

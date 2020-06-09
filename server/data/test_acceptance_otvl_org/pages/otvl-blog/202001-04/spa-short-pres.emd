@@ -7,6 +7,10 @@ title: Single Page Application schema
 
 # Single Page Application short presentation
 
+<div otvl-web>
+type: sf_page_dates
+</div>
+
 The
 [Single Page Application (SPA)](https://en.wikipedia.org/wiki/Single-page_application)
 Architecture

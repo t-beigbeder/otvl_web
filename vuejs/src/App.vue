@@ -40,14 +40,16 @@ export default {
           toolbar: 'toolbar_label_tbd',
           account_tooltip: 'account_tooltip_tbd'
         },
+        bottom_menu: {
+          index: -1
+        },
         behavior: {
           dates_header: false,
           dates_footer: false
         }
       },
-      menus: function () {
-        return []
-      },
+      menus: [],
+      bottom_menu: [],
       pages_by_id: function () {
         return {}
       },
@@ -99,6 +101,9 @@ export default {
         console.log('App site_pages_updated')
       }
       this.menus = this.buildMenusFromConf()
+      if (this.brand.bottom_menu.index !== -1) {
+        this.$set(this, 'bottom_menu', this.menus[this.brand.bottom_menu.index].sub_menus)
+      }
       this.pages_by_id = this.buildPagesById()
     }
   },

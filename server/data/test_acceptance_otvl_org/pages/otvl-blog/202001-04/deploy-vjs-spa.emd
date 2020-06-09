@@ -1,6 +1,15 @@
-![Article image](/assets/images/deploy-vjs-spa/deploy_vjs_spa.jpg "Vue.js SPA deployment schema"){: class="BRAND__page-img-max-itself" }
+<div otvl-web>
+type: sf_q_img_in_card
+src: /assets/images/deploy-vjs-spa/deploy_vjs_spa.jpg
+alt: Article image
+title: Vue.js SPA deployment schema
+</div>
 
 # Deploying a Vue.js Single Page Application
+
+<div otvl-web>
+type: sf_page_dates
+</div>
 
 A
 [short presentation](/blog/otvl-blog/spa-short-pres)
@@ -82,7 +91,13 @@ we must:
        among which the Vue.js application JavaScript file
     3. The Vue.js application calls the API server to get application data
 
-![Launch Schema](/assets/images/spa-short-pres/spa_short_pres_start.jpg "SPA launch schema"){: class="BRAND__page-img-max-itself" }
+<div otvl-web>
+type: sf_q_img_in_card
+src: /assets/images/spa-short-pres/spa_short_pres_start.jpg
+alt: Launch Schema
+title: SPA launch schema
+class_: self_width_img
+</div>
 
 We could generate one specific application bundle for each distinct deployment environment.
 But the deployment pipeline would become heavy and slow, and the solution is not scalable.
@@ -182,7 +197,13 @@ The deployment must in any case involve a reverse proxy that will route URL requ
 We are describing here the following deployment, based on the solutions previously described.
 The asumption is made that all the URLs belong to the same DNS domain.
 
-![Deployed components architecture Schema](/assets/images/deploy-vjs-spa/deploy_vjs_spa_dca.jpg "Deployed components architecture schema"){: class="BRAND__page-img-max-itself" }
+<div otvl-web>
+type: sf_q_img_in_card
+src: /assets/images/deploy-vjs-spa/deploy_vjs_spa_dca.jpg
+alt: Deployed components architecture Schema
+title: Deployed components architecture Schema
+class_: self_width_img
+</div>
 
 - The Apache reverse proxy is responsible for the routing of client-side requested URLs
   to the relevant back-end component

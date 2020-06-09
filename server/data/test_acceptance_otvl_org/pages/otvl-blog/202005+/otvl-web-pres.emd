@@ -299,7 +299,13 @@ The ovl_web application
 [ git [![Image GitHub](/assets/images/common/github-logo-24.png)](https://github.com/t-beigbeder/otvl_web) ]
 comes with Dockerfiles to produce the different components of the following architecture.
 
-![Docker components](/assets/images/otvl-web-pres/otvl_web_docker.jpg "Architecture schema for the docker components"){: class="BRAND__page-img-max-itself" }
+<div otvl-web>
+type: sf_q_img_in_card
+src: /assets/images/otvl-web-pres/otvl_web_docker.jpg
+alt: Docker components
+title: Architecture schema for the docker components
+class_: self_width_img
+</div>
 
 If you have
 [docker](https://docs.docker.com/)
@@ -311,8 +317,7 @@ installed on a development environment, you can run those components using the f
     # run docker build for the three components
     $ dev/shell/run_dkb_for_compose.sh  
     # run the three components with docker compose
-    $ dev/shell/run_compose_up.sh \
-      [/path/to/a/specific/otvl_web/site]
+    $ dev/shell/run_compose_up.sh [/path/to/a/specific/otvl_web/site]
 
 The otvl_ansible
 [ git [![Image GitHub](/assets/images/common/github-logo-24.png)](https://github.com/t-beigbeder/otvl_ansible) ]

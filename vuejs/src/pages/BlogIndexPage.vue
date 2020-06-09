@@ -3,7 +3,7 @@
     <div class="row q-mx-sm-lg q-mx-md-xl q-mt-sm-lg">
       <div class="col-grow col-md-9 q-pr-md-sm page-article">
         <h1>{{ content.heading }}</h1>
-        <StreamField v-for="(stream_field, index) in content.stream_fields" v-bind="stream_field" :key="str_id + index">
+        <StreamField v-for="(stream_field, index) in content.stream_fields" v-bind="stream_field" :key="str_id + index" :meta="meta" :brand="content.brand">
         </StreamField>
         <p v-if="app.app_debug">site_configuration {{ app.site_configuration }}</p>
         <div v-for="blog in published_blogs" :key="blog.slug" class="row q-pl-md">

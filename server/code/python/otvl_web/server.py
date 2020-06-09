@@ -25,14 +25,6 @@ def setup_env():
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 
-class NoCacheStaticFileHandler(tornado.web.StaticFileHandler):
-    logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
-
-    def set_extra_headers(self, path):
-        self.logger.debug("set_extra_headers")
-        self.set_header("Cache-control", "no-cache")
-
-
 class BaseHandler(tornado.web.RequestHandler):
     logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
     server_config = {}
@@ -576,7 +568,7 @@ def make_otvl_web_app(server_config):
         (r"/api/sitemap.xml", SiteMapHandler, handler_kwa),
         (r"/api/site/config/?", SiteHandler, handler_kwa),
         (r"/api/site/pages/?", SiteHandler, handler_kwa),
-        (r"/api/assets/(.*)", NoCacheStaticFileHandler, {"path": assets_directory}),
+        (r"/api/assets/(.*)", tornado.web.StaticFileHandler, {"path": assets_directory}),
         (r"/api/blogs/([^/]*)/([^/]*)/([^/]*)/?", BlogsHandler, handler_kwa),
         (r"/api/blogs/([^/]*)/([^/]*)/?", BlogsHandler, handler_kwa),
         (r"/api/blogs/([^/]*)/?", BlogsHandler, handler_kwa),

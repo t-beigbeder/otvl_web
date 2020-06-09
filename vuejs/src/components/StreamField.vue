@@ -1,7 +1,7 @@
 <template>
   <span v-if="type == 'html'" v-html="content"></span>
   <div v-else-if="type == 'sf_q_img_in_card'" class="row">
-    <q-card class="q-mb-md">
+    <q-card class="col-auto q-mb-md">
       <img :src="src" :alt=alt :title=title :class=class_>
     </q-card>
     <p v-if="credit"><i><a :href=credit.href>{{ credit.text }}</a></i></p>
