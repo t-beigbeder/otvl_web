@@ -1,14 +1,14 @@
 import AppUtilMixin from 'src/mixins/AppUtilMixin'
-import PageHeaderAndFooter from 'src/components/PageHeaderAndFooter'
 import StreamField from 'src/components/StreamField'
+import PageBottom from 'src/components/PageBottom'
 import { DateTime } from 'luxon'
 
 export default {
   mixins: [AppUtilMixin],
 
   components: {
-    PageHeaderAndFooter,
-    StreamField
+    StreamField,
+    PageBottom
   },
 
   data: function () {

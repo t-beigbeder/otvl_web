@@ -2,6 +2,20 @@
 .page-article a:link, .page-article a:visited, .page-article a:hover, .page-article a:active {
   background-color: #eceff1;
   padding: 2px;
-  color: #25495a;
+  color: #003E68;
   text-decoration: none;
+}
+
+.brand_img {
+  border-radius: 50px;
+}
+
+.drawer_brand_img {
+  max-height: 30px;
+  border-radius: 30px;
+}
+
+.self_width_img {
+  max-width:100%;
+  height: auto;
 }

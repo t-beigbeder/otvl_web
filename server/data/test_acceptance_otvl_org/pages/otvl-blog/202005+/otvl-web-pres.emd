@@ -1,8 +1,18 @@
-![Article image](/assets/images/otvl-web-pres/business-background-illustration-people.jpg "Web Content Manager Cartoon"){: class="BRAND__page-img-max-itself" }
-
-_[Illustration above credit](https://www.piqsels.com/en/public-domain-photo-jrrkb)_
+<div otvl-web>
+type: sf_q_img_in_card
+src: /assets/images/otvl-web-pres/business-background-illustration-people.jpg
+alt: Article image
+title: Web Content Manager Cartoon
+credit:
+  text: Illustration above credit
+  href: https://www.piqsels.com/en/public-domain-photo-jrrkb
+</div>
 
 # Publishing content efficiently with otvl_web
+
+<div otvl-web>
+type: sf_page_dates
+</div>
 
 Otvl_web is an
 [Open Source](https://en.wikipedia.org/wiki/Free_and_open-source_software)

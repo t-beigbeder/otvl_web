@@ -243,6 +243,8 @@ class BasePageHandler(BaseHandler):
         div = end[:cdiv_bx]
         try:
             div = yaml.load(div, Loader=yaml.FullLoader)
+            if "src" in div:
+                div["src"] = self._patch_asset_in_src_sf(div["src"])
         except yaml.parser.ParserError:
             pass
         end = end[cdiv_bx + len("</div>\n"):]

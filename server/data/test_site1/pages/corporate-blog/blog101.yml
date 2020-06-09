@@ -1,8 +1,8 @@
 meta:
   version: "1.0"
-  creation_date: 20200507
+  creation_date: "20200507"
   publication_date: "20200508"
-  last_update_date: 20200509
+  last_update_date: "20200509"
   summary: |
     blog 101 summary.
     Line2.
@@ -26,6 +26,10 @@ content:
   - type: md_data
     data: |
       # heading in md_data
+
+      <div otvl-web>
+      type: sf_page_dates
+      </div>
 
       Text in md_data
 

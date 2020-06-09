@@ -14,7 +14,7 @@
             class="q-mx-md"
           />
           <q-item tag="a" :to=app.brand.urls.home>
-              <img v-if="'assets' in app.brand && 'brand_img' in app.brand.assets" :src="app.assets_url + app.brand.assets.brand_img">
+              <img v-if="'assets' in app.brand && 'brand_img' in app.brand.assets" class="brand_img" :src="app.assets_url + app.brand.assets.brand_img">
               <img v-else src="statics/img/brand_logo.jpg">
           </q-item>
           <q-toolbar-title>
@@ -50,7 +50,8 @@
       <q-scroll-area class="fit">
         <q-toolbar class="BRAND__toolbar">
           <q-toolbar-title class="row items-center text-blue-grey-8">
-            <img class="q-pl-md" src="statics/img/brand_logo.jpg">
+            <img v-if="'assets' in app.brand && 'brand_img' in app.brand.assets" class="q-ml-md drawer_brand_img" :src="app.assets_url + app.brand.assets.brand_img">
+            <img v-else class="q-ml-md" src="statics/img/brand_logo.jpg">
             <span class="q-ml-sm">{{ app.brand.labels.toolbar }}</span>
           </q-toolbar-title>
         </q-toolbar>

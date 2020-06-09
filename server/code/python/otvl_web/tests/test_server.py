@@ -225,6 +225,20 @@ def test_get_sitemap_pages_as_html(http_client, base_url, caplog, monkeypatch):
         body = response.body.decode("utf-8")  # noqa
 
 
+@pytest.mark.gen_test
+def test_get_sf_content(http_client, base_url, caplog, monkeypatch):
+    response = yield http_client.fetch(base_url + "/api/blog/corporate-blog//blog110")
+    assert response.code == 200
+    resp_o = body_to_obj(response.body)
+    assert "stream_fields" in resp_o["content"]
+    assert len(resp_o["content"]["stream_fields"]) == 5
+    sf2t = resp_o["content"]["stream_fields"][1]["type"]
+    assert sf2t == "sf_q_img_in_card"
+    sf2s = resp_o["content"]["stream_fields"][1]["src"]
+    asset_url = "http://vjs-dev-host:8888/api/assets/"
+    assert sf2s.startswith(asset_url)
+
+
 if __name__ == "__main__":
     # pytest.main()
     pytest.main(['-v', '-s', '-k', 'test_server.py'])

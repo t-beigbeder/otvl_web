@@ -4,7 +4,7 @@ Here is some HTML:
 
 <div otvl-web>
 type: sf_q_img_in_card
-src: src content
+src: /assets/images/home/nature.jpg
 </div>
 
 ###### h6 in blog 110

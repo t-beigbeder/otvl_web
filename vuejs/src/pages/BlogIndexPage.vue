@@ -2,22 +2,22 @@
   <q-page class="BRAND__page-content">
     <div class="row q-mx-sm-lg q-mx-md-xl q-mt-sm-lg">
       <div class="col-grow col-md-9 q-pr-md-sm page-article">
-        <PageHeaderAndFooter :page="this" :app="app" is_header></PageHeaderAndFooter>
         <h1>{{ content.heading }}</h1>
         <StreamField v-for="(stream_field, index) in content.stream_fields" v-bind="stream_field" :key="str_id + index">
         </StreamField>
         <p v-if="app.app_debug">site_configuration {{ app.site_configuration }}</p>
-        <q-separator spaced  size="2px" color="blue-grey-2"/>
         <div v-for="blog in published_blogs" :key="blog.slug" class="row q-pl-md">
+          <q-separator spaced class="col-12" size="2px" color="blue-grey-2"/>
           <h3 class="col-12 col-md-9">{{ blog.summary_heading }}</h3>
           <p class="col-12 col-md-3 q-my-auto text-caption">
             {{ content.brand.labels.published_on }} {{ intlDate(blog.publication_date, locale) }}
           </p>
-          <div class="col-12">
+          <div class="col-10">
             {{ blog.summary }}
-            <q-btn class="q-ml-md" dense color="blue-grey-2" text-color="blue-grey-9" no-caps :to="blogPrefixLink + '/' + blog.slug" :label="content.brand.labels.read_more"></q-btn>
           </div>
-          <q-separator spaced class="col-12" size="2px" color="blue-grey-2"/>
+          <div class="col-2">
+            <q-btn class="q-ml-md" dense size=sm color="blue-grey-2" text-color="blue-grey-9" no-caps :to="blogPrefixLink + '/' + blog.slug" :label="content.brand.labels.read_more"></q-btn>
+          </div>
         </div>
       </div>
       <div class="col-md-3 col-sm-4 q-pl-md-sm">
@@ -30,10 +30,8 @@
           <BlogBrowser :app="app" :brand="content.brand" :index_url="content.index_url"></BlogBrowser>
         </div>
       </div>
-      <div class="col-md-9 q-pr-md-sm">
-        <PageHeaderAndFooter :page="this" :app="app"></PageHeaderAndFooter>
-      </div>
     </div>
+    <PageBottom :app="app"></PageBottom>
   </q-page>
 </template>
 

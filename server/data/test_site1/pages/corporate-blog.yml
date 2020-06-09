@@ -19,7 +19,9 @@ content:
       index_title: List of corporate blogs
       search_blogs: "Search blogs..."
       search_criteria: "Other search criteria..."
+      created_on: "Created on "
       published_on: "Published on "
+      last_updated_on: "Last updated on "
       read_more: "Read more..."
 
   stream_fields:

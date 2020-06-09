@@ -1,6 +1,6 @@
 <div otvl-web>
 type: sf_q_img_in_card
-src: http://vjs-dev-host:8888/api/assets/images/spa-short-pres/spa_short_pres.jpg
+src: /assets/images/spa-short-pres/spa_short_pres.jpg
 alt: Article image
 title: Single Page Application schema
 </div>
@@ -39,7 +39,13 @@ and in the same step a main JavaScript application that renders the GUI by updat
 browser's DOM (Document Object Model),
 using some application data downloaded at the same time.
 
-![First Launch Schema](/assets/images/spa-short-pres/spa_short_pres_start.jpg "SPA first launch schema"){: class="BRAND__page-img-max-itself" }
+<div otvl-web>
+type: sf_q_img_in_card
+src: /assets/images/spa-short-pres/spa_short_pres_start.jpg
+alt: First Launch Schema
+title: SPA first launch schema
+class_: self_width_img
+</div>
 
 After this initial step, all interaction with the user is achieved under the control of the
 application running in the browser.
