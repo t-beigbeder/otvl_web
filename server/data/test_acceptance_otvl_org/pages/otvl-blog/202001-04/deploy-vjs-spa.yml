@@ -5,7 +5,7 @@ meta:
   summary_heading: "Deploying a Vue.js Single Page Application"
   summary: |
     What is specific about the deployment of Single Page Applications?
-    Some questions with solutions among others.
+    Some solutions are discussed here.
 
 content:
   title: "Deploying a Vue.js Single Page Application"

@@ -22,7 +22,7 @@ This article is a short presentation of this technical architecture shift.
 
 It is difficult to talk about SPA applications without a small amount of technical details.
 On the schema above, we can see the application users dealing with media files and application data
-by using a Web browser where those informations are presented
+by using a Web browser where this information is presented
 and the application data may be updated.
 
 The SPA architecture introduces in this general context a clear separation of concerns
@@ -38,10 +38,10 @@ some HTML files required for GUI rendering still need to be served to the browse
 by an HTTP server.
 
 When the application is first launched (see the schema below), the browser downloads a basic HTML page
-and corresponding JavaScript, CSS, images and other media files,
-and in the same step a main JavaScript application that renders the GUI by updating the
-browser's DOM (Document Object Model),
-using some application data downloaded at the same time.
+and corresponding JavaScript, CSS, images and other media files.
+Among those JavaScript files, the main JavaScript client application is downloaded and started.
+It renders the GUI by updating the browser's DOM (Document Object Model),
+using some application data requested to the API server.
 
 <div otvl-web>
 type: sf_q_img_in_card
@@ -79,7 +79,7 @@ Despite its rich and powerful features, it remains easy to learn and to use.
 
 The
 [Quasar framework](https://quasar.dev/)
-is based on
+is based among others on
 [Vue.js](https://vuejs.org/)
 and it adds a lot of high level features from a developper perspective
 to enable an efficient development of new applications.
@@ -102,7 +102,7 @@ by successive HTTP requests from the browser to the server.
 In the case of a SPA, the browser-side application has to simulate this behavior
 by using the
 [history API](https://developer.mozilla.org/en-US/docs/Web/API/History_API).
-It is important to note that the support of this API is not equally supported by different
+It is important to note that this API is not equally supported by different
 browsers. See
 [css-tricks - Using the HTML5 History API](https://css-tricks.com/using-the-html5-history-api/)
 for example.
@@ -115,7 +115,7 @@ that helps developper to map URLs schemes to dedicated JavaScript components to 
 
 The routing is generally fully achieved on the browser side,
 no interaction with the server is required
-to change the URL and the page content. API calls are only necessary for application data exchange. 
+to change the URL and the page content.
 
 However the user must have the ability to launch the application by requesting a saved URL.
 In such a case, the application still performs its standard initialization process,
@@ -126,9 +126,9 @@ as it would do during standard navigation.
 
 The browser-side routing thus appear as a natural programming model to the developper.
 
-[Vue.js](https://vuejs.org/) comes with a fully integrated yet optional
-[router](https://router.vuejs.org/) component,
-which is as powerful, yet compact and simple to use as Vue.js itself.
+The Vue.js
+[router](https://router.vuejs.org/) component is as powerful,
+yet compact and simple to use as Vue.js itself.
 
 ## Some constraints
 

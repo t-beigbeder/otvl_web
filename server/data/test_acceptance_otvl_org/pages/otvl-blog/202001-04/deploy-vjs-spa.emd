@@ -27,14 +27,15 @@ but they will be discussed with their specificity in the future on this Blog).
 
 ## Handling URL schemes
 
-The HTTP server must honor all the potential application URLs
+As mentioned in the previous article,
+the HTTP server must honor all the potential application URLs
 by providing the _single-page_ HTML file in response to HTTP requests to any of them.
 
 On the other hand, assets and other resource files that do not have strictly
-a URL for the application entry point must not be handled the same way.
+an URL corresponding to an application entry point must not be handled the same way.
 More specifically, such resources may be missing on the web server
 which must answer in this case with a 404 HTTP status
-and not with the default _single-page_ HTML file.
+and of course not with the default _single-page_ HTML file.
 
 Using Vue.js will for instance build the following static files structure to be deployed:
 
@@ -124,6 +125,9 @@ For instance in the case of the API server endpoint:
       </body>
     </html>
 
+As the initial configuration data is almost always very limited,
+this simple solution will generally be enough.
+
 ## Supporting Search Engines
 
 The SPA navigation is achieved by triggering JavaScript actions
@@ -183,7 +187,7 @@ template fed with some API server page data:
       </body>
     </html>
 
-In such a case, the pages contents will be provided by the API server in the simplest case,
+For such a purpose, the pages contents can be provided by the API server in the simplest case,
 if not by a complementary component responsible to build HTML content from application data. 
 The deployment must in any case involve a reverse proxy that will route URL requests:
 
@@ -212,8 +216,15 @@ class_: self_width_img
 
 ### Corresponding configuration
 
-The Apache reverse proxy configuration will looks like this
-based on the rewrite engine:
+The reverse proxy will take the following actions:
+
+- the routing to the api server for rendering HTML for SearchEngine bots
+keeps the original requested URL by prepending the prefix "/api/html4"
+- all URLs starting with "/api" are routed to the API server
+- all other URLs are routed to the static HTTP server 
+
+The Apache reverse proxy configuration will looks like the following
+based on the Apache rewrite engine module.
 
     :::apache
     RewriteEngine on
@@ -238,7 +249,7 @@ based on the rewrite engine:
     ProxyPass / http://http-server/
     ProxyPassReverse / http://http-server/
 
-The Apache http server configuration will be as described above
+The Apache http server configuration will be as previously described:
 
     :::apache
     DocumentRoot "/path/to/document/root"
@@ -251,7 +262,8 @@ The Apache http server configuration will be as described above
     </Directory>
     # etc.
 
-The API server will serve all dynamic content, using the following URLs mapping in the case of
+The API server will serve all dynamic content, using for instance
+the following URLs mapping in the case of
 [python tornado](https://www.tornadoweb.org/):
 
     :::python

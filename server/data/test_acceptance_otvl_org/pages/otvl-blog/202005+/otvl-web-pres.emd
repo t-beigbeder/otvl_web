@@ -50,7 +50,7 @@ From a content publisher point of view, the benefits of this tool are that
   files, a simple language to describe structured data;
 - the pages contents are described in
   [markdown](https://daringfireball.net/projects/markdown/syntax),
-  a simple language widely used to describe web page (and other) contents;
+  a simple language widely used to describe web page contents;
 - the underlying 
   _[single-page application](https://en.wikipedia.org/wiki/Single-page_application)_
   architecture enables smoother pages transitions and uses less data over the network;
@@ -71,7 +71,7 @@ The content publisher must have direct or indirect access to the content files o
 An example of indirect access is the use of [git](https://git-scm.com/) along with triggers
 to upload files after commit.
 
-There is yet no access control on the publish content either.
+There is yet no access control on the published content either.
 
 ### For developpers
 
@@ -94,7 +94,8 @@ The following topics are detailed in the section "Deployment" below:
 
 - the application supports web crawler bots through sitemap.xml generation
   and server-side HTML rendering;
-- a static Vue.js site may be configured at deployment time concerning the actual server DNS name.
+- a static Vue.js site may be configured at deployment time concerning the actual DNS name
+  of the reverse proxy.
 
 ### Current status
 
@@ -154,7 +155,7 @@ In the case of single-page applications, the routing is achieved on the client s
 [router](https://router.vuejs.org/) component,
 which is as compact and simple to use as Vue.js itself.
 Being said very schematically, its role is to trigger the execution of specific page handlers
-when a new URL scheme is requested from another page, in response to user demand.
+when a new URL scheme is requested from another page, in response to user interaction.
 Because URL schemes are hierarchic by nature, so the organization of those page handlers has to be.
 This can appear as a constraint in the case of otvl_web where the URLs
 should map the site content hierarchy rather than specific parts implementation.
@@ -213,7 +214,7 @@ but this mockup will not be throwable in that case,
 because it uses the same tools as the final product will.
 With the added availability of _off-the-shelf_ components like in the case of the 
 [Quasar framework](https://quasar.dev/),
-the developper becomes much more efficient when implementing new designs.
+the developper's work becomes much more efficient when implementing new designs.
 By contrast, GUI design with a classical web "client-server" architecture
 is achieved with static HTML and has to be translated to server-side templates.
 In that case, the static design becomes more and more outdated as the application evolves.
@@ -241,7 +242,7 @@ also integrates those tools very efficiently though a dedicated
 [command-line interface](https://quasar.dev/start/quasar-cli).
 
 A second concern is about the
-[single-page application](https://en.wikipedia.org/wiki/Single-page_application),
+[single-page application](https://en.wikipedia.org/wiki/Single-page_application)
 technology.
 While it has many benefits for the user and the developper,
 it also comes with some constraints, generally related to URL handling.
