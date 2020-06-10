@@ -1,0 +1,27 @@
+This is the first paragraph blog 112.
+
+<div otvl-web>
+type: sf_q_img_in_card
+src: /assets/images/home/nature.jpg
+</div>
+
+<div otvl-web>
+type: sf_q_img_in_card
+src: /assets/images/home/nature.jpg
+alt: Article image
+</div>
+
+<div otvl-web>
+type: sf_q_img_in_card
+src: /assets/images/home/nature.jpg
+title: Vers Port Vendres
+</div>
+
+<div otvl-web>
+type: sf_q_img_in_card
+src: /assets/images/home/nature.jpg
+alt: Article image
+title: Vers Port Vendres
+</div>
+
+###### h6 in blog 112
