@@ -497,6 +497,19 @@ Check if browser implements ECMAScript 6 `String.prototype.contains` per specifi
   // Run each test
   testRunner();
 
+  clsf = 'es6';
+  for (ix = 0; ix < classes.length; ix++) {
+    cls = classes[ix];
+    if (cls == 'no-contains') {
+      continue;
+    }
+    if ( (cls.length > 3) && (cls[0] === 'n') && (cls[1] === 'o') && (cls[2] === '-')) {
+      clsf = 'no-es6';
+      break;
+    }
+  }
+  classes.push(clsf);
+
   // Remove the "no-js" class if it exists
   setClasses(classes);
 
