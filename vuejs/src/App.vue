@@ -18,7 +18,7 @@ export default {
   data: function () {
     return {
       app_debug: false,
-      app_debug_console: false,
+      app_debug_console: true,
       odbg: {},
       pageClassesByName: {
         StandardPage: StandardPage,

@@ -12,13 +12,13 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@quasar/extras": "^1.8.1",
+    "@quasar/extras": "^1.8.2",
     "axios": "^0.18.1",
     "luxon": "^1.24.1",
-    "quasar": "^1.12.2"
+    "quasar": "^1.12.4"
   },
   "devDependencies": {
-    "@quasar/app": "^1.9.5",
+    "@quasar/app": "^1.9.6",
     "babel-eslint": "^10.0.1",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.0",
