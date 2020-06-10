@@ -16,7 +16,7 @@ However, the files structure and their contents remain easy to understand.
     media files such as documents, images and video files
     are managed directly as files on the server.
 
-- From a developper point of view:
+- From a developer point of view:
   - the front-end is developped with
     [Vue.js](https://vuejs.org/)
     and more specifically
@@ -31,4 +31,4 @@ However, the files structure and their contents remain easy to understand.
 The documentation is organized as following:
 
 - [user documentation](doc/user.md)
-- [developper documentation](doc/developper.md)
+- [developer documentation](doc/developer.md)

@@ -1,4 +1,4 @@
-# otvl web developper documentation
+# otvl web developer documentation
 
 [documentation index](../README.md)
 
