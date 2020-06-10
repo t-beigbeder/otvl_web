@@ -1,0 +1,75 @@
+config:
+  home_section: home
+  home_type: page
+  types:
+    page:
+      mapping: StandardPage
+      has_slug: false
+    blox:
+      mapping: BlogIndexPage
+      has_slug: false
+      blog_type: blog
+    blog:
+      mapping: BlogPage
+      has_slug: true
+      blog_index_type: blox
+  default_assets_url: /assets/
+  brand:
+    urls:
+      home: /page/home
+    locale: fr
+    labels:
+      toolbar: Ateliers du QI
+      account_tooltip: Compte
+
+pages:
+  - id: home
+    type: page
+    title: Les ateliers du QI
+  - id: qi-gong
+    type: page
+    menu: QI Gong
+    title: QI Gong
+    children:
+      - id: notions-mtc-utiles
+        type: page
+        menu: Notions de MTC utiles
+        title: Notions de MTC utiles
+      - id: le-poumon
+        type: page
+        menu: Le poumon
+        title: Le poumon
+  - id: pratique
+    type: page
+    menu: Pratique
+    title: Pratique
+    children:
+      - id: association-qi-gong-go
+        type: page
+        menu: Association Qi Gong Go!
+        title: Association Qi Gong Go!
+      - id: actualites
+        type: blox
+        menu: Actualités
+        title: Actualités
+        blog_type: blog
+  - id: a-propos
+    menu: À propos
+    title: À propos
+    children:
+      - id: contact
+        type: page
+        menu: Nous contacter
+        title: Nous contacter
+      - id: association-qi-gong-go
+        type: page
+        menu: Association Qi Gong Go!
+        title: Association Qi Gong Go!
+      - id: association-chemins-harmonie
+        type: page
+        menu: Association Les chemins de l'harmonie
+        title: Association Les chemins de l\'harmonie
+      - id: mentions-legales
+        type: page
+        menu: Mentions légales
+        title: Mentions légales

@@ -1,0 +1,56 @@
+config:
+  home_section: home
+  home_type: page
+  types:
+    page:
+      mapping: StandardPage
+      has_slug: false
+    blox:
+      mapping: BlogIndexPage
+      has_slug: false
+      blog_type: blog
+    blog:
+      mapping: BlogPage
+      has_slug: true
+      blog_index_type: blox
+  default_assets_url: /assets/
+  brand:
+    urls:
+      home: /page/home
+    locale: en
+    labels:
+      toolbar: Blog
+      account_tooltip: Account
+      created_on: "Created on "
+      published_on: "Published on "
+      last_updated_on: "Last updated on "
+    behavior:
+      dates_header: true
+      dates_footer: false
+
+pages:
+  - id: home
+    type: page
+    menu: Home
+  - id: menu1
+    type: page
+    menu: Menu1
+    children:
+      - id: sub-menu1
+        type: page
+        menu: Sub 1
+      - id: sub-menu2
+        type: page
+        menu: Sub 2
+  - id: blog-demo
+    type: blox
+    menu: Blog
+  - id: about
+    type: page
+    menu: About
+    children:
+      - id: legal-policies
+        type: page
+        menu: Legal Policies
+
+###

@@ -1,0 +1,41 @@
+meta:
+  version: "1.0"
+  creation_date: 20200429
+  publication_date: 20200507
+  summary: |
+    Home summary.
+    Line2.
+    Line3 of home summary.
+  authors:
+    - no nem
+    - thierry otvl
+
+content:
+  title: Corporate blog for Otvl Web
+  heading: Heading for Otvl Web's corporate blog
+  brand:
+    no_dates: true
+    labels:
+      index_title: List of corporate blogs
+      search_blogs: "Search blogs..."
+      search_criteria: "Other search criteria..."
+      created_on: "Created on "
+      published_on: "Published on "
+      last_updated_on: "Last updated on "
+      read_more: "Read more..."
+
+  stream_fields:
+  - type: md_data
+    data: |
+      # heading in md_data
+
+      Text in md_data
+
+      - list in md_data
+          - sub list in md_data
+          - sub list in md_data # 2
+      - list in md_data # 2
+
+      End text in md_data
+  - type: sf_img
+    src: http://vjs-dev-host:8888/assets/images/home/nature.jpg

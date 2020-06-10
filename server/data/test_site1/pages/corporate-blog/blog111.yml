@@ -1,0 +1,25 @@
+meta:
+  version: "1.0"
+  publication_date: "20200111"
+  summary: |
+    blog 111 summary.
+
+content:
+  title: "Blog 111 corporate"
+  heading: Heading for blog 111
+  brand:
+    no_dates: true
+    labels:
+      index_title: List of blog corporate
+      search_blogs: "Search blogs..."
+      blog_index_search_criteria: "Other search criteria..."
+      blog_index_read_more: "Read more..."
+
+  stream_fields:
+  - type: md_file
+    file: blog111.emd
+  - type: md_data
+    data: |
+      # heading blog111 in md_data
+  - type: sf_img
+    src: /assets/images/blog111/nature.jpg

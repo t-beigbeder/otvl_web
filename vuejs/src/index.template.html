@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= htmlWebpackPlugin.options.productName %></title>
+
+    <meta charset="utf-8">
+    <meta name="description" content="<%= htmlWebpackPlugin.options.productDescription %>">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width<% if (htmlWebpackPlugin.options.ctx.mode.cordova || htmlWebpackPlugin.options.ctx.mode.capacitor) { %>, viewport-fit=cover<% } %>">
+    <link rel="icon" type="image/ico" href="statics/img/favicon.ico">
+    <link href=statics/css/otvl_web.css rel=stylesheet>
+    <link href=statics/css/codehilite_friendly.css rel=stylesheet>
+  </head>
+  <body>
+    <!-- DO NOT touch the following DIV -->
+    <div id="q-app" api-server-url="default_api_server_url" web-server-url="default_web_server_url"></div>
+    <script type="module" src=statics/js/luxon.min.js></script>
+    <script type="module" src=statics/js/conf.js></script>
+  </body>
+</html>

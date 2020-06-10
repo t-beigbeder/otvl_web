@@ -1,0 +1,18 @@
+meta:
+  version: "1.0"
+  creation_date: 20200514
+  publication_date: 20200514
+  last_update_date: 20200514
+
+content:
+  title: Actualités
+  heading: Les actualités du site
+  brand:
+    labels:
+      index_title: "Liste des nouvelles"
+      search_blogs: "Rechercher..."
+      search_criteria: "Autres recherches..."
+      published_on: "Publié le "
+      read_more: "Lire..."
+
+  stream_fields: []

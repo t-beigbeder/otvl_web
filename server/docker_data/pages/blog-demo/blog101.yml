@@ -1,0 +1,18 @@
+meta:
+  version: "1.0"
+  publication_date: "20200430"
+  summary_heading: "Blog 101 is a thing to read!"
+  summary: |
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+content:
+  title: otvl_web demo Blog 101
+  heading: otvl_web demo Blog 101
+  stream_fields:
+  - type: md_data
+    data: |
+      ## Blog 101 page sub title for otvl_web demo
+
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+      The end.

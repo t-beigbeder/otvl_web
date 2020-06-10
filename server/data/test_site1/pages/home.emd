@@ -1,0 +1,17 @@
+This is the first paragraph of the document.
+
+Here is some HTML:
+
+![Image Home](/assets/images/home/boutDuMonde.jpg){: class="BRAND__page-img-full" }
+# Title
+## Sub title
+### Level 3
+
+Some text
+
+- a list
+- below, a hr
+
+---
+
+![Image Nature](/assets/images/home/nature.jpg){: class="BRAND__page-img-full" }
