@@ -268,73 +268,6 @@ Check if browser implements ECMAScript 6 Object per specification.
     Object.is &&
     Object.setPrototypeOf));
 
-/*!
-{
-  "name": "ES6 Promises",
-  "property": "promises",
-  "caniuse": "promises",
-  "polyfills": ["es6promises"],
-  "authors": ["Krister Kari", "Jake Archibald"],
-  "tags": ["es6"],
-  "notes": [{
-    "name": "The ES6 promises spec",
-    "href": "https://github.com/domenic/promises-unwrapping"
-  },{
-    "name": "Chromium dashboard - ES6 Promises",
-    "href": "https://www.chromestatus.com/features/5681726336532480"
-  },{
-    "name": "JavaScript Promises: There and back again - HTML5 Rocks",
-    "href": "http://www.html5rocks.com/en/tutorials/es6/promises/"
-  }]
-}
-!*/
-/* DOC
-Check if browser implements ECMAScript 6 Promises per specification.
-*/
-
-  Modernizr.addTest('promises', function() {
-    return 'Promise' in window &&
-    // Some of these methods are missing from
-    // Firefox/Chrome experimental implementations
-    'resolve' in window.Promise &&
-    'reject' in window.Promise &&
-    'all' in window.Promise &&
-    'race' in window.Promise &&
-    // Older version of the spec had a resolver object
-    // as the arg rather than a function
-    (function() {
-      var resolve;
-      new window.Promise(function(r) { resolve = r; });
-      return typeof resolve === 'function';
-    }());
-  });
-
-/*!
-{
-  "name": "ES6 String",
-  "property": "es6string",
-  "notes": [{
-    "name": "unofficial ECMAScript 6 draft specification",
-    "href": "https://people.mozilla.org/~jorendorff/es6-draft.html"
-  }],
-  "polyfills": ["es6shim"],
-  "authors": ["Ron Waldon (@jokeyrhyme)"],
-  "warnings": ["ECMAScript 6 is still a only a draft, so this detect may not match the final specification or implementations."],
-  "tags": ["es6"]
-}
-!*/
-/* DOC
-Check if browser implements ECMAScript 6 String per specification.
-*/
-
-  Modernizr.addTest('es6string', !!(String.fromCodePoint &&
-    String.raw &&
-    String.prototype.codePointAt &&
-    String.prototype.repeat &&
-    String.prototype.startsWith &&
-    String.prototype.endsWith &&
-    String.prototype.includes));
-
 
   /**
    * is returns a boolean if the typeof an obj is exactly type.
@@ -434,6 +367,73 @@ Check if browser implements ECMAScript 6 `String.prototype.contains` per specifi
 
   Modernizr.addTest('contains', is(String.prototype.contains, 'function'));
 
+/*!
+{
+  "name": "ES6 Promises",
+  "property": "promises",
+  "caniuse": "promises",
+  "polyfills": ["es6promises"],
+  "authors": ["Krister Kari", "Jake Archibald"],
+  "tags": ["es6"],
+  "notes": [{
+    "name": "The ES6 promises spec",
+    "href": "https://github.com/domenic/promises-unwrapping"
+  },{
+    "name": "Chromium dashboard - ES6 Promises",
+    "href": "https://www.chromestatus.com/features/5681726336532480"
+  },{
+    "name": "JavaScript Promises: There and back again - HTML5 Rocks",
+    "href": "http://www.html5rocks.com/en/tutorials/es6/promises/"
+  }]
+}
+!*/
+/* DOC
+Check if browser implements ECMAScript 6 Promises per specification.
+*/
+
+  Modernizr.addTest('promises', function() {
+    return 'Promise' in window &&
+    // Some of these methods are missing from
+    // Firefox/Chrome experimental implementations
+    'resolve' in window.Promise &&
+    'reject' in window.Promise &&
+    'all' in window.Promise &&
+    'race' in window.Promise &&
+    // Older version of the spec had a resolver object
+    // as the arg rather than a function
+    (function() {
+      var resolve;
+      new window.Promise(function(r) { resolve = r; });
+      return typeof resolve === 'function';
+    }());
+  });
+
+/*!
+{
+  "name": "ES6 String",
+  "property": "es6string",
+  "notes": [{
+    "name": "unofficial ECMAScript 6 draft specification",
+    "href": "https://people.mozilla.org/~jorendorff/es6-draft.html"
+  }],
+  "polyfills": ["es6shim"],
+  "authors": ["Ron Waldon (@jokeyrhyme)"],
+  "warnings": ["ECMAScript 6 is still a only a draft, so this detect may not match the final specification or implementations."],
+  "tags": ["es6"]
+}
+!*/
+/* DOC
+Check if browser implements ECMAScript 6 String per specification.
+*/
+
+  Modernizr.addTest('es6string', !!(String.fromCodePoint &&
+    String.raw &&
+    String.prototype.codePointAt &&
+    String.prototype.repeat &&
+    String.prototype.startsWith &&
+    String.prototype.endsWith &&
+    String.prototype.includes));
+
 
   /**
    * docElement is a convenience wrapper to grab the root element of the document
@@ -497,18 +497,20 @@ Check if browser implements ECMAScript 6 `String.prototype.contains` per specifi
   // Run each test
   testRunner();
 
+
   clsf = 'es6';
+  // es6array arrow es6collections generators es6math es6number es6object promises es6string
+  exclClasses = [ 'no-arrow', 'no-es6collections', 'no-promises' ]
   for (ix = 0; ix < classes.length; ix++) {
-    cls = classes[ix];
-    if (cls == 'no-contains') {
-      continue;
-    }
-    if ( (cls.length > 3) && (cls[0] === 'n') && (cls[1] === 'o') && (cls[2] === '-')) {
-      clsf = 'no-es6';
-      break;
+    for (iy = 0; iy < exclClasses.length; iy++) {
+      if (classes[ix] === exclClasses[iy]) {
+        clsf = 'no-es6';
+        break;
+      }
     }
   }
   classes.push(clsf);
+
 
   // Remove the "no-js" class if it exists
   setClasses(classes);

@@ -31,6 +31,15 @@ class BaseHandler(tornado.web.RequestHandler):
     site_config = {}
     j24bots_loader = None
 
+    def _request_summary(self):
+        s = "%s %s (%s) (%s)" % (
+            self.request.method,
+            self.request.uri,
+            self.request.remote_ip,
+            self.request.headers['User-Agent']
+        )
+        return s
+
     def initialize(self, **kwargs):
         BaseHandler.server_config = kwargs["server_config"]
         del kwargs["server_config"]
@@ -41,7 +50,7 @@ class BaseHandler(tornado.web.RequestHandler):
         super().initialize(**kwargs)
 
     def prepare(self):
-        self.logger.debug(f"prepare: {self.request.method} {self.request.path}")
+        self.logger.debug(f"prepare: {self.request.headers['User-Agent']} {self.request.method} {self.request.path}")
         if not self.request.path.endswith(".xml"):
             if "/html4/" not in self.request.path:
                 self.set_header("Content-Type", "application/json")
