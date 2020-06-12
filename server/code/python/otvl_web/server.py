@@ -35,7 +35,7 @@ class BaseHandler(tornado.web.RequestHandler):
         s = "%s %s (%s) (%s)" % (
             self.request.method,
             self.request.uri,
-            self.request.remote_ip,
+            self.request.headers['X-Forwarded-For'],
             self.request.headers['User-Agent']
         )
         return s
