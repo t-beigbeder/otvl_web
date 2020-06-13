@@ -185,6 +185,15 @@ def test_get_html_home_content(http_client, base_url, caplog, monkeypatch):
 
 
 @pytest.mark.gen_test
+def test_get_html_root_content(http_client, base_url, caplog, monkeypatch):
+    response = yield http_client.fetch(base_url + "/api/html4", raise_error=False)
+    assert response.code == 200
+    assert response.headers["Content-Type"] == "text/html"
+    body = response.body.decode("utf-8")
+    assert "<title>Home for Otvl Web</title>" in body
+
+
+@pytest.mark.gen_test
 def test_get_sitemap_pages_as_html(http_client, base_url, caplog, monkeypatch):
     response = yield http_client.fetch(base_url + "/api/sitemap.xml", raise_error=False)
     assert response.code == 200

@@ -32,11 +32,20 @@ class BaseHandler(tornado.web.RequestHandler):
     j24bots_loader = None
 
     def _request_summary(self):
+        if 'User-Agent' in self.request.headers:
+            ua = self.request.headers['User-Agent']
+        else:
+            ua = "undefined_User-Agent"
+        if 'X-Forwarded-For' in self.request.headers:
+            xff = self.request.headers['X-Forwarded-For']
+        else:
+            xff = "undefined_X-Forwarded-For"
+
         s = "%s %s (%s) (%s)" % (
             self.request.method,
             self.request.uri,
-            self.request.headers['X-Forwarded-For'],
-            self.request.headers['User-Agent']
+            xff,
+            ua
         )
         return s
 
@@ -50,9 +59,13 @@ class BaseHandler(tornado.web.RequestHandler):
         super().initialize(**kwargs)
 
     def prepare(self):
-        self.logger.debug(f"prepare: {self.request.headers['User-Agent']} {self.request.method} {self.request.path}")
+        if 'User-Agent' in self.request.headers:
+            ua = self.request.headers['User-Agent']
+        else:
+            ua = "undefined_User-Agent"
+        self.logger.debug(f"prepare: {ua} {self.request.method} {self.request.path}")
         if not self.request.path.endswith(".xml"):
-            if "/html4/" not in self.request.path:
+            if "/html4/" not in self.request.path and self.request.path != "/api/html4":
                 self.set_header("Content-Type", "application/json")
             else:
                 self.set_header("Content-Type", "text/html")
@@ -341,6 +354,23 @@ class Html4PageHandler(BasePageHandler):
         return self.finish(h4c)
 
 
+class Html4RootPageHandler(BasePageHandler):
+    logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
+
+    def initialize(self, **kwargs):
+        super().initialize(**kwargs)
+
+    def get(self, *path_args):
+        self.path_args = [
+            self.site_config["config"]["home_type"],
+            self.site_config["config"]["home_section"]
+            ]
+        return Html4PageHandler.get(
+            self,
+            self.site_config["config"]["home_type"],
+            self.site_config["config"]["home_section"])
+
+
 class PageHandler(BasePageHandler):
     logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
 
@@ -584,6 +614,7 @@ def make_otvl_web_app(server_config):
         (r"/api/html4/([^/]*)/([^/]*)/([^/]*)/([^/]*)/?", Html4PageHandler, handler_kwa),
         (r"/api/html4/([^/]*)/([^/]*)/([^/]*)/?", Html4PageHandler, handler_kwa),
         (r"/api/html4/([^/]*)/([^/]*)/?", Html4PageHandler, handler_kwa),
+        (r"/api/html4/?", Html4RootPageHandler, handler_kwa),
         (r"/api/([^/]*)/([^/]*)/([^/]*)/([^/]*)/?", PageHandler, handler_kwa),
         (r"/api/([^/]*)/([^/]*)/([^/]*)/?", PageHandler, handler_kwa),
         (r"/api/([^/]*)/([^/]*)/?", PageHandler, handler_kwa),
