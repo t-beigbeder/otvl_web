@@ -1,8 +1,8 @@
 <div otvl-web>
 type: sf_q_img_in_card
-src: /assets/images/local-cloud-mixed-use-data-science/portVendres.jpg
+src: /assets/images/local-cloud-mixed-use-data-science/versEtangDeSoulcem.jpg
 alt: Article image
-title: Vers Port Vendres
+title: Vers l'étang de Soulcem
 </div>
 
 # Mixing local and cloud data access for Data Science
@@ -13,9 +13,12 @@ title: Vers Port Vendres
 
 ## Introduction
 
-Relying on Cloud Computing services is often an opportunity for Data Science,
-however, as mixed local and cloud processing generally must coexist,
-the access to data must be organized carefully.
+Relying on Cloud Computing services is often an opportunity for Data Science projects,
+however, as both local and cloud processing must generally coexist,
+the access to the data must be designed carefully.
+
+After browsing available solutions for the support of various use cases,
+this article discusses their implementations.
 
 You will find useful references at the bottom of this page.
 
@@ -24,6 +27,8 @@ You will find useful references at the bottom of this page.
 ## Operational constraints
 
 ## Solutions
+
+## Implementations
 
 ## Conclusion
 
