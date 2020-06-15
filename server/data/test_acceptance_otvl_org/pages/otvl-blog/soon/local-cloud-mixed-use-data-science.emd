@@ -34,3 +34,12 @@ You will find useful references at the bottom of this page.
 
 ## References
 
+**Articles**
+
+- [martinFowler - Continuous Delivery for Machine Learning](https://martinfowler.com/articles/cd4ml.html)
+- [martinFowler - How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh](https://martinfowler.com/articles/data-monolith-to-mesh.html)
+- [Modern Data Lake with Minio : Part 1](https://blog.minio.io/modern-data-lake-with-minio-part-1-716a49499533)
+
+**Reference materials**
+
+- [martinFowler - DataLake](https://martinfowler.com/bliki/DataLake.html)
