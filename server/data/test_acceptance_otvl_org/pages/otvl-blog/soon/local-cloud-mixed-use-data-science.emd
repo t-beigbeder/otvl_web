@@ -14,8 +14,8 @@ title: Vers l'étang de Soulcem
 ## Introduction
 
 Relying on Cloud Computing services is often an opportunity for Data Science projects,
-however, as both local and cloud processing must generally coexist,
-the access to the data must be designed carefully.
+however, as both local and cloud processing must often coexist,
+the data access must be designed carefully.
 
 After browsing available solutions for the support of various use cases,
 this article discusses their implementations.
@@ -23,6 +23,15 @@ this article discusses their implementations.
 You will find useful references at the bottom of this page.
 
 ## Use cases
+
+It may be useful to consider first
+that there is a wide range of requirements as far as a Big Data Platform is concerned.
+You may browse the presentation from AWS 
+_"[Next-Gen Data Lakes and Analytics Platforms](https://www.slideshare.net/AmazonWebServices/nextgen-data-lakes-and-analytics-platforms-aws-summit-sydney)"_
+to make tour opinion.
+To keep things simple, we will restrict the discussion here
+to low-end and medium-range requirements considering what could be called
+the _data access bandwidth_, i.e. the need to access a large dataset in a small time frame.
 
 ## Operational constraints
 
@@ -34,11 +43,13 @@ You will find useful references at the bottom of this page.
 
 ## References
 
-**Articles**
+**Articles and presentations**
 
-- [martinFowler - Continuous Delivery for Machine Learning](https://martinfowler.com/articles/cd4ml.html)
-- [martinFowler - How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh](https://martinfowler.com/articles/data-monolith-to-mesh.html)
+- [Continuous Delivery for Machine Learning](https://martinfowler.com/articles/cd4ml.html)
+- [How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh](https://martinfowler.com/articles/data-monolith-to-mesh.html)
+- [The curse of the data lake monster](https://www.thoughtworks.com/insights/blog/curse-data-lake-monster)
 - [Modern Data Lake with Minio : Part 1](https://blog.minio.io/modern-data-lake-with-minio-part-1-716a49499533)
+- [Next-Gen Data Lakes and Analytics Platforms](https://www.slideshare.net/AmazonWebServices/nextgen-data-lakes-and-analytics-platforms-aws-summit-sydney)
 
 **Reference materials**
 
