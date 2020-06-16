@@ -34,7 +34,7 @@ You will find useful references at the bottom of this page.
 
 ## Use cases and organisational constraints
 
-As we can too easily stay focused on solutions built around existing datalake products,
+As we can stay too easily focused on solutions built around existing datalake products,
 it is important to keep requirements and solutions as separate as possible.
 I found the article
 _"[How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh](https://martinfowler.com/articles/data-monolith-to-mesh.html)"_
@@ -47,26 +47,26 @@ The mentioned article also explains how existing platforms shape the architectur
 around the data processing pipeline, making it difficult to integrate new data sources
 as those pipelines are monolithic with respect to the organization.
 
-Concerning the _"Move to a Distributed Data Mesh"_
+Concerning the _Move to a Distributed Data Mesh_
  I let you read through this excellent article if you didn't already know it.
 Some important consequences of implementing such an architecture are:
 
 - that a reusable dataset scope is no more restricted to raw data like it was in a datalake,
   and it can now include the result of any intermediate processing of this data 
   if it is relevant for cross-domain reuse;
-- that the data processing pipelines are reshaped by the domain boudaries;
+- that the data processing pipelines are reshaped and this time aligned with the domain boundaries;
 - that those datasets have to be considered as products, reusing the existing know-how of building
   any other software product.
 
-The potential cross-domain reuse of this resulting _"domain data as a product"_
-makes the occurence of our initial assumption, mixing local and cloud access,
+The potential cross-domain reuse of this resulting _domain data as a product_
+makes the occurence of our initial assumption, mixing local and cloud data access,
 even more likely.
 
 ## Solutions and operational constraints
 
 ## Implementations
 
-## Conclusion
+## Conclusion and further perspective
 
 ## References
 
