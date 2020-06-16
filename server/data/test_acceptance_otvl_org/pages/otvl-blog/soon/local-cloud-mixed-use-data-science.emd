@@ -20,22 +20,49 @@ the data access must be designed carefully.
 After browsing available solutions for the support of various use cases,
 this article discusses their implementations.
 
-You will find useful references at the bottom of this page.
-
-## Use cases
-
 It may be useful to consider first
-that there is a wide range of requirements as far as a Big Data Platform is concerned.
+that there is a wide range of requirement types as far as a Big Data Platform is concerned.
 You may browse the presentation from AWS 
 _"[Next-Gen Data Lakes and Analytics Platforms](https://www.slideshare.net/AmazonWebServices/nextgen-data-lakes-and-analytics-platforms-aws-summit-sydney)"_
-to make tour opinion.
+to make your opinion.
 To keep things simple, we will restrict the discussion here
-to low-end and medium-range requirements considering what could be called
+to low-end and medium-range performance requirements concerning what could be called
 the _data access bandwidth_, i.e. the need to access a large dataset in a small time frame.
+However we will give a perspective on high-end performance requirements in the last part of the article.
 
-## Operational constraints
+You will find useful references at the bottom of this page.
 
-## Solutions
+## Use cases and organisational constraints
+
+As we can too easily stay focused on solutions built around existing datalake products,
+it is important to keep requirements and solutions as separate as possible.
+I found the article
+_"[How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh](https://martinfowler.com/articles/data-monolith-to-mesh.html)"_
+ very enlightening concerning this question, the two main challenges being:
+
+- the increasing number of data sources, along with their various organisation origins,
+- and the increasing number of innovation use cases requiring specific data processing.
+
+The mentioned article also explains how existing platforms shape the architecture of the solutions
+around the data processing pipeline, making it difficult to integrate new data sources
+as those pipelines are monolithic with respect to the organization.
+
+Concerning the _"Move to a Distributed Data Mesh"_
+ I let you read through this excellent article if you didn't already know it.
+Some important consequences of implementing such an architecture are:
+
+- that a reusable dataset scope is no more restricted to raw data like it was in a datalake,
+  and it can now include the result of any intermediate processing of this data 
+  if it is relevant for cross-domain reuse;
+- that the data processing pipelines are reshaped by the domain boudaries;
+- that those datasets have to be considered as products, reusing the existing know-how of building
+  any other software product.
+
+The potential cross-domain reuse of this resulting _"domain data as a product"_
+makes the occurence of our initial assumption, mixing local and cloud access,
+even more likely.
+
+## Solutions and operational constraints
 
 ## Implementations
 
