@@ -63,8 +63,9 @@ Some important consequences of implementing such an architecture are:
 
 We could represent such data services composition opportunities on a schema like the one below
 (the arrows come from the consumer to the provider).
-Each domain is represented by a colour, providing data services built upon data engineering tools
-and organized in pipelines.
+Each domain is represented by a colour, providing data services, built upon data engineering tools,
+and that can be organized in pipelines.
+We create thus a mesh of data services the same way we do for other kind of services. 
 
 <div otvl-web>
 type: sf_q_img_in_card
@@ -74,8 +75,22 @@ title: Domain Data Services Mesh
 class_: self_width_img
 </div>
 
+The data services gouvernance is clear and enables cross-domain reuse when wanted,
+as soon as service level agreements are defined.
 The potential cross-domain reuse of this resulting _"domain data as a product"_
 makes our initial assumption, mixing local and cloud data access, even more likely.
+
+To conlude on the functional point of view, we can see that this move
+towards a distributed data mesh provides all the organisational agility
+required for answering new challenges concerning Data Science,
+while taking benefit of know-how and best practices from other technical domains.
+
+We will consider the implementation questions in the following sections,
+as this is the domain where Data Science has very specific requirements.
+The services and pipelines implementation responsibilities are naturally defined
+with the same domain boundaries as the services they provide,
+and the architecture does not forbid technical solutions reuse,
+while not making it mandatory.
 
 ## Solutions and operational constraints
 
