@@ -54,9 +54,25 @@ Some important consequences of implementing such an architecture are:
 - that a reusable dataset scope is no more restricted to raw data like it was in a datalake,
   and it can now include the result of any intermediate processing of this data 
   if it is relevant for cross-domain reuse;
-- that the data processing pipelines are reshaped and this time aligned with the domain boundaries;
+- it can even be provided through advanced data services such as ones found for instance
+  with graph or time-series databases;
 - that those datasets have to be considered as products, reusing the existing know-how of building
-  any other software product.
+  any other software product;
+- that the data processing pipelines are reshaped and this time aligned with the domain boundaries,
+- those datasets product services being naturally provided by their owner domains.
+
+We could represent such data services composition opportunities on a schema like the one below
+(the arrows come from the consumer to the provider).
+Each domain is represented by a colour, providing data services built upon data engineering tools
+and organized in pipelines.
+
+<div otvl-web>
+type: sf_q_img_in_card
+src: /assets/images/local-cloud-mixed-use-data-science/local_cloud_mixed_use_ds_mesh.jpg
+alt: Domain Data Services Mesh schema
+title: Domain Data Services Mesh
+class_: self_width_img
+</div>
 
 The potential cross-domain reuse of this resulting _"domain data as a product"_
 makes our initial assumption, mixing local and cloud data access, even more likely.
