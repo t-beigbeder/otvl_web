@@ -21,13 +21,13 @@ After browsing available solutions for the support of various use cases,
 this article discusses their implementations.
 
 It may be useful to consider first
-that there is a wide range of requirement types as far as a Big Data Platform is concerned.
+that there is a wide range of performance requirements as far as a Big Data Platform is concerned.
 You may browse the presentation from AWS 
 _"[Next-Gen Data Lakes and Analytics Platforms](https://www.slideshare.net/AmazonWebServices/nextgen-data-lakes-and-analytics-platforms-aws-summit-sydney)"_
 to make your opinion.
 To keep things simple, we will restrict the discussion here
 to low-end and medium-range performance requirements concerning what could be called
-the _data access bandwidth_, i.e. the need to access a large dataset in a small time frame.
+the data access bandwidth, in other words the need to access a large dataset in a small time frame.
 However we will give a perspective on high-end performance requirements in the last part of the article.
 
 You will find useful references at the bottom of this page.
@@ -38,12 +38,12 @@ As we can stay too easily focused on solutions built around existing datalake pr
 it is important to keep requirements and solutions as separate as possible.
 I found the article
 _"[How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh](https://martinfowler.com/articles/data-monolith-to-mesh.html)"_
- very enlightening concerning this question, the two main challenges being:
+ very enlightening concerning this question, the two main challenges that it describes being:
 
 - the increasing number of data sources, along with their various organisation origins,
 - and the increasing number of innovation use cases requiring specific data processing.
 
-The mentioned article also explains how existing platforms shape the architecture of the solutions
+The article also explains how existing platforms shape the architecture of the solutions
 around the data processing pipeline, making it difficult to integrate new data sources
 as those pipelines are monolithic with respect to the organization.
 
@@ -58,9 +58,8 @@ Some important consequences of implementing such an architecture are:
 - that those datasets have to be considered as products, reusing the existing know-how of building
   any other software product.
 
-The potential cross-domain reuse of this resulting _domain data as a product_
-makes the occurence of our initial assumption, mixing local and cloud data access,
-even more likely.
+The potential cross-domain reuse of this resulting _"domain data as a product"_
+makes our initial assumption, mixing local and cloud data access, even more likely.
 
 ## Solutions and operational constraints
 
@@ -81,3 +80,8 @@ even more likely.
 **Reference materials**
 
 - [martinFowler - DataLake](https://martinfowler.com/bliki/DataLake.html)
+
+** Security related **
+
+- [Amazon Cognito](https://docs.aws.amazon.com/cognito/latest/developerguide/what-is-amazon-cognito.html)
+- [OpenStack Swift ACLs](https://docs.openstack.org/swift/latest/overview_acl.html)
