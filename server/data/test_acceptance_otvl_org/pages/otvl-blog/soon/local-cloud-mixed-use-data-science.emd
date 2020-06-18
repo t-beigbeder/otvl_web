@@ -20,21 +20,21 @@ the data access must be designed carefully.
 After browsing available solutions for the support of various use cases,
 this article discusses their implementations.
 
-It may be useful to consider first
-that there is a wide range of performance requirements as far as a Big Data Platform is concerned.
-You may browse the presentation from AWS 
-_"[Next-Gen Data Lakes and Analytics Platforms](https://www.slideshare.net/AmazonWebServices/nextgen-data-lakes-and-analytics-platforms-aws-summit-sydney)"_
-to make your opinion.
-To keep things simple, we will restrict the discussion here
-to low-end and medium-range performance requirements concerning what could be called
-the data access bandwidth, in other words the need to access a large dataset in a small time frame.
-However we will give a perspective on high-end performance requirements in the last part of the article.
-
 You will find useful references at the bottom of this page.
 
 ## Use cases and organisational constraints
 
-As we can stay too easily focused on solutions built around existing datalake products,
+### Data Science use cases and the Data Lake
+
+There is a wide range of Data Science types of use cases,
+and as some of them require the fast processing of large datasets
+the assumption is often made that a Big Data platform is required.
+While this is generally true concerning Data Analytics projects,
+most of the Data Science applications do not require such
+
+### Going beyond the Data Lake 
+
+As we can stay too easily focused on solutions built around existing Data Lake products,
 it is important to keep requirements and solutions as separate as possible.
 I found the article
 _"[How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh](https://martinfowler.com/articles/data-monolith-to-mesh.html)"_
@@ -51,7 +51,7 @@ Concerning the _Move to a Distributed Data Mesh_
  I let you read through this excellent article if you didn't already know it.
 Some important consequences of implementing such an architecture are:
 
-- that a reusable dataset scope is no more restricted to raw data like it was in a datalake,
+- that a reusable dataset scope is no more restricted to raw data like it was in a Data Lake,
   and it can now include the result of any intermediate processing of this data 
   if it is relevant for cross-domain reuse;
 - it can even be provided through advanced data services such as ones found for instance
@@ -60,6 +60,8 @@ Some important consequences of implementing such an architecture are:
   any other software product;
 - that the data processing pipelines are reshaped and this time aligned with the domain boundaries,
 - those datasets product services being naturally provided by their owner domains.
+
+### Domain driven architecture
 
 We could represent such data services composition opportunities on a schema like the one below
 (the arrows come from the consumer to the provider).
@@ -107,6 +109,7 @@ while not making it mandatory.
 - [The curse of the data lake monster](https://www.thoughtworks.com/insights/blog/curse-data-lake-monster)
 - [Modern Data Lake with Minio : Part 1](https://blog.minio.io/modern-data-lake-with-minio-part-1-716a49499533)
 - [Next-Gen Data Lakes and Analytics Platforms](https://www.slideshare.net/AmazonWebServices/nextgen-data-lakes-and-analytics-platforms-aws-summit-sydney)
+- [Everything a Data Scientist Should Know About Data Management](https://www.kdnuggets.com/2019/10/data-scientist-data-management.html)
 
 **Reference materials**
 
