@@ -4,7 +4,7 @@ meta:
   preview: true
   summary_heading: "Mixing local and cloud data access for Data Science"
   summary: |
-    Relying on Cloud Computing services is often an opportunity for Data Science projects,
+    Cloud Computing services offer great opportunities to Data Science projects,
     however, as both local and cloud processing must often coexist,
     the data access must be designed carefully.
 

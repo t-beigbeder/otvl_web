@@ -13,7 +13,7 @@ title: Vers l'étang de Soulcem
 
 ## Introduction
 
-Relying on Cloud Computing services is often an opportunity for Data Science projects,
+Cloud Computing services offer great opportunities to Data Science projects,
 however, as both local and cloud processing must often coexist,
 the data access must be designed carefully.
 
@@ -29,8 +29,10 @@ You will find useful references at the bottom of this page.
 There is a wide range of Data Science types of use cases,
 and as some of them require the fast processing of large datasets
 the assumption is often made that a Big Data platform is required.
-While this is generally true concerning Data Analytics projects,
-most of the Data Science applications do not require such
+While this is almost always the case when integrating Data Analytics results,
+many Data Science applications do not require such a specialized infrastructure.
+
+This is important to keep in mind as we may find more convenient technical solutions to be applied.
 
 ### Going beyond the Data Lake 
 
@@ -44,7 +46,7 @@ _"[How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh](https:/
 - and the increasing number of innovation use cases requiring specific data processing.
 
 The article also explains how existing platforms shape the architecture of the solutions
-around the data processing pipeline, making it difficult to integrate new data sources
+around the data processing pipelines, making it difficult to integrate new data sources
 as those pipelines are monolithic with respect to the organization.
 
 Concerning the _Move to a Distributed Data Mesh_
@@ -58,7 +60,7 @@ Some important consequences of implementing such an architecture are:
   with graph or time-series databases;
 - that those datasets have to be considered as products, reusing the existing know-how of building
   any other software product;
-- that the data processing pipelines are reshaped and this time aligned with the domain boundaries,
+- that the data processing pipelines are reshaped and this time aligned with the domain boundaries;
 - those datasets product services being naturally provided by their owner domains.
 
 ### Domain driven architecture
@@ -82,7 +84,7 @@ as soon as service level agreements are defined.
 The potential cross-domain reuse of this resulting _"domain data as a product"_
 makes our initial assumption, mixing local and cloud data access, even more likely.
 
-To conlude on the functional point of view, we can see that this move
+To conclude on the functional point of view, we can see that this move
 towards a distributed data mesh provides all the organisational agility
 required for answering new challenges concerning Data Science,
 while taking benefit of know-how and best practices from other technical domains.
