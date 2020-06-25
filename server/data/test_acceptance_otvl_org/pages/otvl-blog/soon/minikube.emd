@@ -1,0 +1,90 @@
+<div otvl-web>
+type: sf_q_img_in_card
+src: /assets/images/minikube/portVendresMk8s.jpg
+alt: Article image
+title: Vers Port Vendres mk8s
+</div>
+
+# Installing Minikube on debian buster
+
+![logo work in progess](/assets/images/common/wip.png "Logo work in progress")
+
+** Preview: ** this is a work in progress.
+
+## Introduction
+    
+As mentioned on its project's page:  
+_minikube implements a local Kubernetes cluster on macOS, Linux, and Windows.
+minikube's primary goals are to be the best tool for local Kubernetes application development
+and to support all Kubernetes features that fit._
+
+This article details the various steps for the installation of Minikube on Debian 10 "buster"
+running the
+[KVM](https://wiki.debian.org/KVM)
+hypervisor.
+
+## Components architecture
+
+## Installation steps
+
+The installation takes place on the KVM host machine.
+
+Install kubectl. As root, check and type the following:
+
+    :::shell
+    # Download, install the binary and check the installation
+    apt-get install curl
+    curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+    chmod +x ./kubectl
+    mv ./kubectl /usr/local/bin/kubectl
+    kubectl version --client
+    ## displays something like: Client Version: version.Info{Major:"1", Minor:"18", GitVersion:"v1.18.4", ..., Platform:"linux/amd64"}
+
+&nbsp;  
+Install minikube. As root, check and type the following:
+
+    :::shell
+    # Download and install the binary
+    curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \
+      && chmod +x minikube
+    mv ./minikube /usr/local/bin/minikube
+    minikube version
+    ## displays something like: minikube version: v1.11.0
+    ##                          commit: 57e2f55f47effe9ce396cea42a1e0eb4f611ebbd
+    # Validate libvirt support
+    virt-host-validate
+
+&nbsp;  
+If you want to access a GPU from the Kubernetes cluster,
+you need to enable
+[IOMMU](https://en.wikipedia.org/wiki/Input%E2%80%93output_memory_management_unit)
+support in the BIOS and by the kernel.
+If the previous command `virt-host-validate` reported IOMMU as not supported,
+as root, check and type the following:
+
+    :::shell
+    # edit the file:
+    vi /etc/default/grub
+    # change the line containing GRUB_CMDLINE_LINUX_DEFAULT by adding intel_iommu (or amd)
+    # as in GRUB_CMDLINE_LINUX_DEFAULT="quiet intel_iommu=on"
+    
+    # update the GRUB boot loader configuration
+    update-grub
+    # reboot the system
+
+&nbsp;  
+Install and start a Kubernetes cluster. Using your developer login, check and type the following
+(if you need to access a GPU from the Kubernetes cluster, provide the option `--kvm-gpu=true` below):
+
+    :::shell
+    # check virsh configuration
+    virsh --connect qemu:///system version
+    # Install and start a Kubernetes cluster
+    minikube start --driver=kvm2 [--kvm-gpu=true]
+  
+## References
+
+- [minikube project](https://github.com/kubernetes/minikube)
+- [minikube installation](https://kubernetes.io/docs/tasks/tools/install-minikube/)
+- [minikube KVM2 driver](https://minikube.sigs.k8s.io/docs/drivers/kvm2/)
+

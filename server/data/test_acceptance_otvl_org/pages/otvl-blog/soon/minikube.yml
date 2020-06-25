@@ -1,0 +1,16 @@
+meta:
+  version: "1.0"
+  publication_date: ""
+  preview: true
+  summary_heading: "Installing Minikube on debian buster"
+  summary: |
+    Minikube is the simplest tool to setup a Kubernetes learning environment
+    on a development workstation.
+    This article details the various steps of Minikube installation on debian buster.
+
+content:
+  title: Installing Minikube on debian buster
+  heading:
+  stream_fields:
+  - type: md_file
+    file: minikube.emd
