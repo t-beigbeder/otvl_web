@@ -5,7 +5,7 @@ alt: Article image
 title: Vers Port Vendres mk8s
 </div>
 
-# Installing Minikube on debian buster
+# Installing Minikube on Debian buster KVM
 
 ![logo work in progess](/assets/images/common/wip.png "Logo work in progress")
 
@@ -13,12 +13,14 @@ title: Vers Port Vendres mk8s
 
 ## Introduction
     
-As mentioned on its project's page:  
-_minikube implements a local Kubernetes cluster on macOS, Linux, and Windows.
-minikube's primary goals are to be the best tool for local Kubernetes application development
+As mentioned on its project's page:
+
+_Minikube implements a local Kubernetes cluster on macOS, Linux, and Windows.
+Minikube's primary goals are to be the best tool for local Kubernetes application development
 and to support all Kubernetes features that fit._
 
-This article details the various steps for the installation of Minikube on Debian 10 "buster"
+This article details the various steps for the installation of Minikube
+on a development workstation under Debian 10 "buster"
 running the
 [KVM](https://wiki.debian.org/KVM)
 hypervisor.
@@ -81,6 +83,16 @@ Install and start a Kubernetes cluster. Using your developer login, check and ty
     virsh --connect qemu:///system version
     # Install and start a Kubernetes cluster
     minikube start --driver=kvm2 [--kvm-gpu=true]
+    # check cluster status
+    minikube status
+    ## displays something like:
+    ## minikube
+    ## type: Control Plane
+    ## host: Running
+    ## kubelet: Running
+    ## apiserver: Running
+    ## kubeconfig: Configured
+    
   
 ## References
 
