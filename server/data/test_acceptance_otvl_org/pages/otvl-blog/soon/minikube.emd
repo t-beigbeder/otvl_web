@@ -31,29 +31,36 @@ hypervisor.
 
 The installation takes place on the KVM host machine.
 
-Install kubectl. As root, check and type the following:
+In the following sections
 
-    :::shell
-    # Download, install the binary and check the installation
-    apt-get install curl
-    curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
-    chmod +x ./kubectl
-    mv ./kubectl /usr/local/bin/kubectl
-    kubectl version --client
-    ## displays something like: Client Version: version.Info{Major:"1", Minor:"18", GitVersion:"v1.18.4", ..., Platform:"linux/amd64"}
+- command lines starting with `"# "` are run by root,
+- command lines starting with `"$ "` are run by the login of the developer,
+- output of commands is displayed without prefix,
+- comments are displayed with `"## "` prefix.
+
+Install kubectl.
+
+    :::text
+    ## Download, install the binary and check the installation
+    # apt-get install curl
+    # curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+    # chmod +x ./kubectl
+    # mv ./kubectl /usr/local/bin/kubectl
+    # kubectl version --client
+    Client Version: version.Info{Major:"1", Minor:"18", GitVersion:"v1.18.4", ..., Platform:"linux/amd64"}
 
 &nbsp;  
-Install minikube. As root, check and type the following:
+Install minikube.
 
-    :::shell
-    # Download and install the binary
-    curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \
-      && chmod +x minikube
-    mv ./minikube /usr/local/bin/minikube
-    minikube version
-    ## displays something like: minikube version: v1.11.0
-    ##                          commit: 57e2f55f47effe9ce396cea42a1e0eb4f611ebbd
-    # Validate libvirt support
+    :::text
+    ## Download and install the binary
+    # curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \
+        && chmod +x minikube
+    # mv ./minikube /usr/local/bin/minikube
+    # minikube version
+    minikube version: v1.11.0
+    commit: 57e2f55f47effe9ce396cea42a1e0eb4f611ebbd
+    ## Validate libvirt support
     virt-host-validate
 
 &nbsp;  
@@ -61,42 +68,40 @@ If you want to access a GPU from the Kubernetes cluster,
 you need to enable
 [IOMMU](https://en.wikipedia.org/wiki/Input%E2%80%93output_memory_management_unit)
 support in the BIOS and by the kernel.
-If the previous command `virt-host-validate` reported IOMMU as not supported,
-as root, check and type the following:
+If the previous command `virt-host-validate` reported IOMMU as not supported, run:
 
-    :::shell
-    # edit the file:
-    vi /etc/default/grub
-    # change the line containing GRUB_CMDLINE_LINUX_DEFAULT by adding intel_iommu (or amd)
-    # as in GRUB_CMDLINE_LINUX_DEFAULT="quiet intel_iommu=on"
+    :::text
+    ## edit the file:
+    # vi /etc/default/grub
+    ## change the line containing GRUB_CMDLINE_LINUX_DEFAULT by adding intel_iommu (or amd)
+    GRUB_CMDLINE_LINUX_DEFAULT="quiet intel_iommu=on"
     
-    # update the GRUB boot loader configuration
-    update-grub
-    # reboot the system
+    ## update the GRUB boot loader configuration
+    # update-grub
+    ## reboot the system
 
 &nbsp;  
-Install and start a Kubernetes cluster. Using your developer login, check and type the following
-(if you need to access a GPU from the Kubernetes cluster, provide the option `--kvm-gpu=true` below):
+Install and start a Kubernetes cluster.
+If you need to access a GPU from the Kubernetes cluster, provide the option `--kvm-gpu=true` below.
 
-    :::shell
-    # check virsh configuration
-    virsh --connect qemu:///system version
-    # Install and start a Kubernetes cluster
-    minikube start --driver=kvm2 [--kvm-gpu=true]
-    # check cluster status
-    minikube status
-    ## displays something like:
-    ## minikube
-    ## type: Control Plane
-    ## host: Running
-    ## kubelet: Running
-    ## apiserver: Running
-    ## kubeconfig: Configured
+    :::text
+    ## check virsh configuration
+    $ virsh --connect qemu:///system version
+    ## Install and start a Kubernetes cluster
+    $ minikube start --driver=kvm2 [--kvm-gpu=true]
+    ## check cluster status
+    $ minikube status
+    minikube
+    type: Control Plane
+    host: Running
+    kubelet: Running
+    apiserver: Running
+    kubeconfig: Configured
 
 &nbsp;  
-You may now stop the cluster. Using your developer login, type the following
+You may then stop the cluster.
 
-    :::shell
+    :::text
     minikube stop
   
 ## References
