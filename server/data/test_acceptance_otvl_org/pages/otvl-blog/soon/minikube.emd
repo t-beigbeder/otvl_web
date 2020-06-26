@@ -204,15 +204,20 @@ service "`kubelet.service`" (the Kubernetes Node Agent) running.
 
 Minikube profiles provide an efficient way to support several cluster configurations,
 they even enable to run several clusters in parallel.
+The cluster configuration is saved for each profile when creating the cluster or reconfiguring it,
+and it is then reused when the cluster is restarted.
 
-In the following example we will create a new cluster running 3 Kubernetes nodes,
+Note that as profile names are also DNS host names, some characters are not allowed: typically,
+use a minus sign as separator and not an underscore.
+
+In the following example we will create a new cluster running 2 Kubernetes nodes,
 each of which with a 5GB disk and 2GB RAM.
 Note that multinode support in Minikube is mentioned as experimental in its
 [documentation](https://minikube.sigs.k8s.io/docs/tutorials/multi_node/)
 .
 
     :::text
-    $ minikube start -p mk8s-test02 --nodes=3 --disk-size=5g --memory=2g
+    $ minikube start -p mk8s-test02 --nodes=2 --disk-size=5g --memory=2g
     ...
     $ minikube status -p mk8s-test02
     mk8s-test02
@@ -227,16 +232,10 @@ Note that multinode support in Minikube is mentioned as experimental in its
     host: Running
     kubelet: Running
     
-    mk8s-test02-m03
-    type: Worker
-    host: Running
-    kubelet: Running
-    
     $ kubectl get nodes
     NAME              STATUS   ROLES    AGE   VERSION
-    mk8s-test02       Ready    master   29m   v1.18.3
-    mk8s-test02-m02   Ready    <none>   27m   v1.18.3
-    mk8s-test02-m03   Ready    <none>   26m   v1.18.3
+    mk8s-test02       Ready    master   17m   v1.18.3
+    mk8s-test02-m02   Ready    <none>   16m   v1.18.3
 
 &nbsp;  
 Minikube profiles also create corresponding Kubernetes contexts.
@@ -247,13 +246,14 @@ For instance if the cluster `mk8s-test01` is still running, we can address it wi
     NAME          STATUS   ROLES    AGE    VERSION
     mk8s-test01   Ready    master   131m   v1.18.3
 
+&nbsp;  
 We may also note that Minikube home directory may be located elsewhere than `$HOME/.minikube` if appropriate.
 We must set the `MINIKUBE_HOME` environment variable in such a case.
 
 ## Conclusion
 
 While Minikube ensures the support of "all Kubernetes features that fit" in the resulting infrastructure,
-its installation and its use over KVM remains straightforward.
+its installation and its use over KVM remain straightforward.
 Its configuration is rather easy too and provides mainly what is required.
 
 The resulting infrastructure can host valuable data whose provisioning or backup must be ensured,
@@ -264,6 +264,7 @@ So any effective Minikube deployment
 must be supplemented by the definition of explicit engineering operations.
 
 Important features like multinode and GPU are reported as experimental which could be a risk on some projects.
+Actually, during my tests, a 3 nodes cluster appeared unstable after restart.
 All nodes share the same configuration in terms of system resources,
 which is quite restrictive for instance if performing resources related tests.
 
