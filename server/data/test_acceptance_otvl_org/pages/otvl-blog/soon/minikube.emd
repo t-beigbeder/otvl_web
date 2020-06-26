@@ -42,6 +42,7 @@ In the following sections
 - comments are displayed with `"## "` prefix.
 
 First we install kubectl and check its installation.
+Kubectl is the main command to interact with a Kubernetes cluster. It is also required prior to Minikube installation.
 
     :::text
     # apt-get install curl
@@ -53,6 +54,7 @@ First we install kubectl and check its installation.
 
 &nbsp;  
 Next we install minikube and check its installation.
+Minikube is an executable providing all sub-commands required to create and control a minikube cluster. 
 
     :::text
     # curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \
@@ -89,7 +91,7 @@ by updating the GRUB boot loader configuration:
     
     # update-grub
 
-Next we have to reboot the system.
+Next we have to reboot the system, having the opportunity to check IOMMU configuration in the BIOS.
 
 Now we may install and start a Kubernetes cluster.
 If we need to access a GPU from the Kubernetes cluster,
@@ -252,7 +254,7 @@ We must set the `MINIKUBE_HOME` environment variable in such a case.
 
 While Minikube ensures the support of "all Kubernetes features that fit" in the resulting infrastructure,
 its installation and its use over KVM remains straightforward.
-Its configuration is rather easy too and mainly provides what is required.
+Its configuration is rather easy too and provides mainly what is required.
 
 The resulting infrastructure can host valuable data whose provisioning or backup must be ensured,
 which is not a common practice on development environments.
