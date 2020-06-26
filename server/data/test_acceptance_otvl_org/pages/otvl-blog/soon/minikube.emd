@@ -32,7 +32,7 @@ To be completed.
 ## Installation steps
 
 The installation takes place on the KVM host machine.
-Make sure your system is up-to-date and backups are correct.
+Make sure your system and its backups are up-to-date.
 
 In the following sections
 
@@ -95,7 +95,7 @@ Now we may install and start a Kubernetes cluster.
 If we need to access a GPU from the Kubernetes cluster,
 we will provide the option `--kvm-gpu=true` below
 (note that GPU support is mentioned as experimental in the
-[documentation]()
+[documentation](https://minikube.sigs.k8s.io/docs/drivers/kvm2/)
 ).
 
 We first check the virsh configuration, then create and launch a Kubernetes cluster,
@@ -167,7 +167,9 @@ We may now shut the VM down.
 &nbsp;  
 If we start the cluster again, we can see the docker containers running
 for its support.
-There is also a systemd service "`kubelet.service`" (The Kubernetes Node Agent) running.
+There is also a
+[systemd](https://www.freedesktop.org/wiki/Software/systemd/)
+service "`kubelet.service`" (the Kubernetes Node Agent) running.
 
     :::text
     $ minikube start -p mk8s-test01
@@ -193,8 +195,79 @@ There is also a systemd service "`kubelet.service`" (The Kubernetes Node Agent) 
     57c77c7d8274        7e28efa976bd           "kube-apiserver --ad…"   About a minute ago   Up About a minute                       k8s_kube-apiserver_kube-apiserver-mk8s-test01_kube-system_04c199f02b3b3295e5d552453b0d572b_1
     cdfa5d50f2ca        303ce5db0e90           "etcd --advertise-cl…"   About a minute ago   Up About a minute                       k8s_etcd_etcd-mk8s-test01_kube-system_0a0b79d2e717ad9fe186ee9c54e9e3fe_1
     ...
-    # systemctl |grep kubelet.service
+    # systemctl | grep kubelet.service
     kubelet.service  loaded active running   kubelet: The Kubernetes Node Agent
+
+## Profiles and further configuration
+
+Minikube profiles provide an efficient way to support several cluster configurations,
+they even enable to run several clusters in parallel.
+
+In the following example we will create a new cluster running 3 Kubernetes nodes,
+each of which with a 5GB disk and 2GB RAM.
+Note that multinode support in Minikube is mentioned as experimental in its
+[documentation](https://minikube.sigs.k8s.io/docs/tutorials/multi_node/)
+.
+
+    :::text
+    $ minikube start -p mk8s-test02 --nodes=3 --disk-size=5g --memory=2g
+    ...
+    $ minikube status -p mk8s-test02
+    mk8s-test02
+    type: Control Plane
+    host: Running
+    kubelet: Running
+    apiserver: Running
+    kubeconfig: Configured
+    
+    mk8s-test02-m02
+    type: Worker
+    host: Running
+    kubelet: Running
+    
+    mk8s-test02-m03
+    type: Worker
+    host: Running
+    kubelet: Running
+    
+    $ kubectl get nodes
+    NAME              STATUS   ROLES    AGE   VERSION
+    mk8s-test02       Ready    master   29m   v1.18.3
+    mk8s-test02-m02   Ready    <none>   27m   v1.18.3
+    mk8s-test02-m03   Ready    <none>   26m   v1.18.3
+
+&nbsp;  
+Minikube profiles also create corresponding Kubernetes contexts.
+For instance if the cluster `mk8s-test01` is still running, we can address it with `kubectl`:
+
+    :::text
+    $ kubectl --context mk8s-test01 get nodes
+    NAME          STATUS   ROLES    AGE    VERSION
+    mk8s-test01   Ready    master   131m   v1.18.3
+
+We may also note that Minikube home directory may be located elsewhere than `$HOME/.minikube` if appropriate.
+We must set the `MINIKUBE_HOME` environment variable in such a case.
+
+## Conclusion
+
+While Minikube ensures the support of "all Kubernetes features that fit" in the resulting infrastructure,
+its installation and its use over KVM remains straightforward.
+Its configuration is rather easy too and mainly provides what is required.
+
+The resulting infrastructure can host valuable data whose provisioning or backup must be ensured,
+which is not a common practice on development environments.
+Installing or reinstalling a cluster also involve the download of large datasets
+which may be relocated locally if wanted.
+So any effective Minikube deployment
+must be supplemented by the definition of explicit engineering operations.
+
+Important features like multinode and GPU are reported as experimental which could be a risk on some projects.
+All nodes share the same configuration in terms of system resources,
+which is quite restrictive for instance if performing resources related tests.
+
+Minikube is an open source project and anyone is free to
+[contribute](https://minikube.sigs.k8s.io/docs/contrib/)
+to it.
     
 ## References
 
