@@ -69,16 +69,23 @@ we need to enable
 support in the BIOS and in the Linux kernel. Type the following:
 
     :::text
-    virt-host-validate
+    # virt-host-validate
+      QEMU: Checking for hardware virtualization                                 : PASS
+      ...
+      QEMU: Checking for device assignment IOMMU support                         : WARN (No ACPI DMAR table found, IOMMU either disabled in BIOS or not supported by this hardware platform)
+       LXC: Checking for Linux >= 2.6.26                                         : PASS
+       ...
+       LXC: Checking if device /sys/fs/fuse/connections exists                   : PASS    
 
 If the previous command reported IOMMU as not supported,
-we have to check the BIOS and configure the Linux boot
+we have to enable it both in the BIOS, and during the Linux boot
 by updating the GRUB boot loader configuration:
 
     :::text
     # vi /etc/default/grub
-    ## change the line containing GRUB_CMDLINE_LINUX_DEFAULT by adding intel_iommu (or amd)
-    GRUB_CMDLINE_LINUX_DEFAULT="quiet intel_iommu=on"
+    ## change the line containing GRUB_CMDLINE_LINUX_DEFAULT by adding intel_iommu
+    ## (or amd_iommu=on depending on the CPU vendor) and iommu=pt
+    GRUB_CMDLINE_LINUX_DEFAULT="quiet intel_iommu=on iommu=pt"
     
     # update-grub
 
@@ -86,39 +93,112 @@ Next we have to reboot the system.
 
 Now we may install and start a Kubernetes cluster.
 If we need to access a GPU from the Kubernetes cluster,
-we will provide the option `--kvm-gpu=true` below.
+we will provide the option `--kvm-gpu=true` below
+(note that GPU support is mentioned as experimental in the
+[documentation]()
+).
+
 We first check the virsh configuration, then create and launch a Kubernetes cluster,
 and finally check its state.
+The profile name (`-p` option) will also be the name of the VM.
+The execution time may be long as large docker images must be downloaded.
 
     :::text
     $ virsh --connect qemu:///system version
-    $ minikube start --driver=kvm2 [--kvm-gpu=true]
+    $ minikube start -p mk8s-test01 --driver=kvm2 [--kvm-gpu=true]
     outputs with emojis here...
-    $ minikube status
-    minikube
+
+    $ minikube status -p mk8s-test01
+    mk8s-test01
     type: Control Plane
     host: Running
     kubelet: Running
     apiserver: Running
     kubeconfig: Configured
 
+
 &nbsp;  
 We may then stop the cluster.
 
     :::text
-    minikube stop
+    minikube stop -p mk8s-test01
 
 ## What happened?
 
-If we check our KVM domains configuration, we will see:
+If we check our KVM domains configuration, we will see (some default values may differ):
 
-- a new VM named "minikube" with the same hostname
+- a new VM named "mk8s-test01" with the same hostname
 - it has 2 CPUs, 3720 MiB RAM and a virtual disk of 20GB
-- it has a (NETWORK TBC)
+- it has two NICs, one connected to the default NAT network
+  and the other to a newly created network "`minikube-net`" that is isolated
+- the virtual disk image is located in `.minikube/machines/mk8s-test01/`
 
+If we start and connect to the VM, we can see that it runs a "Buildroot" Linux and that docker
+is not started. We have to use "`minikube start`" to start the cluster.
+
+    :::text
+    $ virsh --connect qemu:///system start mk8s-test01
+    $ virsh --connect qemu:///system console mk8s-test01
+    Connected to domain mk8s-test01
+    Escape character is ^]
+    
+    Welcome to minikube
+    minikube login: root
+                             _             _            
+                _         _ ( )           ( )           
+      ___ ___  (_)  ___  (_)| |/')  _   _ | |_      __  
+    /' _ ` _ `\| |/' _ `\| || , <  ( ) ( )| '_`\  /'__`\
+    | ( ) ( ) || || ( ) || || |\`\ | (_) || |_) )(  ___/
+    (_) (_) (_)(_)(_) (_)(_)(_) (_)`\___/'(_,__/'`\____)
+    
+    # cat /etc/os-release 
+    NAME=Buildroot
+    VERSION=2019.02.10
+    ...
+    # docker ps
+    Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+
+&nbsp;  
+We may now shut the VM down.
+
+    :::text
+    $ virsh --connect qemu:///system shutdown mk8s-test01
+
+&nbsp;  
+If we start the cluster again, we can see the docker containers running
+for its support.
+There is also a systemd service "`kubelet.service`" (The Kubernetes Node Agent) running.
+
+    :::text
+    $ minikube start -p mk8s-test01
+    $ virsh --connect qemu:///system console mk8s-test01
+    ...
+    mk8s-test01 login: root
+                             _             _            
+                _         _ ( )           ( )           
+      ___ ___  (_)  ___  (_)| |/')  _   _ | |_      __  
+    /' _ ` _ `\| |/' _ `\| || , <  ( ) ( )| '_`\  /'__`\
+    | ( ) ( ) || || ( ) || || |\`\ | (_) || |_) )(  ___/
+    (_) (_) (_)(_)(_) (_)(_)(_) (_)`\___/'(_,__/'`\____)
+    
+    # docker ps
+    CONTAINER ID        IMAGE                  COMMAND                  CREATED              STATUS              PORTS               NAMES
+    bb7b305b5013        67da37a9a360           "/coredns -conf /etc…"   59 seconds ago       Up 56 seconds                           k8s_coredns_coredns-66bff467f8-w2lqt_kube-system_39f8128a-537e-422e-8537-4e388b9b4d91_1
+    ecb519d2329d        4689081edb10           "/storage-provisioner"   About a minute ago   Up 57 seconds                           k8s_storage-provisioner_storage-provisioner_kube-system_556ceeb4-acac-492a-bef4-bf422760105e_1
+    f281c152bdd7        67da37a9a360           "/coredns -conf /etc…"   About a minute ago   Up 58 seconds                           k8s_coredns_coredns-66bff467f8-c29mh_kube-system_fa2d4898-c5ae-4b20-b1cb-5d5b388d5449_1
+    99ccf9eedaee        3439b7546f29           "/usr/local/bin/kube…"   About a minute ago   Up 59 seconds                           k8s_kube-proxy_kube-proxy-tb24j_kube-system_aac88721-6285-4099-8ff3-092ccc8a0b24_1
+    ...
+    2925eedb77c1        76216c34ed0c           "kube-scheduler --au…"   About a minute ago   Up About a minute                       k8s_kube-scheduler_kube-scheduler-mk8s-test01_kube-system_a8caea92c80c24c844216eb1d68fe417_1
+    006e8b6c6247        da26705ccb4b           "kube-controller-man…"   About a minute ago   Up About a minute                       k8s_kube-controller-manager_kube-controller-manager-mk8s-test01_kube-system_6188fbbe64e28a0413e239e610f71669_1
+    57c77c7d8274        7e28efa976bd           "kube-apiserver --ad…"   About a minute ago   Up About a minute                       k8s_kube-apiserver_kube-apiserver-mk8s-test01_kube-system_04c199f02b3b3295e5d552453b0d572b_1
+    cdfa5d50f2ca        303ce5db0e90           "etcd --advertise-cl…"   About a minute ago   Up About a minute                       k8s_etcd_etcd-mk8s-test01_kube-system_0a0b79d2e717ad9fe186ee9c54e9e3fe_1
+    ...
+    # systemctl |grep kubelet.service
+    kubelet.service  loaded active running   kubelet: The Kubernetes Node Agent
+    
 ## References
 
 - [minikube project](https://github.com/kubernetes/minikube)
 - [minikube installation](https://kubernetes.io/docs/tasks/tools/install-minikube/)
 - [minikube KVM2 driver](https://minikube.sigs.k8s.io/docs/drivers/kvm2/)
-
+- [minikube GPU support](https://minikube.sigs.k8s.io/docs/tutorials/nvidia_gpu/)
