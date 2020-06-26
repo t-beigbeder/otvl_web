@@ -210,11 +210,14 @@ and it is then reused when the cluster is restarted.
 Note that as profile names are also DNS host names, some characters are not allowed: typically,
 use a minus sign as separator and not an underscore.
 
-In the following example we will create a new cluster running 2 Kubernetes nodes,
+In the following example we will create a new cluster running two Kubernetes nodes,
 each of which with a 5GB disk and 2GB RAM.
 Note that multinode support in Minikube is mentioned as experimental in its
 [documentation](https://minikube.sigs.k8s.io/docs/tutorials/multi_node/)
 .
+All nodes share the same configuration in terms of system resources,
+which is quite restrictive for instance if performing resources related tests.
+Moreover, it is worth noting that during my tests, a 3 nodes cluster appeared unstable after restart.
 
     :::text
     $ minikube start -p mk8s-test02 --nodes=2 --disk-size=5g --memory=2g
@@ -250,6 +253,33 @@ For instance if the cluster `mk8s-test01` is still running, we can address it wi
 We may also note that Minikube home directory may be located elsewhere than `$HOME/.minikube` if appropriate.
 We must set the `MINIKUBE_HOME` environment variable in such a case.
 
+## Minikube addons
+
+Minikube addons are built-in applications that may be easily deployed in the cluster.
+The following lists available add-ons and install the `dashboard` application,
+which is the
+[default GUI]()
+for managing applications on a Kubernetes cluster.
+
+    :::text
+    $ minikube addons list
+    |-----------------------------|----------|--------------|
+    |         ADDON NAME          | PROFILE  |    STATUS    |
+    |-----------------------------|----------|--------------|
+    | ambassador                  | minikube | disabled     |
+    | dashboard                   | minikube | disabled     |
+    ...
+    $ minikube addons -p mk8s-test02 enable dashboard
+    $ kubectl get all --all-namespaces | grep service/ | grep dashboard
+    kubernetes-dashboard   service/dashboard-metrics-scraper   ClusterIP   10.97.100.126    <none>        8000/TCP                 106s
+    kubernetes-dashboard   service/kubernetes-dashboard        ClusterIP   10.105.101.124   <none>        80/TCP                   106s
+    
+
+&nbsp;  
+Next
+
+## Interacting with the cluster
+
 ## Conclusion
 
 While Minikube ensures the support of "all Kubernetes features that fit" in the resulting infrastructure,
@@ -261,12 +291,10 @@ which is not a common practice on development environments.
 Installing or reinstalling a cluster also involve the download of large datasets
 which may be relocated locally if wanted.
 So any effective Minikube deployment
-must be supplemented by the definition of explicit engineering operations.
+must be supplemented by the application of related engineering operations.
 
 Important features like multinode and GPU are reported as experimental which could be a risk on some projects.
-Actually, during my tests, a 3 nodes cluster appeared unstable after restart.
-All nodes share the same configuration in terms of system resources,
-which is quite restrictive for instance if performing resources related tests.
+I would not recommend using multinode support at the moment.
 
 Minikube is an open source project and anyone is free to
 [contribute](https://minikube.sigs.k8s.io/docs/contrib/)
@@ -274,7 +302,10 @@ to it.
     
 ## References
 
-- [minikube project](https://github.com/kubernetes/minikube)
-- [minikube installation](https://kubernetes.io/docs/tasks/tools/install-minikube/)
-- [minikube KVM2 driver](https://minikube.sigs.k8s.io/docs/drivers/kvm2/)
-- [minikube GPU support](https://minikube.sigs.k8s.io/docs/tutorials/nvidia_gpu/)
+**Minikube**
+
+- [Project](https://github.com/kubernetes/minikube)
+- [Documentation](https://minikube.sigs.k8s.io/docs/)
+- [Installation](https://kubernetes.io/docs/tasks/tools/install-minikube/)
+- [KVM2 driver](https://minikube.sigs.k8s.io/docs/drivers/kvm2/)
+- [GPU support](https://minikube.sigs.k8s.io/docs/tutorials/nvidia_gpu/)
