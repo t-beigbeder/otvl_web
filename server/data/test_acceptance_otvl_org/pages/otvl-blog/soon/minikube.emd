@@ -256,10 +256,13 @@ We must set the `MINIKUBE_HOME` environment variable in such a case.
 ## Minikube addons
 
 Minikube addons are built-in applications that may be easily deployed in the cluster.
-The following lists available add-ons and install the `dashboard` application,
+The following lists available add-ons and then installs the `dashboard` application,
 which is the
-[default GUI]()
+[default GUI](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
 for managing applications on a Kubernetes cluster.
+
+The minikube "`dashboard`" subcommand is a shortcut that enables the add-on if not already done
+and creates a proxy with the deployed service and launches a browser on the corresponding URL.
 
     :::text
     $ minikube addons list
@@ -273,25 +276,36 @@ for managing applications on a Kubernetes cluster.
     $ kubectl get all --all-namespaces | grep service/ | grep dashboard
     kubernetes-dashboard   service/dashboard-metrics-scraper   ClusterIP   10.97.100.126    <none>        8000/TCP                 106s
     kubernetes-dashboard   service/kubernetes-dashboard        ClusterIP   10.105.101.124   <none>        80/TCP                   106s
-    
-
-&nbsp;  
-TO BE COMPLETED: how to access the dashboard with LB
+    $ minikube -p mk8s-test02 dashboard
 
 ## Interacting with the cluster
+
+Interacting with the cluster in parallel with other development tasks is rather easy
+once the previous deployment has been achieved.
+There are even
+[shortcuts](https://minikube.sigs.k8s.io/docs/handbook/pushing/)
+to make docker images provisionning more performant.
+
+However most Minikube services make the assumption that the development takes place on the KVM host
+which is also supposed to be a docker host.
+If we want to keep other development activities in another KVM virtual machine, we will have:
+
+- to push and pull images with docker registry
+- to install a kubectl configuration on the development virtual machine
 
 ## Conclusion
 
 While Minikube ensures the support of "all Kubernetes features that fit" in the resulting infrastructure,
 its installation and its use over KVM remain straightforward.
-Its configuration is rather easy too and provides mainly what is required.
+Its configuration is rather easy too and generally provides what is required,
+even if some assumptions sometimes appear as restrictive.
 
 The resulting infrastructure can host valuable data whose provisioning or backup must be ensured,
 which is not a common practice on development environments.
 Installing or reinstalling a cluster also involve the download of large datasets
 which may be relocated locally if wanted.
 So any effective Minikube deployment
-must be supplemented by the application of related engineering operations.
+must be supplemented by the documentation and the application of related engineering operations.
 
 Important features like multinode and GPU are reported as experimental which could be a risk on some projects.
 I would not recommend using multinode support at the moment.
