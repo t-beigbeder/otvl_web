@@ -103,7 +103,7 @@ we will provide the option `--kvm-gpu=true` below
 We first check the virsh configuration, then create and launch a Kubernetes cluster,
 and finally check its state.
 The profile name (`-p` option) will also be the name of the VM.
-The execution time may be long as large docker images must be downloaded.
+The execution time may be long as large Docker images must be downloaded.
 
     :::text
     $ virsh --connect qemu:///system version
@@ -135,7 +135,7 @@ If we check our KVM domains configuration, we will see (some default values may 
   and the other to a newly created network "`minikube-net`" that is isolated
 - the virtual disk image is located in `.minikube/machines/mk8s-test01/`
 
-If we start and connect to the VM, we can see that it runs a "Buildroot" Linux and that docker
+If we start and connect to the VM, we can see that it runs a "Buildroot" Linux and that Docker
 is not started. We have to use "`minikube start`" to start the cluster.
 
     :::text
@@ -167,7 +167,7 @@ We may now shut the VM down.
     $ virsh --connect qemu:///system shutdown mk8s-test01
 
 &nbsp;  
-If we start the cluster again, we can see the docker containers running
+If we start the cluster again, we can see the Docker containers running
 for its support.
 There is also a
 [systemd](https://www.freedesktop.org/wiki/Software/systemd/)
@@ -282,16 +282,19 @@ and creates a proxy with the deployed service and launches a browser on the corr
 
 Interacting with the cluster in parallel with other development tasks is rather easy
 once the previous deployment has been achieved.
-There are even
+Minikube even implements
 [shortcuts](https://minikube.sigs.k8s.io/docs/handbook/pushing/)
-to make docker images provisionning more performant.
+to make Docker images provisionning more performant.
 
 However most Minikube services make the assumption that the development takes place on the KVM host
-which is also supposed to be a docker host.
+which is also supposed to be a Docker host.
 If we want to keep other development activities in another KVM virtual machine, we will have:
 
-- to push and pull images with docker registry
-- to install a kubectl configuration on the development virtual machine
+- to push and pull images through a Docker registry
+- to connect the development virtual machine to the isolated network "`minikube-net`" that was allocated
+  as part as our first cluster creation
+- to install a `kubectl` configuration on the development virtual machine
+- to rely on `kubectl` services and not on minikube's ones
 
 ## Conclusion
 
