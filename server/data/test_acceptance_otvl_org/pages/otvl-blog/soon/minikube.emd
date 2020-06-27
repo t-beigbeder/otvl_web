@@ -107,10 +107,10 @@ The execution time may be long as large docker images must be downloaded.
 
     :::text
     $ virsh --connect qemu:///system version
-    $ minikube start -p mk8s-test01 --driver=kvm2 [--kvm-gpu=true]
+    $ minikube -p mk8s-test01 start --driver=kvm2 [--kvm-gpu=true]
     outputs with emojis here...
 
-    $ minikube status -p mk8s-test01
+    $ minikube -p mk8s-test01 status
     mk8s-test01
     type: Control Plane
     host: Running
@@ -123,7 +123,7 @@ The execution time may be long as large docker images must be downloaded.
 We may then stop the cluster.
 
     :::text
-    minikube stop -p mk8s-test01
+    minikube -p mk8s-test01 stop
 
 ## What happened?
 
@@ -174,7 +174,7 @@ There is also a
 service "`kubelet.service`" (the Kubernetes Node Agent) running.
 
     :::text
-    $ minikube start -p mk8s-test01
+    $ minikube -p mk8s-test01 start
     $ virsh --connect qemu:///system console mk8s-test01
     ...
     mk8s-test01 login: root
@@ -220,9 +220,9 @@ which is quite restrictive for instance if performing resources related tests.
 Moreover, it is worth noting that during my tests, a 3 nodes cluster appeared unstable after restart.
 
     :::text
-    $ minikube start -p mk8s-test02 --nodes=2 --disk-size=5g --memory=2g
+    $ minikube -p mk8s-test02 start --nodes=2 --disk-size=5g --memory=2g
     ...
-    $ minikube status -p mk8s-test02
+    $ minikube -p mk8s-test02 status
     mk8s-test02
     type: Control Plane
     host: Running
@@ -269,14 +269,14 @@ for managing applications on a Kubernetes cluster.
     | ambassador                  | minikube | disabled     |
     | dashboard                   | minikube | disabled     |
     ...
-    $ minikube addons -p mk8s-test02 enable dashboard
+    $ minikube -p mk8s-test02 addons enable dashboard
     $ kubectl get all --all-namespaces | grep service/ | grep dashboard
     kubernetes-dashboard   service/dashboard-metrics-scraper   ClusterIP   10.97.100.126    <none>        8000/TCP                 106s
     kubernetes-dashboard   service/kubernetes-dashboard        ClusterIP   10.105.101.124   <none>        80/TCP                   106s
     
 
 &nbsp;  
-Next
+TO BE COMPLETED: how to access the dashboard with LB
 
 ## Interacting with the cluster
 
@@ -296,6 +296,8 @@ must be supplemented by the application of related engineering operations.
 Important features like multinode and GPU are reported as experimental which could be a risk on some projects.
 I would not recommend using multinode support at the moment.
 
+Installing a Kubernetes cluster even without production features is not an easy process and Minikube does a great job.
+As a result, developers can learn how to use Kubernetes and test their deployments locally before going to a hosted cluster.
 Minikube is an open source project and anyone is free to
 [contribute](https://minikube.sigs.k8s.io/docs/contrib/)
 to it.
