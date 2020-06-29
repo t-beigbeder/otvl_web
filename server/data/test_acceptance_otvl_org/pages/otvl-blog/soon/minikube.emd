@@ -135,7 +135,9 @@ If we check our KVM domains configuration, we will see (some default values may 
   and the other to a newly created network "`minikube-net`" that is isolated
 - the virtual disk image is located in `.minikube/machines/mk8s-test01/`
 
-If we start and connect to the VM, we can see that it runs a "Buildroot" Linux and that Docker
+If we start and connect to the VM, we can see that it runs a
+"[coreboot](https://www.coreboot.org/)"
+Linux and that Docker
 is not started. We have to use "`minikube start`" to start the cluster.
 
     :::text
@@ -253,6 +255,10 @@ For instance if the cluster `mk8s-test01` is still running, we can address it wi
 We may also note that Minikube home directory may be located elsewhere than `$HOME/.minikube` if appropriate.
 We must set the `MINIKUBE_HOME` environment variable in such a case.
 
+The developer documentation also explains how you can customize the
+[KVM image](https://minikube.sigs.k8s.io/docs/contrib/building/iso/)
+for the Virtual Machines that are launched to support the Kubernetes cluster.
+
 ## Minikube addons
 
 Minikube addons are built-in applications that may be easily deployed in the cluster.
@@ -278,6 +284,9 @@ and creates a proxy with the deployed service and launches a browser on the corr
     kubernetes-dashboard   service/kubernetes-dashboard        ClusterIP   10.105.101.124   <none>        80/TCP                   106s
     $ minikube -p mk8s-test02 dashboard
 
+&nbsp;  
+Minikube also comes with addons for nginx and ambassador ingress controllers.
+
 ## Interacting with the cluster
 
 Interacting with the cluster in parallel with other development tasks is rather easy
@@ -288,13 +297,86 @@ to make Docker images provisionning more performant.
 
 However most Minikube services make the assumption that the development takes place on the KVM host
 which is also supposed to be a Docker host.
-If we want to keep other development activities in another KVM virtual machine, we will have:
+If we want to keep other development activities in another KVM virtual machine,
+and not to install all development tools directly on our workstation,
+we will have:
 
-- to push and pull images through a Docker registry
+- to push and pull images with the support of a Docker registry
 - to connect the development virtual machine to the isolated network "`minikube-net`" that was allocated
   as part as our first cluster creation
 - to install a `kubectl` configuration on the development virtual machine
 - to rely on `kubectl` services and not on minikube's ones
+
+### A small demonstration application
+
+You can download the demonstration code from the git repository
+[otvl_blog](https://github.com/t-beigbeder/otvl_blog).
+In the following sections "192.168.122.139:5000" is the address of a private Docker registry,
+to be adapted to your context.
+
+In the following session we launch a private registry on host 192.168.122.139.
+If this registry is insecure, we must have created the Minikube cluster with the corresponding flag,
+providing for instance the CIDR network address for the registry server,
+as demonstrated below:
+
+    :::text
+    $ docker run -d -p 5000:5000 --name registry -v /path/to/local/docker/registry:/var/lib/registry registry:2
+    $ minikube -p mk8s-test02 -n=2 --insecure-registry 192.168.122.0/24 start
+
+&nbsp;  
+We build and push the image for the demonstration application:
+
+    :::text
+    $ cd code/minikube
+    $ docker build -t mk8s_server:1.0 .
+    $ docker image tag mk8s_server:1.0 192.168.122.139:5000/mk8s_server:1.0
+    $ docker push 192.168.122.139:5000/mk8s_server:1.0
+
+&nbsp;  
+The application is now ready for deployment.
+
+### Deploying and exposing the application in the cluster
+
+The `kubectl` context configuration is stored on the KVM host in `.kube` and `.minikube` directories.
+If we develop on a Virtual Machine and not on the KVM host, we have to remote copy those files, for
+instance if the development IP address is 192.168.122.139:
+
+    :::text
+    scp -p .kube/config 192.168.122.139:.kube/
+    scp -rp .minikube/ca.crt .minikube/profiles/ 192.168.122.139:.minikube/
+
+Check that the development Virtual Machine is also connected to the isolated network "`minikube-net`"
+that was allocated as part as our first cluster creation.
+Install `kubectl` if not already done. We can now check access to the cluster:
+
+    :::text
+    $ kubectl get all --all-namespaces
+    
+&nbsp;  
+Then deploy the application, expose it as a service and use
+[port forwarding](https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#port-forward)
+from the relevant addresses of our development Virtual Machine towards the deployed service:
+
+    :::text
+    $ kubectl apply -f code/minikube/data/k8s/mk8s_server_deployment.yml
+    $ kubectl apply -f code/minikube/data/k8s/mk8s_server_service_load_balancer.yml
+    $ kubectl port-forward service/mk8s-server-service --address 192.168.122.139 8989
+
+&nbsp;  
+The application is exposed on our development environment:
+
+    :::text hl_lines="3 4 8"
+    $ kubectl get pod,svc
+    NAME                                          READY   STATUS    RESTARTS   AGE
+    pod/mk8s-server-deployment-7d4dbf8ddb-bwdmc   1/1     Running   0          114m
+    pod/mk8s-server-deployment-7d4dbf8ddb-txzm2   1/1     Running   0          114m
+    
+    NAME                          TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+    service/kubernetes            ClusterIP      10.96.0.1      <none>        443/TCP          6h9m
+    service/mk8s-server-service   LoadBalancer   10.104.141.3   <pending>     8989:30302/TCP   44m
+
+    $ curl http://dxpydk:8989/api/hostname
+    "mk8s-server-deployment-7d4dbf8ddb-bwdmc"
 
 ## Conclusion
 
@@ -328,3 +410,4 @@ to it.
 - [Installation](https://kubernetes.io/docs/tasks/tools/install-minikube/)
 - [KVM2 driver](https://minikube.sigs.k8s.io/docs/drivers/kvm2/)
 - [GPU support](https://minikube.sigs.k8s.io/docs/tutorials/nvidia_gpu/)
+- [KVM image](https://minikube.sigs.k8s.io/docs/contrib/building/iso/)
