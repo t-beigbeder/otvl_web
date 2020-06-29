@@ -1,7 +1,6 @@
 meta:
   version: "1.0"
-  publication_date: ""
-  preview: true
+  publication_date: "20200629"
   summary_heading: "Installing Minikube on Debian buster KVM"
   summary: |
     Minikube is the simplest tool to setup a Kubernetes learning environment
