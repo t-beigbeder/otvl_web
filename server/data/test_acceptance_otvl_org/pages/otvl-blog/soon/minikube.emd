@@ -7,10 +7,6 @@ title: Vers Port Vendres mk8s
 
 # Installing Minikube on Debian buster KVM
 
-![logo work in progess](/assets/images/common/wip.png "Logo work in progress")
-
-** Preview: ** this is a work in progress.
-
 ## Introduction
     
 As mentioned on its project's page:
@@ -25,9 +21,60 @@ running the
 [KVM](https://wiki.debian.org/KVM)
 hypervisor.
 
+This article does not present how to use a GPU from a container.
+A dedicated
+[article](/blog/otvl-blog/k8s-local-gpu)
+on this blog will talk about it in the near future.
+
 ## Components architecture
 
-To be completed.
+### A complete development environment
+
+The following schema presents the different components of the architecture
+on which we will be working.
+
+- The host system is supposed to be a development workstation running Debian 10 "buster".
+  Other Linux distributions should work with minimal adaptation.
+- The workstation is running the Linux standard KVM hypervisor to create and execute
+  Virtual Machines. KVM is supposed to be installed and running.
+- Two executables "`minikube`" and "`kubectl`" will be installed on the workstation host.
+- The development environment is not directly the physical host system:
+  we develop for various technical stacks on distinct Virtual Machines,
+  here "Development Stack XYZ".
+  Docker is part of our development environment, as we target Kubernetes deployment.
+  We will install "`kubectl`" on the development Virtual Machine.
+- Minikube is a tool that instantiates and control a minimal Kubernetes cluster.
+  In our environment, we will direct it to create one or several Kubernetes nodes # 1 to # N.  
+
+<div otvl-web>
+type: sf_q_img_in_card
+src: /assets/images/minikube/minikube_comps_arch.png
+alt: Minikube Components architecture schema
+title: Minikube Components architecture
+class_: self_width_img
+</div>
+
+### Kubernetes and minikube
+
+A Kubernetes cluster integrates standard components,
+some of them may be distributed to enhance availability,
+some of them may be run as docker containers or not.
+We present here the components of a minimal architecture deployed by minikube.
+The first four of them are only deployed on a special node called the control plane.
+Production clusters will require a control plane with redundant nodes.
+
+- "`etcd`" is the database to store the cluster state;
+- "`kube-api-server`" is the cluster API entry point;
+- "`kube-scheduler`" is responsible to allocate resources to the containers to be run;
+- "`kube-controller-manager`" is responsible to apply requested changes on the cluster;
+- "`kubelet`" is an agent running on each node to control the state of containers;
+- "`kube-proxy`" is responsible to configure network rules to enable secured network
+  communication among the components and with external systems;
+- in the end, Kubernetes runs application components named "pods": a pod is a group
+  of containers running as the same host.  
+
+As we can see, even a minimal cluster is something rather complex to set up,
+and Minikube is here to help.
 
 ## Installation steps
 
