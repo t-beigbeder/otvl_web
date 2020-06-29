@@ -15,11 +15,15 @@ _Minikube implements a local Kubernetes cluster on macOS, Linux, and Windows.
 Minikube's primary goals are to be the best tool for local Kubernetes application development
 and to support all Kubernetes features that fit._
 
+Developing an application to be deployed on Kubernetes is often more efficient
+if you can rely on local computing resources.
+Thus, being able to setup a Kubernetes cluster easily and quickly is a great opportunity.
+
 This article details the various steps for the installation of Minikube
 on a development workstation under Debian 10 "buster"
 running the
 [KVM](https://wiki.debian.org/KVM)
-hypervisor.
+hypervisor, and how developers can interact with the resulting cluster.
 
 This article does not present how to use a GPU from a container.
 A dedicated
@@ -40,11 +44,17 @@ on which we will be working.
 - Two executables "`minikube`" and "`kubectl`" will be installed on the workstation host.
 - The development environment is not directly the physical host system:
   we develop for various technical stacks on distinct Virtual Machines,
-  here "Development Stack XYZ".
+  here "Development Stack XYZ" for instance.
   Docker is part of our development environment, as we target Kubernetes deployment.
-  We will install "`kubectl`" on the development Virtual Machine.
+  We will install "`kubectl`" on the development Virtual Machine
+  to be able to interact with the Kubernetes cluster.
 - Minikube is a tool that instantiates and control a minimal Kubernetes cluster.
-  In our environment, we will direct it to create one or several Kubernetes nodes # 1 to # N.  
+  In our environment, we will direct it to create one or several Kubernetes nodes # 1 to # N,
+  each one as a KVM Virtual Machine.
+  
+Minikube makes the assumption that the development occurs directly on the Workstation.
+If this is your case, some parts of this article are useless and your resulting developer
+experience will be as good.
 
 <div otvl-web>
 type: sf_q_img_in_card
@@ -216,7 +226,7 @@ We may now shut the VM down.
     $ virsh --connect qemu:///system shutdown mk8s-test01
 
 &nbsp;  
-If we start the cluster again, we can see the Docker containers running
+If we start the cluster again using Minikube, we can see the Docker containers running
 for its support.
 There is also a
 [systemd](https://www.freedesktop.org/wiki/Software/systemd/)
@@ -256,7 +266,7 @@ they even enable to run several clusters in parallel.
 The cluster configuration is saved for each profile when creating the cluster or reconfiguring it,
 and it is then reused when the cluster is restarted.
 
-Note that as profile names are also DNS host names, some characters are not allowed: typically,
+Note that, as profile names are also DNS host names, some characters are not allowed: typically,
 use a minus sign as separator and not an underscore.
 
 In the following example we will create a new cluster running two Kubernetes nodes,
@@ -358,7 +368,7 @@ we will have:
 
 You can download the demonstration code from the git repository
 [otvl_blog](https://github.com/t-beigbeder/otvl_blog).
-In the following sections "192.168.122.139:5000" is the address of a private Docker registry,
+In the following sections "`192.168.122.139:5000`" is the address of a private Docker registry,
 to be adapted to your context.
 
 In the following session we launch a private registry on host 192.168.122.139.
@@ -370,7 +380,9 @@ as demonstrated below:
     $ docker run -d -p 5000:5000 --name registry -v /path/to/local/docker/registry:/var/lib/registry registry:2
     $ minikube -p mk8s-test02 -n=2 --insecure-registry 192.168.122.0/24 start
 
-&nbsp;  
+Note this not enough to stop and start the cluster,
+you have to delete and recreate it to enable the insecure registry access.
+
 We build and push the image for the demonstration application:
 
     :::text
@@ -422,7 +434,7 @@ The application is exposed on our development environment:
     service/kubernetes            ClusterIP      10.96.0.1      <none>        443/TCP          6h9m
     service/mk8s-server-service   LoadBalancer   10.104.141.3   <pending>     8989:30302/TCP   44m
 
-    $ curl http://dxpydk:8989/api/hostname
+    $ curl http://192.168.122.139:8989/api/hostname
     "mk8s-server-deployment-7d4dbf8ddb-bwdmc"
 
 ## Conclusion
