@@ -26,7 +26,15 @@ You will find useful references at the bottom of this page.
 
 ### Data Science use cases and the Data Lake
 
-There is a wide range of Data Science types of use cases,
+The article
+[Data Science and Big Data: Two Very Different Beasts](https://www.thoughtworks.com/insights/blog/data-science-and-big-data-two-very-different-beasts)
+provides a very good definition of what Data Science is with respect to its use of Big Data.
+This article also emphasizes that  
+_"An unfortunate aspect of big data is that we look to the largest companies
+to see what solutions they have engineered to compete in their markets.
+But these companies hardly represent the challenges faced by most organizations."_
+
+Indeed, there is a wide range of Data Science types of use cases,
 and as some of them require the fast processing of large datasets
 the assumption is often made that a Big Data platform is required.
 While this is almost always the case when integrating Data Analytics results,
@@ -89,14 +97,47 @@ towards a distributed data mesh provides all the organisational agility
 required for answering new challenges concerning Data Science,
 while taking benefit of know-how and best practices from other technical domains.
 
+Perhaps will you also find interesting some real-world examples
+related to the application of a product thinking approach
+for the data governance in the article:
+"[The curse of the data lake monster](https://www.thoughtworks.com/insights/blog/curse-data-lake-monster)"
+
 We will consider the implementation questions in the following sections,
 as this is the domain where Data Science has very specific requirements.
 The services and pipelines implementation responsibilities are naturally defined
-with the same domain boundaries as the services they provide,
+with the same domain boundaries as the business services they provide,
 and the architecture does not forbid technical solutions reuse,
 while not making it mandatory.
 
 ## Solutions and operational constraints
+
+The number and the variety of the solutions is intimidating at first, see for instance:
+[Next-Gen Data Lakes and Analytics Platforms](https://www.slideshare.net/AmazonWebServices/nextgen-data-lakes-and-analytics-platforms-aws-summit-sydney).
+We will first hear what analysts and technology specialists have to say,
+before looking at the existing infrastructure products for their support.
+
+### General recommendations
+
+The article already mentioned
+[Data Science and Big Data: Two Very Different Beasts](https://www.thoughtworks.com/insights/blog/data-science-and-big-data-two-very-different-beasts)
+also emphasizes that _"conversion Should Scale Before Collection"_.
+Applying this recommendation when looking for Data Science infrastructure solutions
+means that those solutions
+
+- must be adaptable to a continuous change of requirements
+  concerning the use of existing or newly created data services
+  and their implementations through data transformation pipelines;
+- must be flexible regarding the multiplicity of needs:
+  business users, refresh rates, confidentiality and compliancy rules,
+  processing tools and database engines;
+- must enable Data Scientists to work efficiently
+  but also with the required security and reliability, from the Proof of Concept products
+  up to effective applications integrating their solutions in production.
+
+Those ideas are also developed in the article  
+- [ten Characteristics of a Modern Data Architecture](https://www.eckerson.com/articles/ten-characteristics-of-a-modern-data-architecture)
+
+### Infrastructure products
 
 ## Implementations
 
@@ -106,12 +147,16 @@ while not making it mandatory.
 
 **Articles and presentations**
 
-- [Continuous Delivery for Machine Learning](https://martinfowler.com/articles/cd4ml.html)
+- [Data Science and Big Data: Two Very Different Beasts](https://www.thoughtworks.com/insights/blog/data-science-and-big-data-two-very-different-beasts)
 - [How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh](https://martinfowler.com/articles/data-monolith-to-mesh.html)
 - [The curse of the data lake monster](https://www.thoughtworks.com/insights/blog/curse-data-lake-monster)
-- [Modern Data Lake with Minio : Part 1](https://blog.minio.io/modern-data-lake-with-minio-part-1-716a49499533)
+- [Ten Characteristics of a Modern Data Architecture](https://www.eckerson.com/articles/ten-characteristics-of-a-modern-data-architecture)
 - [Next-Gen Data Lakes and Analytics Platforms](https://www.slideshare.net/AmazonWebServices/nextgen-data-lakes-and-analytics-platforms-aws-summit-sydney)
+- [Building Big Data Storage Solutions (Data Lakes) for Maximum Flexibility](https://docs.aws.amazon.com/whitepapers/latest/building-data-lakes/building-data-lake-aws.html)
+- [Continuous Delivery for Machine Learning](https://martinfowler.com/articles/cd4ml.html)
+- [Modern Data Lake with Minio : Part 1](https://blog.minio.io/modern-data-lake-with-minio-part-1-716a49499533)
 - [Everything a Data Scientist Should Know About Data Management](https://www.kdnuggets.com/2019/10/data-scientist-data-management.html)
+- [How LinkedIn, ... and Netflix are Solving Data Management ... for Machine Learning Solutions](https://www.kdnuggets.com/2019/08/linkedin-uber-lyft-airbnb-netflix-solving-data-management-discovery-machine-learning-solutions.html)
 
 **Reference materials**
 
