@@ -113,12 +113,16 @@ while not making it mandatory.
 
 The number and the variety of the solutions is intimidating at first, see for instance:
 [Next-Gen Data Lakes and Analytics Platforms](https://www.slideshare.net/AmazonWebServices/nextgen-data-lakes-and-analytics-platforms-aws-summit-sydney).
+Here again, we get a mix of Data Analytics requirements and Data Science requirements.
+Anyway, because Data Analytics data services in any shape are of great value to Data Scientists,
+such point of views are definitely to be taken into account.
+
 We will first hear what analysts and technology specialists have to say,
-before looking at the existing infrastructure products for their support.
+before looking at the existing infrastructure and platform products for their support.
 
-### General recommendations
+### A Data Architecture
 
-The article already mentioned
+The article mentioned in the introduction
 [Data Science and Big Data: Two Very Different Beasts](https://www.thoughtworks.com/insights/blog/data-science-and-big-data-two-very-different-beasts)
 also emphasizes that _"conversion Should Scale Before Collection"_.
 Applying this recommendation when looking for Data Science infrastructure solutions
@@ -128,19 +132,30 @@ means that those solutions:
   concerning the use of existing or newly created data services
   and their implementations through data transformation pipelines;
 - must be flexible regarding the multiplicity of needs:
-  business users, refresh rates, confidentiality and compliancy rules,
+  business users diversity, refresh rates, confidentiality and compliancy rules,
   processing tools and database engines;
 - must enable Data Scientists to work efficiently
   but also must enforce all the security and reliability requirements,
   from the Proof of Concept products
   up to production applications integrating Data Science solutions.
 
-Those ideas are also developed in the article  
+Those ideas are also developed in the article
 [Ten Characteristics of a Modern Data Architecture](https://www.eckerson.com/articles/ten-characteristics-of-a-modern-data-architecture)
-along with the identification of other important characteristics.
-Here again, the focus is put on the architecture and not on a specific Data Lake solution. 
+along with the identification of other important characteristics,
+but first of all with the definition of a reference architecture.
+Here again, the architecture prevails over specific Data Lake solutions.
 
-### Infrastructure products
+### Different constraints
+
+#### Infrastructure and performance
+
+#### Adaptability to uses
+
+#### Security and reliability
+
+#### Delivery process
+
+### Infrastructure and platform products
 
 ## Implementations
 
