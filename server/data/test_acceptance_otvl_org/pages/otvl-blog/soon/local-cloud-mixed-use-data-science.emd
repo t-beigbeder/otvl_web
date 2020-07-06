@@ -122,7 +122,7 @@ The article already mentioned
 [Data Science and Big Data: Two Very Different Beasts](https://www.thoughtworks.com/insights/blog/data-science-and-big-data-two-very-different-beasts)
 also emphasizes that _"conversion Should Scale Before Collection"_.
 Applying this recommendation when looking for Data Science infrastructure solutions
-means that those solutions
+means that those solutions:
 
 - must be adaptable to a continuous change of requirements
   concerning the use of existing or newly created data services
@@ -131,11 +131,14 @@ means that those solutions
   business users, refresh rates, confidentiality and compliancy rules,
   processing tools and database engines;
 - must enable Data Scientists to work efficiently
-  but also with the required security and reliability, from the Proof of Concept products
-  up to effective applications integrating their solutions in production.
+  but also must enforce all the security and reliability requirements,
+  from the Proof of Concept products
+  up to production applications integrating Data Science solutions.
 
 Those ideas are also developed in the article  
-- [ten Characteristics of a Modern Data Architecture](https://www.eckerson.com/articles/ten-characteristics-of-a-modern-data-architecture)
+[Ten Characteristics of a Modern Data Architecture](https://www.eckerson.com/articles/ten-characteristics-of-a-modern-data-architecture)
+along with the identification of other important characteristics.
+Here again, the focus is put on the architecture and not on a specific Data Lake solution. 
 
 ### Infrastructure products
 
