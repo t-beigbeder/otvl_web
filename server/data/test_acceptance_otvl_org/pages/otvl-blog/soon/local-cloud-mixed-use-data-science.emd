@@ -35,12 +35,12 @@ to see what solutions they have engineered to compete in their markets.
 But these companies hardly represent the challenges faced by most organizations."_
 
 Indeed, there is a wide range of Data Science types of use cases,
-and as some of them require the fast processing of large datasets
+and as some of them require the fast processing of large datasets,
 the assumption is often made that a Big Data platform is required.
 While this is almost always the case when integrating Data Analytics results,
 many Data Science applications do not require such a specialized infrastructure.
 
-This is important to keep in mind as we may find more convenient technical solutions to be applied.
+This is important to keep in mind as we may find more convenient technical solutions to be applied to some use cases.
 
 ### Going beyond the Data Lake 
 
@@ -69,14 +69,14 @@ Some important consequences of implementing such an architecture are:
 - that those datasets have to be considered as products, reusing the existing know-how of building
   any other software product;
 - that the data processing pipelines are reshaped and this time aligned with the domain boundaries;
-- those datasets product services being naturally provided by their owner domains.
+- those dataset product services are naturally provided by their owner domains.
 
 ### Domain driven architecture
 
 We could represent such data services composition opportunities on a schema like the one below
 (the arrows come from the consumer to the provider).
-Each domain is represented by a colour, providing data services, built upon data engineering tools,
-and that can be organized in pipelines.
+Each domain is represented by a colour, providing data services implemented with various data engineering tools,
+services can be organized in pipelines.
 We create thus a mesh of data services the same way we do for other kind of services. 
 
 <div otvl-web>
@@ -97,16 +97,16 @@ towards a distributed data mesh provides all the organisational agility
 required for answering new challenges concerning Data Science,
 while taking benefit of know-how and best practices from other technical domains.
 
-Perhaps will you also find interesting some real-world examples
-related to the application of a product thinking approach
-for the data governance in the article:
+In complement to the previous article you may be interested in hearing about
+some real-world examples related to the application of a product thinking approach
+for the data governance:
 "[The curse of the data lake monster](https://www.thoughtworks.com/insights/blog/curse-data-lake-monster)"
 
 We will consider the implementation questions in the following sections,
 as this is the domain where Data Science has very specific requirements.
 The services and pipelines implementation responsibilities are naturally defined
-with the same domain boundaries as the business services they provide,
-and the architecture does not forbid technical solutions reuse,
+with the same domain boundaries as the business services they provide.
+It is worth underlining that this domain driven architecture does not forbid technical solutions reuse,
 while not making it mandatory.
 
 ## Solutions and operational constraints
@@ -114,7 +114,7 @@ while not making it mandatory.
 The number and the variety of the solutions is intimidating at first, see for instance:
 [Next-Gen Data Lakes and Analytics Platforms](https://www.slideshare.net/AmazonWebServices/nextgen-data-lakes-and-analytics-platforms-aws-summit-sydney).
 Here again, we get a mix of Data Analytics requirements and Data Science requirements.
-Anyway, because Data Analytics data services in any shape are of great value to Data Scientists,
+Anyway, because Data Analytics services in any shape are of great value to Data Scientists,
 such point of views are definitely to be taken into account.
 
 We will first hear what analysts and technology specialists have to say,
