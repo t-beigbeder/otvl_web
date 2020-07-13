@@ -1,0 +1,14 @@
+meta:
+  version: "1.0"
+  publication_date: ""
+  preview: true
+  summary_heading: "A few notes about getting started with Go"
+  summary: |
+    The title is the summary.
+
+content:
+  title: A few notes about getting started with Go
+  heading:
+  stream_fields:
+  - type: md_file
+    file: few-notes-getting-started-go.emd
