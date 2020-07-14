@@ -19,7 +19,7 @@ A lot of reasons can lead you to start programming with [Go](https://golang.org/
 - You can build [safer software](https://github.com/rfjakob/gocryptfs)
 - Learning a new language is as exciting as visiting a [new foreign country](https://tour.golang.org/welcome/1)
 - You can understand Kubernetes [code](https://github.com/kubernetes/kubernetes)
-- You can build Kubernetes [operators](https://github.com/operator-framework/operator-sdk)
+- You can implement Kubernetes [operators](https://github.com/operator-framework/operator-sdk)
 - You can build [super minimal](https://hub.docker.com/_/scratch/) Docker images
 - It is [open source](https://github.com/golang/go)
 - The community is [great](https://golang.org/CONTRIBUTORS)
@@ -27,9 +27,22 @@ A lot of reasons can lead you to start programming with [Go](https://golang.org/
 - You loved [C](https://opensource.com/article/19/10/command-line-heroes-c) once,
   and it is [like C](https://blog.golang.org/cgo)
 - It has great [concurrency patterns](https://golang.org/doc/effective_go.html#concurrency)
+- ...
 
 Hum... you can also [temperate](https://bluxte.net/musings/2018/04/10/go-good-bad-ugly/) all this.
 
-### Books
+In my case, writing system software and feeling more comfortable in the Kubernetes ecosystem
+are the first motivations.
 
-- [The Go Programming Language](https://www.oreilly.com/library/view/the-go-programming/9780134190570/): like _The C Programming Language_ from K&R but for Go
+## In the beginning
+
+- The [book](https://www.oreilly.com/library/view/the-go-programming/9780134190570/), or
+- the [site](https://tour.golang.org/)
+
+## Books
+
+- [The Go Programming Language](https://www.oreilly.com/library/view/the-go-programming/9780134190570/):
+  like
+  _[The C Programming Language](https://en.wikipedia.org/wiki/The_C_Programming_Language)_
+  from K&R but for Go. By the way, Brian Kernighan is the co-author of both!
+  
