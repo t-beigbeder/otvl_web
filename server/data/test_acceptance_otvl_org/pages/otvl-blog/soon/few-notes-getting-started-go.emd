@@ -13,4 +13,15 @@ title: Un tracteur en Gaspésie avec Go
 
 ## Introduction
 
-A lot of reasons can lead you to start programming with Go.
+A lot of reasons can lead you to start programming with Go:
+
+- You can understand Kubernetes code
+- You can build safer software
+- You can build system software
+- It is open source
+- The community is great
+- Channels
+
+### Books
+
+- [The Go Programming Language](https://www.oreilly.com/library/view/the-go-programming/9780134190570/): like _The C Programming Language_ from K&R but for Go
