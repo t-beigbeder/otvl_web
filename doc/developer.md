@@ -44,9 +44,9 @@ vue.js
     $ vue --version
     @vue/cli 4.1.2
 
-Quasar (or try yarn)
+Quasar
 
-    # npm install -g @quasar/cli
+    $ yarn global add @quasar/cli
 
 ### System setup for python
 
