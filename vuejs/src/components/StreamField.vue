@@ -7,15 +7,15 @@
     <p v-if="credit"><i><a :href=credit.href>{{ credit.text }}</a></i></p>
   </div>
   <div v-else-if="type == 'sf_q_cards'" class="row">
-    <div v-for="(card, index) in content" :key="index" class="col-md-3 col-sm-4">
+    <div v-for="(card, index) in content" :key="index" class="col-grow col-md-3 col-sm-4 q-mx-sm">
       <q-card>
-        <q-card-section class="bg-blue-grey-1 q-ma-none">
+        <q-card-section class="bg-blue-grey-1 q-ma-none q-pa-sm">
           <div class="text-h6 text-blue-grey-8 text-center">
             {{ card.title }}
           </div>
         </q-card-section>
         <q-card-section class="q-my-sm">
-          {{ card.content }}
+          <span v-html="card.content"></span>
         </q-card-section>
       </q-card>
     </div>

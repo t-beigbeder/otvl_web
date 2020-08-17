@@ -259,6 +259,11 @@ class BasePageHandler(BaseHandler):
             div = yaml.load(div, Loader=yaml.FullLoader)
             if "src" in div:
                 div["src"] = self._patch_asset_in_src_sf(div["src"])
+            if "content" in div:
+                if type(div["content"]) is list:
+                    for elt in div["content"]:
+                        if "content" in elt:
+                            elt["content"] = self._md2html(elt["content"])
         except yaml.parser.ParserError:
             pass
         end = end[cdiv_bx + len("</div>\n"):]
