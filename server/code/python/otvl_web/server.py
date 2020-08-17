@@ -271,7 +271,10 @@ class BasePageHandler(BaseHandler):
                 serialized_sf.append(sf)
                 continue
             changed = True
+            if sf["content"][-1] != '\n':
+                sf["content"] += '\n'
             next = sf["content"]
+
             while changed:
                 changed, start, div, end = self._serialize_first_div(next)
                 serialized_sf.append(dict(type="html", content=start))

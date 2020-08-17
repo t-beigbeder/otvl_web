@@ -1,0 +1,15 @@
+some content
+
+<div otvl-web>
+type: sf_q_cards
+content:
+- title: First card
+  content: |
+      First card text in md_data
+      next line
+- title: Second card
+  content: |
+      Second card text in md_data
+      next line
+</div>
+
