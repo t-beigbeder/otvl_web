@@ -13,7 +13,7 @@ else
     exit 1
 fi
 if [ -z "${DKB_R_VERSION}" ] ; then
-  VERSION="1.0.dev001"
+  VERSION="1.0.dev002"
 else
   VERSION="${DKB_R_VERSION}"
 fi

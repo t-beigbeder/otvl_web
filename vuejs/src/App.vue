@@ -53,7 +53,8 @@ export default {
       pages_by_id: function () {
         return {}
       },
-      assets_url: 'assets_url_tbd'
+      assets_url: 'assets_url_tbd',
+      es6_no_support: ''
     }
   },
   created: function () {
@@ -70,6 +71,17 @@ export default {
     }
     if (this.rtc.api_server_url === 'default_api_server_url' || !this.rtc.api_server_url) {
       this.rtc.api_server_url = this.rtc.default_api_server_url
+    }
+    var htmlElt = document.getElementsByTagName('html')[0]
+    for (var ix = 0; ix < htmlElt.classList.length; ix++) {
+      if (htmlElt.classList[ix].startsWith('no-')) {
+        if (htmlElt.classList[ix] !== 'no-contains') {
+          if (this.es6_no_support !== '') {
+            this.es6_no_support += ','
+          }
+          this.es6_no_support += htmlElt.classList[ix]
+        }
+      }
     }
     if (this.app_debug_console) {
       console.log('App was created, it104 qApp and rtc')
@@ -109,7 +121,11 @@ export default {
   },
   methods: {
     fetchSiteConfiguration: function () {
-      this.$axios.get(this.rtc.api_server_url + '/site/config/')
+      var scUrl = '/site/config/'
+      if (this.es6_no_support !== '') {
+        scUrl += `?es6_no_support=${this.es6_no_support}`
+      }
+      this.$axios.get(this.rtc.api_server_url + scUrl)
         .then((response) => {
           this.$set(this, 'site_configuration', response.data)
           this.site_configuration_updated = true

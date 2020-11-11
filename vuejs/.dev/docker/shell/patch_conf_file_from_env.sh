@@ -3,6 +3,7 @@ if [ ! -f $1.ori ] ; then
 fi
 sed -i -e "s=@WEB_PORT@=${WEB_PORT}=" $1
 sed -i -e "s=@WEB_SERVER@=${WEB_SERVER}=" $1
+sed -i -e "s=otvl_web_home_title=${WEB_HOME_TITLE}=" $1
 sed -i -e "s=@API_PORT@=${API_PORT}=" $1
 sed -i -e "s=@SERVER_NAME@=${SERVER_NAME}=" $1
 sed -i -e "s=@APP_PORT@=${APP_PORT}=" $1

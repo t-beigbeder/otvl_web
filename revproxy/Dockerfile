@@ -1,6 +1,7 @@
 FROM httpd:2.4
 COPY shell/* /shell/
 COPY apache2/conf/ /usr/local/apache2/conf/
+RUN htpasswd -cb /srv/htpasswd guest p
 
 ENV WEB_PORT 9981
 ENV WEB_SERVER otvl-web-vuejs

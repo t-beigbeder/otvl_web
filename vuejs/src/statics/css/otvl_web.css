@@ -26,3 +26,16 @@
   max-width:100%;
   height: auto;
 }
+
+.page-article table, th, td {
+  border-collapse: collapse;
+  border: 1px solid black;
+  padding: 5px;
+}
+
+.page-article hr {
+  color: white;
+  background-color: rgb(207, 216, 220);
+  height: 1px;
+  box-sizing: content-box;
+}

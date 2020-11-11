@@ -42,6 +42,12 @@ pages:
       - id: sub-menu2
         type: page
         menu: Sub 2
+      - id: sub-menu3
+        type: page
+        menu: Sub 3 - not found
+      - id: sub-menu4
+        type: page
+        menu: Sub 4 - technical error
   - id: blog-demo
     type: blox
     menu: Blog

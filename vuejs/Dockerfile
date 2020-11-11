@@ -22,6 +22,7 @@ RUN ln -s /srv/data/assets /srv/www/site1/web/
 
 ENV WEB_PORT 9981
 ENV WEB_SERVER otvl-web-vuejs
+ENV WEB_HOME_TITLE "Otvl Web demo"
 
 ENV API_PORT 9991
 ENV SERVER_NAME vjs-dev-host

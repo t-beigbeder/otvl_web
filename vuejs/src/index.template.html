@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html class="no-js">
   <head>
-    <title><%= htmlWebpackPlugin.options.productName %></title>
-
+    <title>otvl_web_home_title</title>
     <meta charset="utf-8">
     <meta name="description" content="<%= htmlWebpackPlugin.options.productDescription %>">
     <meta name="format-detection" content="telephone=no">
@@ -11,10 +10,80 @@
     <link rel="icon" type="image/ico" href="statics/img/favicon.ico">
     <link href=statics/css/otvl_web.css rel=stylesheet>
     <link href=statics/css/codehilite_friendly.css rel=stylesheet>
+    <style>
+    .js .js-hide, .es6 .es6-hide, .no-js .no-js-hide, .no-es6 .no-es6-hide  {
+      display: none;
+    }
+    </style>
+    <script src=statics/js/modernizr-custom.js></script>
   </head>
   <body>
-    <!-- DO NOT touch the following DIV -->
-    <div id="q-app" api-server-url="default_api_server_url" web-server-url="default_web_server_url"></div>
+    <div class="no-js-hide no-es6-hide">
+      <!-- DO NOT touch the following DIV -->
+      <div id="q-app" api-server-url="default_api_server_url" web-server-url="default_web_server_url"></div>
+    </div>
+
+    <div class="js-hide">
+      <pre>
+        <code>
+     _
+    | | __ ___   ____ _
+ _  | |/ _` \ \ / / _` |
+| |_| | (_| |\ V / (_| |
+ \___/ \__,_| \_/ \__,_|
+ ____            _       _
+/ ___|  ___ _ __(_)_ __ | |_
+\___ \ / __| '__| | '_ \| __|
+ ___) | (__| |  | | |_) | |_
+|____/ \___|_|  |_| .__/ \__|
+                  |_|
+  ___ _ __ _ __ ___  _ __
+ / _ \ '__| '__/ _ \| '__|
+|  __/ |  | | | (_) | |
+ \___|_|  |_|  \___/|_|
+        </code>
+      </pre>
+      <h3>
+        Your browser does not support JavaScript.
+      </h3>
+      <p>
+        You cannot view this page, please reconfigure your browser or use another one.
+      </p>
+      <p>Come back <a href="/">home</a></p>
+    </div>
+
+    <div class="es6-hide no-js-hide">
+      <pre>
+        <code>
+     _
+    | | __ ___   ____ _
+ _  | |/ _` \ \ / / _` |
+| |_| | (_| |\ V / (_| |
+ \___/ \__,_| \_/ \__,_|
+ ____            _       _
+/ ___|  ___ _ __(_)_ __ | |_
+\___ \ / __| '__| | '_ \| __|
+ ___) | (__| |  | | |_) | |_
+|____/ \___|_|  |_| .__/ \__|
+                  |_|
+  ___ _ __ _ __ ___  _ __
+ / _ \ '__| '__/ _ \| '__|
+|  __/ |  | | | (_) | |
+ \___|_|  |_|  \___/|_|
+        </code>
+      </pre>
+      <h3>
+        Your browser does not support recent JavaScript.
+      </h3>
+      <p>
+        Your browser does not support ECMAScript 6.
+      </p>
+      <p>
+        You cannot view this page, please upgrade your browser, use another one or another device.
+      </p>
+      <p>Come back <a href="/">home</a></p>
+    </div>
+
     <script type="module" src=statics/js/luxon.min.js></script>
     <script type="module" src=statics/js/conf.js></script>
   </body>

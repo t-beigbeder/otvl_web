@@ -1,0 +1,14 @@
+meta:
+  version: "1.0"
+  creation_date: "20200429"
+  publication_date: "20200430"
+  last_update_date: "20200501"
+
+content:
+  title: Sub-menu4 page for otvl_web demo
+  heading: Sub-menu4 page for otvl_web demo
+  brand:
+    no_dates: true
+  stream_fields:
+  - type: md_file
+    file: not_found
