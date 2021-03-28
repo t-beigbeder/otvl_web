@@ -1,0 +1,24 @@
+content:
+  title: Home for Otvl Web
+  heading: Heading for Otvl Web's home
+  stream_fields:
+  - type: md_file
+    file: c5-sf-nofile.emd
+  - type: md_data
+    data: |
+      # heading in md_data
+
+      Text in md_data
+
+      - list in md_data
+          - sub list in md_data
+          - sub list in md_data # 2
+      - list in md_data # 2
+
+      End text in md_data
+
+      And this is a [[/assets/images/home/nature.jpg | wiki link towards an image]]
+
+      And a second one [[/assets/images/home/boutDuMonde.jpg | wiki link towards an image]]
+  - type: sf_q_img_in_card
+    src: /assets/images/home/nature.jpg

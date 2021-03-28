@@ -83,15 +83,6 @@ celerybeat-schedule
 # SageMath parsed files
 *.sage.py
 
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -108,10 +99,4 @@ venv.bak/
 /test/data/output/*
 *.swp
 
-# PyCharm
-.idea/workspace.xml
-
-# openstack secret
-clouds.yaml
-
-# Submodules
+.pytest_cache

@@ -1,8 +1,0 @@
-.git
-data
-node_modules
-dist
-.quasar
-.vscode
-.dockerignore
-.gitignore

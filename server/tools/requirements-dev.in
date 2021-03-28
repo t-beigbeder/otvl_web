@@ -1,0 +1,9 @@
+requests>=2.25,<3
+coverage
+flake8
+mccabe
+pep8
+pyflakes
+pytest
+markdown
+importlib-metadata>=3.3.0

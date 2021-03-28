@@ -4,7 +4,7 @@ from jinja2 import Environment, FileSystemLoader, TemplateError
 
 
 class Jinja2Loader():
-    logger = logging.getLogger(__module__ + '.' + __qualname__)  # noqa
+    logger = logging.getLogger(__name__)
 
     def __init__(self, j2_dir):
         self.j2_dir = j2_dir

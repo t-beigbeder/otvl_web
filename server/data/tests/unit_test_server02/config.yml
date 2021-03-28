@@ -1,0 +1,11 @@
+server:
+  default_assets_url: "/assets/"
+  assets_url: "http://otvl-dev-host:9090/api/v2/asset/"
+  base_url: "/"
+  private_uris:
+  - "c6-private/"
+  - "c7-private"
+  j24bots_templates:
+    - uri: ".*"
+      template: "page.j2"
+vuejs: {}

@@ -1,0 +1,8 @@
+vuejs:
+  routes:
+  - path: "/about"
+    component: "About"
+  - path: "/"
+    component: "Home"
+server:
+  dummy:

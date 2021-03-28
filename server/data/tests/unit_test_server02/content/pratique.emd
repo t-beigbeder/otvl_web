@@ -1,0 +1,47 @@
+### Pratique régulière
+
+Il vous est possible de venir pratiquer le QI Gong avec nous au sein d'associations:
+
+- "QI Gong Go!" à Poucharramet, non loin de Rieumes (31370)
+- "Les chemins de l'harmonie" à Seysses, non loin de Muret (31600)
+
+### Stages
+
+Des stages sont organisés régulièrement, ils sont
+[[/blox/pratique/actualites | annoncés]]
+sur ce site.
+
+### Plus d'information
+
+<div otvl-web>
+type: sf-cards
+elements:
+- title: QI Gong Go!
+  content: |
+    Les séances ont lieu à la Salle de la Commanderie à **Poucharramet**
+
+    - le samedi de 10h à 12h
+    - le mardi de 18h30 à 20h00
+    
+- title: Les chemins de l'harmonie
+  content: |
+    Les séances ont lieu à la Salle
+    [Stephane Hessel](https://www.mairie-seysses.fr/culture-sports-loisirs/cadre-de-vie/offre-de-location-de-salles/salle-stephane-hessel/)
+    à **Seysses**
+
+    - le mercredi de 17h30 à 19h30
+    
+- title: Informations, contact
+  content: |
+    Pour plus de renseignements et pour prendre contact,
+    veuillez vous reporter à la rubrique
+    "[[/page/a-propos/contact | À propos > Nous contacter]]".
+    
+    Retrouvez les dernières informations dans la rubrique
+    "[[/blox/pratique/actualites | Pratique > Actualités]]".
+
+- title: Accès adhérents
+  content: |
+    Pour se remémorer le travail effectué pendant les séances:
+    [[/page/prive/documents | Documents, vidéos]]
+</div>

@@ -1,0 +1,10 @@
+server:
+  default_assets_url: "/assets/"
+  private_uris:
+  - "c6-private/"
+  - "c7-private"
+  j24bots_templates:
+    - uri: ".*"
+      template: "page.j2"
+
+vuejs: {}

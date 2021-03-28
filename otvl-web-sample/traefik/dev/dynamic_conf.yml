@@ -1,0 +1,97 @@
+http:
+  routers:
+
+    to-api-private-https:
+      rule: "Host(`otvl-dev-host`) && Path(`/api/v2/content/private{n:.*}`,`/api/v2/content/prive{n:.*}`,`/api/v2/html/private{n:.*}`,`/api/v2/html/prive{n:.*}`)"
+      middlewares:
+      - private-basic-auth
+      service: api
+      tls: {}
+
+    to-api-sitemap-https:
+      rule: "Host(`otvl-dev-host`) && PathPrefix(`/sitemap.xml`)"
+      middlewares:
+      - add-api
+      service: api
+      tls: {}
+
+    to-api-https:
+      rule: "Host(`otvl-dev-host`) && PathPrefix(`/api/`)"
+      service: api
+      tls: {}
+
+    to-api-html-private-https:
+      rule: "Host(`otvl-dev-host`) && Path(`/private{n:.*}`,`/prive{n:.*}`) && HeadersRegexp(`User-Agent`, `(otvl_begin|Googlebot|Bingbot|bingbot|BingPreview|YandexWebmaster|YandexBot|LinkedInBot|PocketParser|Slurp|Baiduspider|Sogou|Exabot|facebot|facebookexternalhit|ia_archiver|DuckDuckBot|WhatsApp|Twitterbot|Applebot|AhrefsBot|PaperLiBot|otvl_end)`)"
+      priority: 4
+      middlewares:
+      - private-basic-auth
+      - add-api-html
+      service: api
+      tls: {}
+
+    to-api-html-https:
+      rule: "Host(`otvl-dev-host`) && HeadersRegexp(`User-Agent`, `(otvl_begin|Googlebot|Bingbot|bingbot|BingPreview|YandexWebmaster|YandexBot|LinkedInBot|PocketParser|Slurp|Baiduspider|Sogou|Exabot|facebot|facebookexternalhit|ia_archiver|DuckDuckBot|WhatsApp|Twitterbot|Applebot|AhrefsBot|PaperLiBot|otvl_end)`)"
+      priority: 3
+      middlewares:
+      - add-api-html
+      service: api
+      tls: {}
+
+    to-otvl-web-sample-private-https:
+      rule: "Host(`otvl-dev-host`) && Path(`/private{n:.*}`,`/prive{n:.*}`)"
+      priority: 2
+      middlewares:
+      - private-basic-auth
+      service: otvl-web-sample
+      tls: {}
+
+    to-otvl-web-sample-https:
+      rule: "Host(`otvl-dev-host`)"
+      priority: 1
+      service: otvl-web-sample
+      tls: {}
+
+    to-otvl-web-dcsample-https:
+      rule: "Host(`otvl-dcdev-host`)"
+      service: otvl-web-dcsample
+      tls: {}
+
+    to-dcapi-https:
+      rule: "Host(`otvl-dcdev-host`) && PathPrefix(`/api/`)"
+      service: dcapi
+      tls: {}
+
+  middlewares:
+    add-api:
+      addPrefix:
+        prefix: "/api/v2"
+
+    add-api-html:
+      addPrefix:
+        prefix: "/api/v2/html"
+
+    private-basic-auth:
+      basicAuth:
+        users:
+          - "dkr:$apr1$KuBSr/oL$PFF0Bu7NJHn4jgZzPovhZ0"
+
+  services:
+    otvl-web-sample:
+      loadBalancer:
+        servers:
+        - url: http://otvl-web-sample
+
+    api:
+      loadBalancer:
+        servers:
+        - url: http://api:9090
+
+    otvl-web-dcsample:
+      loadBalancer:
+        servers:
+        - url: http://dxpydk:8081
+
+    dcapi:
+      loadBalancer:
+        servers:
+        - url: http://dxpydk:9091

@@ -18,8 +18,8 @@ You will find useful references at the bottom of this page.
 
 The documentation is organized as following:
 
-- general presentation: here
-- [user documentation](doc/user.md)
+- general presentation: this one
+- [user documentation](doc/user.md) not yet written
 - [developer documentation](doc/developer.md)
 
 ## General presentation
@@ -67,9 +67,6 @@ From a developer point of view, the benefits of this tool are that
 
 - the front-end is developped with
   [Vue.js](https://vuejs.org/)
-  and more specifically
-  [Quasar](https://quasar.dev/)
-  layouts and components,
   so the site general _look-and-feel_ may be customized and enriched efficiently;
 - on the server side, a collection of simple REST web services are developped in python,
   their roles being mainly to serve files to the Vue.js client, either directly or
@@ -108,12 +105,7 @@ however it is already hosting a few web sites in production.
 The first concern at this time is obviously the lack of documentation.
 However this gap may be filled easily, thus quickly,
 moreover, several samples that are used for tests
-and a demonstration site can help to start a new site,
-
-A second concern is about the ability to customize the site's _look-and-feel_
-without having to modify the source code.
-Several options for this goal are already present but, with no doubt,
-the first future features implemented will target this concern
+and a demonstration site can help to start a new site.
 
 ## Useful links
 
@@ -131,5 +123,3 @@ the first future features implemented will target this concern
 - [Quasar framework](https://quasar.dev/)
 - [History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API)
 - [otvl_web project](https://github.com/t-beigbeder/otvl_web)
-
-through a clean packaging for reuse and extension.

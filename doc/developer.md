@@ -10,9 +10,13 @@ This repository is organized as following:
 - doc: documentation
 - revproxy: a reverse proxy apache2 configuration for docker
 - server: a REST API server implemented in python
-- vuejs: the web site GUI is implemented with Vue.js and more specifically quasar
+- vuejs: the web site GUI is implemented with Vue.js
 
 ## Environment setup
+
+### General system setup
+
+Add otvl-dev-host as alias to development host.
 
 ### System setup for Vue.js (debian)
 
@@ -44,58 +48,88 @@ vue.js
     $ vue --version
     @vue/cli 4.1.2
 
-Quasar
 
-    $ yarn global add @quasar/cli
+vue serve
+
+    $ yarn global add @vue/cli-service
+
+Testing local distribution
+
+    $ yarn global add serve
+    $ yarn build
+    $ serve -s dist
 
 ### System setup for python
 
     # in a virtualenv
-    pip install -r server/requirements-dev.txt
+    pip install pip-tools
+    pip-compile tools/requirements.in
+    pip-compile tools/requirements-dev.in
+    pip-sync tools/requirements.txt tools/requirements-dev.txt
 
-### Produce tgz archives for deployment
+## Testing locally without docker
 
-- Docker must be installed on the development environment.
-- Tune VERSION and EXPORT_DIR in shell scripts.
+### Python part
 
-Python server, the resulting archive contains a virtual env that must be installed
-as /srv/venv/otvl_web:
+Run the API server with the following environment (sample):
 
-    dev/shell/run_dkb_server.sh
+    OTVL_WEB_CONFIG_PATH=data/tests/unit_test_server02/config.yml
+    OTVL_WEB_HOST=0.0.0.0
+    OTVL_WEB_INSECURE_CORS=1
+    OTVL_WEB_LOGGING=DEBUG
+    OTVL_WEB_PORT=9090
+    OTVL_WEB_RELOAD=1
+    OTVL_WEB_ROOT_PATH=/api/v2
 
-Vuejs static files, the resulting archive must be deployed
-as the root of a static web site:
+### Vue.js part
 
-    dev/shell/run_dkb_vuejs.sh
+Build the library:
 
-### Simulate deployment
+    # in otvl-web-lib
+    yarn install
+    yarn build-lib
 
-The ovl_web application
-comes with Dockerfiles to produce the different components of the following architecture.
+Install the library in the demo application:
 
-![architecture for docker](images/otvl_web_docker.jpg)
+    # in otvl-web-sample or clone
+    yarn install
+    # or when library otvl-web-lib is updated
+    yarn add ../../otvl_web/otvl-web-lib
 
-If you have
-[docker](https://docs.docker.com/)
-and
-[docker-compose](https://docs.docker.com/compose/)
-installed on a development environment, you can run those components using the following commands:
+Run the vue.js application development server
 
-    :::sh
-    # run docker build for the three components
-    $ dev/shell/run_dkb_for_compose.sh
-    # run the three components with docker compose
-    $ dev/shell/run_compose_up.sh [/path/to/a/specific/otvl_web/site]
+    # in otvl-web-sample or clone
+    yarn serve
 
-The [otvl_ansible](https://github.com/t-beigbeder/otvl_ansible)
-project provides
-[Ansible](https://docs.ansible.com/ansible/latest/)
-playbooks to deploy those components on physical or virtual servers using Debian buster.
+Configure the vue.js application in `otvl-web-sample/src/app/apputils.js`
 
+Setup a vue.js (v3) application from scratch
+
+    # create a vue.js application with vue cli
+    vue create otvl-web-sample
+    # add dependencies (sample)
+    yarn add axios luxon vue-router@4 \
+      tailwindcss@npm:@tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9 \
+      ../../otvl_web/otvl-web-lib
+    # for tailwindcss configure tailwind.config.js and postcss.config.js as intended
+
+## Testing locally with docker-compose
+
+    # run a stack with traefik reverse proxy, apache web server and FastAPI API server
+    docker-compose -f docker-compose-local.yml up -d --build
+    # check log files
+    docker-compose -f docker-compose-local.yml logs -f
+    # update development
+    # update the stack
+    docker-compose -f docker-compose-local.yml up -d --build
+    # clean up
+    docker-compose -f docker-compose-local.yml down
+    docker system prune
+
+The application will be accessible at [https://otvl-dev-host:9443/](https://otvl-dev-host:9443/)
 
 ## References
 
 - [node installation](https://github.com/nodesource/distributions/blob/master/README.md#deb)
-- [Vue.js](https://vuejs.org/)
-- [Quasar framework](https://quasar.dev/)
-
+- [Vue.js v3](https://v3.vuejs.org/)
+- [Vue Router v4](https://next.router.vuejs.org/)

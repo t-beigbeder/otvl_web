@@ -1,9 +1,0 @@
-meta:
-  version: "1.0"
-  publication_date: "20200817"
-
-content:
-  title: Sub menu1
-  stream_fields:
-  - type: md_file
-    file: sub-menu1.emd
