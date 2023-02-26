@@ -20,44 +20,23 @@ Add otvl-dev-host as alias to development host.
 
 ### System setup for Vue.js (debian)
 
-Node and npm
+Install [nvm](https://github.com/nvm-sh/nvm#install--update-script)
 
-    # curl -sL https://deb.nodesource.com/setup_13.x | bash -
-    # apt-get install gcc g++ make
-    # apt-get install -y nodejs
-    # node -v
-    v13.5.0
-    # npm -v
-    6.13.4
-
-Yarn (recommended)
-
-    # curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-    # echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-    # apt-get update && apt-get install yarn
-    # yarn -v
-    1.21.1
-
-vue.js
-
-    $ yarn global add @vue/cli
-    $ vi ~/.profile
-    if [ -d "$HOME/.yarn/bin" ] ; then
-        PATH="$HOME/.yarn/bin:$PATH"
-    fi
-    $ vue --version
-    @vue/cli 4.1.2
-
-
-vue serve
-
-    $ yarn global add @vue/cli-service
+    $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash    
+    $ nvm install lts/hydrogen
+    $ nvm use lts/hydrogen
 
 Testing local distribution
 
-    $ yarn global add serve
-    $ yarn build
-    $ serve -s dist
+### Vue.js app
+
+    cd otvl-web-lib
+    yarn install
+    yarn build-lib
+    cd ../otvl-web-sample
+    yarn install
+    yarn build
+    yarn serve
 
 ### System setup for python
 

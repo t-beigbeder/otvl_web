@@ -1,4 +1,4 @@
-FROM node:14-slim as build-stage
+FROM node:18-slim as build-stage
 
 COPY otvl-web-lib/ /otvl_web/otvl-web-lib/
 WORKDIR /otvl_web/otvl-web-lib
