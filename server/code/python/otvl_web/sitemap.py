@@ -62,7 +62,7 @@ class SiteMapFetcher():
                         break
                     pathparts = pathparts[:-1]
                 else:
-                    self.logger.error(f"fetch document {reldirpath}/{docname}: no known parent")
+                    docs[f"{reldirpath}{docname}"] = None
 
         base_url = f"https://{request.base_url.hostname}/"
         for doc, path in docs.items():

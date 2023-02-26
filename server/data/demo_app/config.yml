@@ -3,6 +3,7 @@ server:
   private_uris:
   - "c6-private/"
   - "c7-private"
+  home_mapped_to: "blog"
   j24bots_templates:
     - uri: ".*"
       template: "page.j2"

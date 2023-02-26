@@ -28,6 +28,16 @@
       {%- endif %}
       />
 {% endif %}
+{% if sf.type == "sf-cards" %}
+  {% for sf_card in sf.elements %}
+      <h2>
+        {{ sf_card.title }}
+      </h2>
+      <div>
+        {{ sf_card.content }}
+      </div>
+  {% endfor %}
+{% endif %}
 {% endfor %}
     </div>
   </body>

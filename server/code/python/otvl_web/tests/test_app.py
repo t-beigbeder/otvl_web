@@ -201,7 +201,22 @@ def test_blog_article_as_html(client):
     assert "text/html" in response.headers["content-type"]
 
 
+@pytest.mark.parametrize('test_config', ['unit_test_server02'])
+def test_404_as_html(client):
+    uri = "blog/minikube2"
+    response = client.get(f"{BASE_URL}/html/{uri}")
+    assert response.status_code == status.HTTP_404_NOT_FOUND
+
+
+@pytest.mark.parametrize('test_config', ['unit_test_server02'])
+@pytest.mark.parametrize('uri', ['', '/'])
+def test_home_redirect_as_html(client, uri):
+    response = client.get(f"{BASE_URL}/html{uri}")
+    assert response.status_code == status.HTTP_200_OK
+    assert "text/html" in response.headers["content-type"]
+
+
 if __name__ == '__main__':
     # pytest.main()
     pytest.main(['-v', '-s', '-k', 'test_app.py'])
-    # pytest.main(['-v', '-s', '-k', 'test_blog_article_as_html'])
+    # pytest.main(['-v', '-s', '-k', 'test_home_redirect_as_html'])

@@ -10,6 +10,7 @@ class Context:
         "port": 9090,
         "reload": False,
         "insecure_cors": False,
+        "full_access_log": False,
         "config_path": "otvl_web_config.yml",
         "content_path": "",
         "assets_path": "",
