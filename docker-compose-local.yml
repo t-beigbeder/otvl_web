@@ -14,6 +14,8 @@ services:
       - OTVL_WEB_ENABLE_BOTS=1
     volumes:
       - ./server/data/demo_app/assets:/assets
+    logging:
+      driver: journald
 
   api:
     build:
@@ -22,8 +24,11 @@ services:
       - "9090:9090"
     environment:
       - OTVL_WEB_LOGGING=DEBUG
+      - OTVL_WEB_FULL_ACCESS_LOG=1
     volumes:
       - ./server/data/demo_app:/data
+    logging:
+      driver: journald
 
   reverse-proxy:
     image: traefik:v2.4
@@ -33,3 +38,5 @@ services:
       - "9180:8080"
     volumes:
       - ./otvl-web-sample/traefik/dev:/traefik
+    logging:
+      driver: journald

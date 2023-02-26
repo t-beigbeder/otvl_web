@@ -1,6 +1,6 @@
 FROM python:3.8-slim as build-stage
 RUN apt-get update && apt-get install -y virtualenv && rm -rf /var/lib/apt/lists/*
-RUN /usr/bin/virtualenv -p python3 /srv/pkg/otvl_web_server_venv
+RUN python -m venv /srv/pkg/otvl_web_server_venv
 RUN mkdir -p /code
 ADD tools/requirements.txt /code
 RUN /srv/pkg/otvl_web_server_venv/bin/pip install -r /code/requirements.txt
@@ -20,6 +20,7 @@ USER ${V_USER}:${V_GROUP}
 ENV OTVL_WEB_CONFIG_PATH=/data/config.yml
 ENV OTVL_WEB_HOST=0.0.0.0
 ENV OTVL_WEB_INSECURE_CORS=
+ENV OTVL_WEB_FULL_ACCESS_LOG=
 ENV OTVL_WEB_LOGGING=INFO
 ENV OTVL_WEB_PORT=9090
 ENV OTVL_WEB_ROOT_PATH=/api/v2

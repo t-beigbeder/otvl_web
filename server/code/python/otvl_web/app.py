@@ -7,7 +7,8 @@ from fastapi.responses import JSONResponse, FileResponse
 from starlette.middleware.cors import CORSMiddleware
 
 from otvl_web import context
-from otvl_web.content import ContentFetcher, HtmlFetcher
+from otvl_web.content import ContentFetcher
+from otvl_web.html4bots import HtmlFetcher
 from otvl_web.index import IndexFetcher
 from otvl_web.sitemap import SiteMapFetcher
 
@@ -49,6 +50,22 @@ async def default_exception_handler(request: Request, exc: Exception):
 @app.on_event("startup")
 async def startup_event():
     logger.info(f"Application {__name__} running with base URL {BASE_URL}")
+
+
+if _ctx.full_access_log:
+    @app.middleware("http")
+    async def full_access_log(request: Request, call_next):
+        response = await call_next(request)
+        scope = request.scope
+        qh = request.headers
+        xff = qh.get("x-forwarded-for", request.client.host)
+        referer = qh.get("referer", "no-referer")
+        req_info = f"{xff} \"{request.method} {scope['path']} {scope['type']}/{scope['http_version']}\""
+        cl = response.headers.get("content-length", "no-content-length")
+        resp_info = f"{response.status_code} {cl}"
+        req_info_compl = f"\"{referer}\" \"{qh['user-agent']}\""
+        logging.getLogger("otvl_web.access").info(f"{req_info} {resp_info} {req_info_compl}")
+        return response
 
 
 @app.get(f"{BASE_URL}/version", status_code=status.HTTP_200_OK)

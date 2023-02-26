@@ -5,48 +5,44 @@ import uvicorn
 from otvl_web import context
 
 
-LOGGING_CONFIG = dict(
-        version=1,
-        disable_existing_loggers=False,
-
-        root={"level": os.getenv("OTVL_WEB_LOGGING", "INFO"), "handlers": ["console"]},
-        loggers={
-            "gunicorn.error": {
-                "level": "INFO",
-                "handlers": ["error_console"],
-                "propagate": True,
-                "qualname": "gunicorn.error"
-            },
-
-            "gunicorn.access": {
-                "level": "INFO",
-                "handlers": ["console"],
-                "propagate": True,
-                "qualname": "gunicorn.access"
-            }
+log_level = os.getenv("OTVL_WEB_LOGGING", "INFO")
+LOGGING_CONFIG = {
+    "version": 1,
+    "disable_existing_loggers": True,
+    "root": {"handlers": ["default"], "level": log_level},
+    "formatters": {
+        "default": {
+            "()": "uvicorn.logging.DefaultFormatter",
+            "fmt": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+            "use_colors": None,
         },
-        handlers={
-            "console": {
-                "class": "logging.StreamHandler",
-                "formatter": "generic",
-                "stream": "ext://sys.stdout"
-            },
-            "error_console": {
-                "class": "logging.StreamHandler",
-                "formatter": "generic",
-                "stream": "ext://sys.stderr"
-            },
+        "access": {
+            "()": "uvicorn.logging.AccessFormatter",
+            "fmt": '%(asctime)s - %(name)s - %(levelname)s - %(client_addr)s - "%(request_line)s" %(status_code)s',  # noqa: E501
         },
-        formatters={
-            "generic": {
-                "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-                "datefmt": "[%Y-%m-%d %H:%M:%S]",
-                "class": "logging.Formatter"
-            }
-        }
-)
+    },
+    "handlers": {
+        "default": {
+            "formatter": "default",
+            "class": "logging.StreamHandler",
+            "stream": "ext://sys.stderr",
+        },
+        "access": {
+            "formatter": "access",
+            "class": "logging.StreamHandler",
+            "stream": "ext://sys.stdout",
+        },
+    },
+    "loggers": {
+        "uvicorn": {"handlers": ["default"], "level": "INFO", "propagate": False},
+        "uvicorn.error": {"handlers": ["default"], "level": "INFO", "propagate": False},
+        "uvicorn.access": {"handlers": ["access"], "level": "INFO", "propagate": False},
+    },
+}
+
 ctx = context.Context()
 
-if __name__ == '__main__':
-    uvicorn.run('otvl_web.app:app', host=ctx.host, port=ctx.port, reload=ctx.reload,
-                log_config=LOGGING_CONFIG)
+if __name__ == "__main__":
+    uvicorn.run("otvl_web.app:app", host=ctx.host, port=ctx.port, reload=ctx.reload,
+                log_config=LOGGING_CONFIG, proxy_headers=True, forwarded_allow_ips="*",
+                access_log=(not ctx.full_access_log))

@@ -9,7 +9,7 @@ http:
       tls: {}
 
     to-api-sitemap-https:
-      rule: "Host(`otvl-dev-host`) && PathPrefix(`/sitemap.xml`)"
+      rule: "Host(`otvl-dev-host`) && Path(`/sitemap.xml`)"
       middlewares:
       - add-api
       service: api
@@ -18,6 +18,12 @@ http:
     to-api-https:
       rule: "Host(`otvl-dev-host`) && PathPrefix(`/api/`)"
       service: api
+      tls: {}
+
+    to-nobot:
+      rule: "Host(`otvl-dev-host`) && (PathPrefix(`/assets/`) || Path(`/favicon.ico`,`/robots.txt`))"
+      priority: 5
+      service: otvl-web-sample
       tls: {}
 
     to-api-html-private-https:

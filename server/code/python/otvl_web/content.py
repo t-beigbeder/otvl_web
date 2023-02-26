@@ -1,13 +1,10 @@
 import os
 import glob
 import logging
-import re
 
 import yaml
 import markdown
-from fastapi import Path, HTTPException, status, Response
-
-from otvl_web.j24bots import Jinja2Loader
+from fastapi import Path, HTTPException, status
 
 
 class BaseFetcher:
@@ -176,8 +173,11 @@ class BaseFetcher:
                         sf["type"] = "html"
                         sf["content"] = self._md2html(md_fd.read())
                         del sf["file"]
-                except FileNotFoundError:
-                    raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, "missing content")
+                except FileNotFoundError as exc:
+                    msg = f"Internal Server Error {type(exc).__name__} {exc}"
+                    self.logger.error(msg)
+                    raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR,
+                                        f"missing content ({msg})")
             elif sf["type"] == "md_data":
                 sf["type"] = "html"
                 sf["content"] = self._md2html(sf["data"])
@@ -206,25 +206,3 @@ class ContentFetcher(BaseFetcher):
     def load_file_content(self, ctx):
         self.ctx = ctx
         return self.do_load_file_content(ctx)
-
-
-class HtmlFetcher(BaseFetcher):
-    def __init__(self,
-                 uri: str = Path(None, description="URI path for the requested HTML")
-                 ):
-        BaseFetcher.__init__(self, uri)
-
-    def fetch(self, ctx):
-        self.ctx = ctx
-        file_content = self.do_load_file_content(ctx)
-        if file_content is None:
-            raise HTTPException(status.HTTP_404_NOT_FOUND)
-        page_content = self._get_page_content(file_content)
-        for j2t in self.ctx.config["server"]["j24bots_templates"]:
-            if not re.match(j2t["uri"], self.uri):
-                continue
-            break
-        else:
-            raise HTTPException(status.HTTP_404_NOT_FOUND)
-        h4c = Jinja2Loader(self.ctx.j24bots_path).load(page_content, j2t["template"])
-        return Response(content=h4c, media_type="text/html")
