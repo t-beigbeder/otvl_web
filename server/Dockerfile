@@ -1,4 +1,4 @@
-FROM python:3.8-slim as build-stage
+FROM python:3.9-slim as build-stage
 RUN apt-get update && apt-get install -y virtualenv && rm -rf /var/lib/apt/lists/*
 RUN python -m venv /srv/pkg/otvl_web_server_venv
 RUN mkdir -p /code
@@ -8,7 +8,7 @@ ADD code/python /code
 WORKDIR /code
 RUN /srv/pkg/otvl_web_server_venv/bin/python setup.py install
 
-FROM python:3.8-slim
+FROM python:3.9-slim
 ARG V_USER=dguest
 ARG V_UID=1001
 ARG V_GROUP=dguest

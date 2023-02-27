@@ -22,9 +22,17 @@ Add otvl-dev-host as alias to development host.
 
 Install [nvm](https://github.com/nvm-sh/nvm#install--update-script)
 
-    $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash    
-    $ nvm install lts/hydrogen
-    $ nvm use lts/hydrogen
+    $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+    $ nvm install lts/gallium
+    $ nvm use lts/gallium
+
+Yarn
+
+    # curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+    # echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+    # apt-get update && apt-get install yarn
+    # yarn -v
+    1.22.19
 
 Testing local distribution
 
