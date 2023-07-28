@@ -16,6 +16,7 @@ ARG V_GID=1001
 COPY --from=build-stage /srv/pkg/otvl_web_server_venv /srv/pkg/otvl_web_server_venv
 RUN addgroup --gid ${V_GID} ${V_GROUP} && \
   adduser --disabled-password --ingroup ${V_GROUP} --uid ${V_UID} --shell /bin/sh --gecos ${V_USER} ${V_USER}
+ADD code/shell/entrypoint.sh /
 USER ${V_USER}:${V_GROUP}
 ENV OTVL_WEB_CONFIG_PATH=/data/config.yml
 ENV OTVL_WEB_HOST=0.0.0.0
@@ -25,4 +26,4 @@ ENV OTVL_WEB_LOGGING=INFO
 ENV OTVL_WEB_PORT=9090
 ENV OTVL_WEB_ROOT_PATH=/api/v2
 
-CMD /srv/pkg/otvl_web_server_venv/bin/python -m otvl_web.main
+ENTRYPOINT /entrypoint.sh /srv/pkg/otvl_web_server_venv/bin/python -m otvl_web.main
