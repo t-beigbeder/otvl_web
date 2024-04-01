@@ -1,4 +1,6 @@
 import os
+import sys
+import logging
 
 import uvicorn
 
@@ -41,6 +43,9 @@ LOGGING_CONFIG = {
 }
 
 ctx = context.Context()
+if ctx.config is None:
+    logging.getLogger("main").error(f"context configuration not available, exiting...")
+    sys.exit(-1)
 
 if __name__ == "__main__":
     uvicorn.run("otvl_web.app:app", host=ctx.host, port=ctx.port, reload=ctx.reload,
